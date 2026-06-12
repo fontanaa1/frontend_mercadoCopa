@@ -1,324 +1,646 @@
 <!DOCTYPE html>
-
-<html lang="pt-br"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Anton:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-error-container": "#93000a",
-                    "surface-container-low": "#f3f4f5",
-                    "on-surface": "#191c1d",
-                    "on-tertiary": "#ffffff",
-                    "surface-container-highest": "#e1e3e4",
-                    "primary-fixed": "#aef2bb",
-                    "on-primary-container": "#79bb87",
-                    "outline": "#707970",
-                    "on-primary-fixed": "#00210c",
-                    "surface-bright": "#f8f9fa",
-                    "on-primary-fixed-variant": "#0b5229",
-                    "on-secondary-container": "#6e5c00",
-                    "on-tertiary-container": "#ff8a86",
-                    "inverse-on-surface": "#f0f1f2",
-                    "surface-container": "#edeeef",
-                    "on-tertiary-fixed": "#410005",
-                    "tertiary-fixed-dim": "#ffb3af",
-                    "inverse-surface": "#2e3132",
-                    "surface-dim": "#d9dadb",
-                    "on-background": "#191c1d",
-                    "tertiary": "#5c000b",
-                    "error-container": "#ffdad6",
-                    "surface-tint": "#2a6a3f",
-                    "surface-container-lowest": "#ffffff",
-                    "on-tertiary-fixed-variant": "#930018",
-                    "on-primary": "#ffffff",
-                    "tertiary-container": "#860015",
-                    "outline-variant": "#c0c9be",
-                    "secondary-fixed": "#ffe16d",
-                    "on-secondary-fixed": "#221b00",
-                    "inverse-primary": "#93d6a0",
-                    "tertiary-fixed": "#ffdad7",
-                    "on-secondary": "#ffffff",
-                    "on-surface-variant": "#404941",
-                    "primary": "#003215",
-                    "primary-fixed-dim": "#93d6a0",
-                    "surface-container-high": "#e7e8e9",
-                    "secondary-container": "#fcd400",
-                    "surface": "#f8f9fa",
-                    "error": "#ba1a1a",
-                    "secondary-fixed-dim": "#e9c400",
-                    "surface-variant": "#e1e3e4",
-                    "on-error": "#ffffff",
-                    "on-secondary-fixed-variant": "#544600",
-                    "background": "#f8f9fa",
-                    "secondary": "#705d00",
-                    "primary-container": "#004b23"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "gutter": "12px",
-                    "container-margin": "20px",
-                    "stack-lg": "48px",
-                    "stack-md": "24px",
-                    "stack-sm": "8px",
-                    "unit": "4px"
-            },
-            "fontFamily": {
-                    "headline-lg": ["Anton"],
-                    "title-md": ["Hanken Grotesk"],
-                    "display-lg": ["Anton"],
-                    "body-lg": ["Hanken Grotesk"],
-                    "headline-lg-mobile": ["Anton"],
-                    "body-sm": ["Hanken Grotesk"],
-                    "label-caps": ["JetBrains Mono"]
-            },
-            "fontSize": {
-                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "400"}],
-                    "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
-                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400"}],
-                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "400"}],
-                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
-            }
-          },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            line-height: 1;
-            vertical-align: middle;
-        }
-        .neobrutalist-push:active {
-            transform: translate(2px, 2px);
-            box-shadow: 0 0 0 transparent !important;
-        }
-        .neobrutalist-shadow {
-            box-shadow: 4px 4px 0px #000;
-        }
-        .glass-overlay {
-            backdrop-filter: blur(8px);
-            background: rgba(255, 255, 255, 0.7);
-        }
-    </style>
-<style>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Publicar Item - Mercado da Copa</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      vertical-align: middle;
+    }
+    .neobrutalist-push:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0 0 0 transparent !important;
+    }
+    .neobrutalist-shadow {
+      box-shadow: 4px 4px 0px #000;
+    }
     body {
       min-height: max(884px, 100dvh);
+      font-family: 'Hanken Grotesk', sans-serif;
+    }
+    .toast-message {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #003215;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      z-index: 1001;
+      animation: fadeInOut 3s ease-in-out;
+      box-shadow: 4px 4px 0px 0px #fcd400;
+      border: 1px solid #fcd400;
+      white-space: nowrap;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+    /* Preview da imagem */
+    .image-preview {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .preview-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #e1e3e4;
+      border-radius: 8px;
+      overflow: hidden;
     }
   </style>
-  </head>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "surface-container-low": "#f3f4f5",
+            "on-surface": "#191c1d",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e1e3e4",
+            "primary-fixed": "#aef2bb",
+            "on-primary-container": "#79bb87",
+            "outline": "#707970",
+            "on-primary-fixed": "#00210c",
+            "surface-bright": "#f8f9fa",
+            "on-primary-fixed-variant": "#0b5229",
+            "on-secondary-container": "#6e5c00",
+            "on-tertiary-container": "#ff8a86",
+            "inverse-on-surface": "#f0f1f2",
+            "surface-container": "#edeeef",
+            "on-tertiary-fixed": "#410005",
+            "tertiary-fixed-dim": "#ffb3af",
+            "inverse-surface": "#2e3132",
+            "surface-dim": "#d9dadb",
+            "on-background": "#191c1d",
+            "tertiary": "#5c000b",
+            "error-container": "#ffdad6",
+            "surface-tint": "#2a6a3f",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#930018",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#860015",
+            "outline-variant": "#c0c9be",
+            "secondary-fixed": "#ffe16d",
+            "on-secondary-fixed": "#221b00",
+            "inverse-primary": "#93d6a0",
+            "tertiary-fixed": "#ffdad7",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#404941",
+            "primary": "#003215",
+            "primary-fixed-dim": "#93d6a0",
+            "surface-container-high": "#e7e8e9",
+            "secondary-container": "#fcd400",
+            "surface": "#f8f9fa",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#e9c400",
+            "surface-variant": "#e1e3e4",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#544600",
+            "background": "#f8f9fa",
+            "secondary": "#705d00",
+            "primary-container": "#004b23"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "gutter": "12px",
+            "container-margin": "20px",
+            "stack-lg": "48px",
+            "stack-md": "24px",
+            "stack-sm": "8px",
+            "unit": "4px"
+          },
+          "fontFamily": {
+            "headline-lg": ["Anton"],
+            "title-md": ["Hanken Grotesk"],
+            "display-lg": ["Anton"],
+            "body-lg": ["Hanken Grotesk"],
+            "headline-lg-mobile": ["Anton"],
+            "body-sm": ["Hanken Grotesk"],
+            "label-caps": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "400"}],
+            "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
+            "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400"}],
+            "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "400"}],
+            "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+            "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+          }
+        }
+      }
+    }
+  </script>
+</head>
 <body class="bg-background text-on-surface font-body-lg min-h-screen pb-32">
-<!-- TopAppBar -->
-<header class="w-full top-0 sticky z-50 bg-surface dark:bg-inverse-surface border-b-2 border-outline-variant dark:border-outline flex justify-between items-center px-container-margin py-stack-sm w-full">
-<div class="flex items-center gap-4">
-<button class="text-on-surface-variant dark:text-surface-variant hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
-<span class="material-symbols-outlined" data-icon="menu">menu</span>
-</button>
-<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim tracking-tight">Mercado da Copa</h1>
-</div>
-<div class="flex items-center gap-4">
-<button class="text-on-surface-variant dark:text-surface-variant hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-</div>
-</header>
-<main class="max-w-[1200px] mx-auto px-container-margin pt-stack-md">
-<!-- Section: Anunciar Novo Item -->
-<section class="mb-stack-lg">
-<div class="flex items-baseline justify-between mb-stack-sm">
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Anunciar Novo Item</h2>
-<span class="font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-1 rounded">VENDEDOR PRO</span>
-</div>
-<div class="bg-surface-container border-2 border-outline-variant p-gutter rounded-lg">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-<!-- Photo Upload Placeholder -->
-<div class="md:col-span-4 aspect-square border-2 border-dashed border-outline flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group rounded-lg">
-<span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:scale-110 transition-transform" data-icon="add_a_photo">add_a_photo</span>
-<p class="font-label-caps text-label-caps text-on-surface-variant">SUBIR FOTO DO ITEM</p>
-<p class="font-body-sm text-body-sm text-outline-variant mt-1 text-center px-4">JPEG ou PNG (Máx 5MB)</p>
-</div>
-<!-- Item Details Form -->
-<div class="md:col-span-8 flex flex-col gap-stack-sm">
-<div class="group">
-<label class="font-label-caps text-label-caps text-outline block mb-1">TÍTULO DO PRODUTO</label>
-<input class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-title-md text-title-md transition-colors placeholder:text-surface-variant" placeholder="Ex: Camisa Brasil 1994 Original" type="text"/>
-</div>
-<div class="grid grid-cols-2 gap-gutter">
-<div>
-<label class="font-label-caps text-label-caps text-outline block mb-1">PREÇO (R$)</label>
-<input class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-title-md text-title-md transition-colors" placeholder="0,00" type="number"/>
-</div>
-<div>
-<label class="font-label-caps text-label-caps text-outline block mb-1">CATEGORIA</label>
-<select class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-body-lg text-body-lg transition-colors appearance-none">
-<option>Camisas Históricas</option>
-<option>Acessórios</option>
-<option>Colecionáveis</option>
-<option>Agasalhos</option>
-</select>
-</div>
-</div>
-<button class="mt-4 bg-primary text-on-primary font-headline-lg-mobile text-headline-lg-mobile py-4 rounded-lg flex items-center justify-center gap-2 hover:border-b-2 hover:border-secondary transition-all active:translate-y-0.5 neobrutalist-push">
-<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
-                            PUBLICAR ITEM
-                        </button>
-</div>
-</div>
-</div>
-</section>
-<!-- Section: Meus Itens -->
-<section>
-<div class="flex items-center justify-between mb-stack-sm border-b-2 border-primary-container pb-2">
-<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Meus Itens</h2>
-<div class="flex gap-2">
-<button class="bg-primary text-on-primary px-3 py-1 rounded border-2 border-primary font-label-caps text-label-caps">TODOS</button>
-<button class="text-on-surface-variant px-3 py-1 border-2 border-outline-variant rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-colors">VENDIDOS</button>
-</div>
-</div>
-<!-- Items List -->
-<div class="space-y-4">
-<!-- Item Card 1: Ativo -->
-<div class="group relative bg-surface border-2 border-outline-variant p-4 flex gap-4 items-center transition-all hover:bg-surface-container-low">
-<div class="w-20 h-20 bg-surface-container-highest flex-shrink-0 border border-outline-variant overflow-hidden rounded">
-<img alt="Camisa Retro" class="w-full h-full object-cover" data-alt="A vintage 1994 Brazil national football team yellow jersey displayed on a clean white professional studio background. The fabric shows subtle mesh textures and classic green details. The lighting is crisp and high-contrast, emphasizing the historical authenticity and vibrant stadium green and yellow colors of a premium sports collectible marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR2SFps_OcZ7J84-EZs2b9tLAjrGJ3MaDIwQ1Rt7HJXU2zilW84Gl9GnvmTAcRQTjR4_2jvGSbYgUqpc23Ja0R8c9p7kpDS4kz8o2poQ8_RrvPKj16Dn_3WKtwqJd4ZgDN__t2i2jeGSv2XGi0oTZ1vm3rdjPf6EYK_CvXWvAePiap1MquC1HGTdmG3ZecII_nH24zcUtDZ8zRiAObBOyzaTGAtoEDqspOP3l9hHRYAAKxHxWwJdVCTTKoKTGyFbJsDiFkHiVZuMs"/>
-</div>
-<div class="flex-grow">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="font-title-md text-title-md leading-tight">Camisa Brasil 94 - Edição Tetra</h3>
-<p class="font-label-caps text-label-caps text-outline">SKU: CBF-94-XL</p>
-</div>
-<span class="bg-primary-container text-on-primary-container font-label-caps text-[10px] px-2 py-1 rounded-full flex items-center gap-1">
-<span class="material-symbols-outlined !text-[12px]" data-icon="check_circle">check_circle</span>
-                                ATIVO
-                            </span>
-</div>
-<div class="flex items-center gap-4 mt-2">
-<span class="font-headline-lg text-headline-lg text-primary">R$ 890,00</span>
-<span class="font-body-sm text-body-sm text-outline">Estoque: 1 un.</span>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="p-2 border-2 border-outline-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary-container transition-all rounded active:translate-x-0.5 active:translate-y-0.5">
-<span class="material-symbols-outlined" data-icon="edit">edit</span>
-</button>
-<button class="p-2 border-2 border-outline-variant hover:bg-error-container hover:text-on-error-container hover:border-error-container transition-all rounded active:translate-x-0.5 active:translate-y-0.5">
-<span class="material-symbols-outlined" data-icon="delete">delete</span>
-</button>
-</div>
-</div>
-<!-- Item Card 2: Vendido -->
-<div class="group relative bg-surface-dim border-2 border-outline-variant p-4 flex gap-4 items-center opacity-70 grayscale-[0.5]">
-<div class="w-20 h-20 bg-surface-container-highest flex-shrink-0 border border-outline-variant overflow-hidden rounded">
-<img alt="Jaqueta Vintage" class="w-full h-full object-cover" data-alt="A classic 1990s vintage Adidas tracksuit jacket in deep navy and vibrant white, laid flat in an editorial style. The lighting is soft and natural, highlighting the retro nylon texture. The composition is clean and organized, fitting a premium digital archive store aesthetic with a focus on sports heritage and authenticity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0SxJs1SZ8EH1NtEGKKS0kJr14Wcjy-d74yG4xIDlkaOC5d8YD70HOmE0nyM7Cag8IiDBP6mQHSK-AYAeeD4VuNl2V9N2CvaLPNa0eAT7IDTbYPuC5Qj5Rg6NIe1OVL7kNeeeU9289y6WyBio1mn2TDHdOcDMM99s7K8zKf2iMU1nsDcgL4H_HJ05j8k7EBzX-NFHSWkObYNuLx6XjKth3lYeLRKyH5iheMdtyYWkqYE02A-IONnzIWquT_h2snUGSEWeVRF3QAbk"/>
-</div>
-<div class="flex-grow">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="font-title-md text-title-md leading-tight">Jaqueta Corta-Vento Retro 90s</h3>
-<p class="font-label-caps text-label-caps text-outline">SKU: ADI-WV-M</p>
-</div>
-<span class="bg-secondary text-on-secondary font-label-caps text-[10px] px-2 py-1 rounded-full flex items-center gap-1">
-<span class="material-symbols-outlined !text-[12px]" data-icon="shopping_bag">shopping_bag</span>
-                                VENDIDO
-                            </span>
-</div>
-<div class="flex items-center gap-4 mt-2">
-<span class="font-headline-lg text-headline-lg text-on-surface-variant">R$ 450,00</span>
-<span class="font-body-sm text-body-sm text-outline italic">Vendido em 12/10</span>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="p-2 border-2 border-outline-variant hover:bg-surface-container-highest transition-all rounded cursor-not-allowed opacity-50">
-<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
-</button>
-</div>
-</div>
-<!-- Item Card 3: Pendente -->
-<div class="group relative bg-surface border-2 border-outline-variant p-4 flex gap-4 items-center transition-all hover:bg-surface-container-low">
-<div class="w-20 h-20 bg-surface-container-highest flex-shrink-0 border border-outline-variant overflow-hidden rounded">
-<img alt="Bola Historica" class="w-full h-full object-cover" data-alt="A premium close-up of a classic leather football from the 1970s, showing aged textures and hand-stitched details. The lighting is dramatic and warm, like a sunset on a stadium pitch, creating deep shadows and bright highlights. The style is nostalgic and energetic, reflecting the grit and authenticity of high-end sports memorabilia." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPWzlZTKKpnqAbFE1VhB1TkCE5hUwVl2WrX_OrvChi-hY41VQGb4g_CEZQB96jcQSHJKz939o8NlkV9i9ubv_Afs-6V8P-ckYl56hg19ljU1JEh7bNlh-18qJEUUfwnI8uM0xqOuFZA4E2yh_R7Nz7fPA7SUTigA_My7bp0ZQo3JM5pq1h_SmEYlfRKKrwgyE6vWfn7GPbvKwhIy2s-xoszx7OY4A9_KUvQYYx343erG9Y403Hd9zQO32mMkAYzqBY014KwVFnTe4"/>
-</div>
-<div class="flex-grow">
-<div class="flex justify-between items-start">
-<div>
-<h3 class="font-title-md text-title-md leading-tight">Bola de Couro Réplica 1970</h3>
-<p class="font-label-caps text-label-caps text-outline">SKU: HIS-BAL-O</p>
-</div>
-<span class="bg-secondary-container text-on-secondary-container font-label-caps text-[10px] px-2 py-1 rounded-full flex items-center gap-1">
-<span class="material-symbols-outlined !text-[12px]" data-icon="pending">pending</span>
-                                PENDENTE
-                            </span>
-</div>
-<div class="flex items-center gap-4 mt-2">
-<span class="font-headline-lg text-headline-lg text-primary">R$ 320,00</span>
-<span class="font-body-sm text-body-sm text-outline">Aguardando revisão</span>
-</div>
-</div>
-<div class="flex gap-2">
-<button class="p-2 border-2 border-outline-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary-container transition-all rounded active:translate-x-0.5 active:translate-y-0.5">
-<span class="material-symbols-outlined" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-inverse-surface border-t-2 border-outline-variant dark:border-outline flex justify-around items-center w-full px-2 py-3">
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="telaprincipal.html">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-label-caps text-label-caps mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="telaprincipal.html">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-<span class="font-label-caps text-label-caps mt-1">Search</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="publicaritens.html">
-<span class="material-symbols-outlined" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
-<span class="font-label-caps text-label-caps mt-1">Sell</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="carrinho.html">
-<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
-<span class="font-label-caps text-label-caps mt-1">Cart</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="perfil.html">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="font-label-caps text-label-caps mt-1">Profile</span>
-</a>
-</nav>
-<script>
-        // Simple micro-interaction for the file upload placeholder
-        const dropzone = document.querySelector('.aspect-square');
-        dropzone.addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.click();
-            input.onchange = (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    alert(`Arquivo selecionado: ${file.name}`);
-                    // In a real app, we would handle the upload preview here
-                }
-            }
-        });
-    </script>
 
-<script src="app.js" defer></script>
-</body></html>
+  <!-- TopAppBar -->
+  <header class="w-full top-0 sticky z-50 bg-surface border-b-2 border-outline-variant flex justify-between items-center px-container-margin py-stack-sm">
+    <div class="flex items-center gap-4">
+      <button onclick="window.location.href='telaprincipal.html'" class="text-primary hover:opacity-80 transition-opacity">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Mercado da Copa</h1>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="text-primary hover:opacity-80 transition-opacity">
+        <span class="material-symbols-outlined">help</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-[1200px] mx-auto px-container-margin pt-stack-md">
+    <!-- Section: Anunciar Novo Item -->
+    <section class="mb-stack-lg">
+      <div class="flex items-baseline justify-between mb-stack-sm">
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Anunciar Novo Item</h2>
+        <span class="font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-1 rounded">VENDEDOR PRO</span>
+      </div>
+      
+      <div class="bg-surface-container border-2 border-outline-variant p-gutter rounded-lg">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+          
+          <!-- Photo Upload Placeholder com Preview -->
+          <div class="md:col-span-4">
+            <div id="uploadArea" class="aspect-square border-2 border-dashed border-outline flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group rounded-lg overflow-hidden">
+              <div id="previewContainer" class="preview-container hidden">
+                <img id="imagePreview" class="image-preview" alt="Preview">
+              </div>
+              <div id="uploadPlaceholder" class="flex flex-col items-center justify-center w-full h-full">
+                <span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:scale-110 transition-transform">add_a_photo</span>
+                <p class="font-label-caps text-label-caps text-on-surface-variant">SUBIR FOTO DO ITEM</p>
+                <p class="font-body-sm text-body-sm text-outline-variant mt-1 text-center px-4">JPEG ou PNG (Máx 5MB)</p>
+              </div>
+              <input type="file" id="imageInput" accept="image/jpeg,image/png" class="hidden">
+            </div>
+          </div>
+          
+          <!-- Item Details Form -->
+          <div class="md:col-span-8 flex flex-col gap-stack-sm">
+            <div class="group">
+              <label class="font-label-caps text-label-caps text-outline block mb-1">TÍTULO DO PRODUTO *</label>
+              <input id="produtoTitulo" class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-title-md text-title-md transition-colors placeholder:text-surface-variant" placeholder="Ex: Camisa Brasil 1994 Original" type="text"/>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-gutter">
+              <div>
+                <label class="font-label-caps text-label-caps text-outline block mb-1">PREÇO (R$) *</label>
+                <input id="produtoPreco" class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-title-md text-title-md transition-colors" placeholder="0,00" type="number" step="0.01"/>
+              </div>
+              <div>
+                <label class="font-label-caps text-label-caps text-outline block mb-1">CATEGORIA *</label>
+                <select id="produtoCategoria" class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-body-lg text-body-lg transition-colors appearance-none">
+                  <option value="camisas">Camisas Históricas</option>
+                  <option value="bones">Bonés</option>
+                  <option value="casacos">Casacos e Jaquetas</option>
+                  <option value="chuteiras">Chuteiras</option>
+                  <option value="bolas">Bolas</option>
+                  <option value="acessorios">Acessórios e Colecionáveis</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-gutter">
+              <div>
+                <label class="font-label-caps text-label-caps text-outline block mb-1">TAMANHO</label>
+                <input id="produtoTamanho" class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-body-lg transition-colors" placeholder="Ex: G, M, PP, 42, Único" type="text"/>
+              </div>
+              <div>
+                <label class="font-label-caps text-label-caps text-outline block mb-1">CONDIÇÃO</label>
+                <select id="produtoCondicao" class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-body-lg text-body-lg transition-colors">
+                  <option value="Novo">Novo com etiqueta</option>
+                  <option value="Excelente">Excelente (sem defeitos)</option>
+                  <option value="Muito Bom">Muito Bom (leves sinais)</option>
+                  <option value="Bom">Bom (sinais de uso)</option>
+                  <option value="Vintage">Vintage (preservado)</option>
+                </select>
+              </div>
+            </div>
+            
+            <div>
+              <label class="font-label-caps text-label-caps text-outline block mb-1">DESCRIÇÃO DO ITEM</label>
+              <textarea id="produtoDescricao" rows="3" class="w-full bg-transparent border-2 border-outline-variant rounded-lg p-2 focus:border-primary focus:ring-0 transition-colors" placeholder="Descreva o item, ano, história, detalhes importantes para o colecionador..."></textarea>
+            </div>
+            
+            <div class="flex items-center gap-4 mt-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input id="aceitaTroca" type="checkbox" class="w-5 h-5 accent-primary">
+                <span class="font-body-sm">Aceito troca por outros itens</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input id="entregaImediata" type="checkbox" class="w-5 h-5 accent-primary" checked>
+                <span class="font-body-sm">Envio imediato (24h)</span>
+              </label>
+            </div>
+            
+            <button id="publicarBtn" class="mt-4 bg-primary text-on-primary font-headline-lg-mobile text-headline-lg-mobile py-4 rounded-lg flex items-center justify-center gap-2 hover:border-b-2 hover:border-secondary transition-all active:translate-y-0.5 neobrutalist-push">
+              <span class="material-symbols-outlined">rocket_launch</span>
+              PUBLICAR ITEM
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Meus Itens (Itens Publicados pelo Usuário) -->
+    <section>
+      <div class="flex items-center justify-between mb-stack-sm border-b-2 border-primary-container pb-2">
+        <h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Meus Itens</h2>
+        <div class="flex gap-2">
+          <button id="filterTodosBtn" class="bg-primary text-on-primary px-3 py-1 rounded border-2 border-primary font-label-caps text-label-caps">TODOS</button>
+          <button id="filterAtivosBtn" class="text-on-surface-variant px-3 py-1 border-2 border-outline-variant rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-colors">ATIVOS</button>
+          <button id="filterVendidosBtn" class="text-on-surface-variant px-3 py-1 border-2 border-outline-variant rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-colors">VENDIDOS</button>
+        </div>
+      </div>
+      
+      <!-- Items List -->
+      <div id="meusItensList" class="space-y-4">
+        <!-- Os itens serão injetados via JavaScript -->
+      </div>
+      
+      <!-- Mensagem quando não há itens -->
+      <div id="noItemsMessage" class="hidden flex flex-col items-center justify-center py-10 text-center">
+        <span class="material-symbols-outlined text-surface-variant text-6xl mb-4">inventory</span>
+        <h3 class="font-headline-lg-mobile text-primary">Nenhum item publicado</h3>
+        <p class="text-on-surface-variant mt-2">Comece anunciando sua primeira relíquia!</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- BottomNavBar -->
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant flex justify-around items-center px-2 py-3">
+    <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all duration-100">
+      <span class="material-symbols-outlined">home</span>
+      <span class="font-label-caps text-label-caps mt-1">Home</span>
+    </a>
+    <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all duration-100">
+      <span class="material-symbols-outlined">search</span>
+      <span class="font-label-caps text-label-caps mt-1">Search</span>
+    </a>
+    <a href="publicaritens.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 transition-all duration-100">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+      <span class="font-label-caps text-label-caps mt-1">Sell</span>
+    </a>
+    <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all duration-100">
+      <span class="material-symbols-outlined">shopping_cart</span>
+      <span class="font-label-caps text-label-caps mt-1">Cart</span>
+    </a>
+    <a href="perfil.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all duration-100">
+      <span class="material-symbols-outlined">person</span>
+      <span class="font-label-caps text-label-caps mt-1">Profile</span>
+    </a>
+  </nav>
+
+  <script>
+    // Chave para salvar os itens publicados
+    const USER_ITEMS_KEY = 'mercado_copa_user_items';
+    let currentImageData = null;
+    let currentFilter = 'todos'; // todos, ativos, vendidos
+
+    // Função para mostrar toast
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast-message';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Carregar itens do usuário do localStorage
+    function loadUserItems() {
+      const saved = localStorage.getItem(USER_ITEMS_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+      // Itens de exemplo
+      return [
+        {
+          id: 101,
+          nome: "Camisa Brasil 1994 Original",
+          preco: 890,
+          categoria: "camisas",
+          tamanho: "G",
+          condicao: "Excelente",
+          descricao: "Camisa original da Copa de 1994, nunca utilizada. Com patches e etiquetas.",
+          aceitaTroca: true,
+          entregaImediata: true,
+          status: "ativo",
+          imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUrJNJKiGYJ8IZRYlb3EGdU7kpNlfq5RfbHZJJf6DrkHCutts30cqLNX7EcpLTcODsRSa5C4bqj1ADzmUDj8ZXSBAfkc_2XZwoUU7tjNmU1L9hPF6X6hh1fCSfGaU8iAKcnBfRZ7nfTwBTtTzri8oYDWOtzsjvtnwuFjV1-t3OleVPF9Lr79hbNVF59jrAfOWt2mXI0exTRKDmp9tMitagEgw_dUCLbWkRYPX4zZjzkTgq232XKyNrryw6rItEg7j1aCsBdeUmrYQ",
+          dataPublicacao: new Date().toISOString()
+        },
+        {
+          id: 102,
+          nome: "Jaqueta Corta-Vento Retro 90s",
+          preco: 450,
+          categoria: "casacos",
+          tamanho: "M",
+          condicao: "Muito Bom",
+          descricao: "Jaqueta vintage dos anos 90, estilo windbreaker. Cores azul marinho e branco.",
+          aceitaTroca: false,
+          entregaImediata: true,
+          status: "vendido",
+          imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC62dQ5kP604-1pftSLJOhRtSspWov-O6EaxXz7gmVa-Xt3cFc3jXnITIocjVpoLRcUad84ghHUDUv434r0EeAeVADgGU-E8AEhxoQvX7Du8xvjMCmCBqFIQPTci0VG6xSMjd1fplQZiK0z27yV_AG59jfofLElbAyZXKEm6CftLA9taCbpMxAjZPLApOwnm4WqhvebjC65dDiyrCRSIifbv1XtEkbam1zNUi-I3cew-nxBzLQUfpy9z2dow1r79OCpkt0VTanPgF0",
+          dataPublicacao: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+          dataVenda: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString()
+        },
+        {
+          id: 103,
+          nome: "Bola de Couro Réplica 1970",
+          preco: 320,
+          categoria: "bolas",
+          tamanho: "Único",
+          condicao: "Novo",
+          descricao: "Réplica da bola oficial da Copa de 1970. Couro sintético de alta qualidade.",
+          aceitaTroca: true,
+          entregaImediata: false,
+          status: "ativo",
+          imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCZzPNeJ-mxS0dWNKmFGArqUotDB1wRRxDgEZpf9-iS5Ml-7d42A4zQPI0xe0VWrOY47OzBdaC9S8GlYC3C2xtzNayC1pJ-B3XOu1Qu5DMrTFGzJluJIG4keRWtODMAzu9VFa4NXwFJxt99LC_HBWCeCfxJpKTGW1coiNmTU4jlxMdM034Jv-znAbC5Gwi3uv5SrteVEfpKB46jjMZaqeMGI1DxdqaKiMpvYptaAQoha0u1LjAJeTof2fxD9Vb7UzLS80DeBbJHg2Y",
+          dataPublicacao: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString()
+        }
+      ];
+    }
+
+    // Salvar itens do usuário
+    function saveUserItems(items) {
+      localStorage.setItem(USER_ITEMS_KEY, JSON.stringify(items));
+    }
+
+    // Adicionar novo item
+    function addNewItem(item) {
+      const items = loadUserItems();
+      items.unshift(item); // Adicionar no início
+      saveUserItems(items);
+      renderMyItems();
+    }
+
+    // Remover item
+    function deleteItem(itemId) {
+      const items = loadUserItems();
+      const newItems = items.filter(item => item.id !== itemId);
+      saveUserItems(newItems);
+      renderMyItems();
+      showToast('🗑️ Item removido com sucesso!');
+    }
+
+    // Marcar como vendido
+    function markAsSold(itemId) {
+      const items = loadUserItems();
+      const item = items.find(i => i.id === itemId);
+      if (item) {
+        item.status = 'vendido';
+        item.dataVenda = new Date().toISOString();
+        saveUserItems(items);
+        renderMyItems();
+        showToast('🏆 Item marcado como vendido! Parabéns pela venda!');
+      }
+    }
+
+    // Reativar item
+    function reactivateItem(itemId) {
+      const items = loadUserItems();
+      const item = items.find(i => i.id === itemId);
+      if (item) {
+        item.status = 'ativo';
+        delete item.dataVenda;
+        saveUserItems(items);
+        renderMyItems();
+        showToast('🔄 Item reativado e disponível para venda!');
+      }
+    }
+
+    // Renderizar meus itens
+    function renderMyItems() {
+      const items = loadUserItems();
+      const container = document.getElementById('meusItensList');
+      const noItemsMessage = document.getElementById('noItemsMessage');
+      
+      let filteredItems = items;
+      if (currentFilter === 'ativos') {
+        filteredItems = items.filter(item => item.status === 'ativo');
+      } else if (currentFilter === 'vendidos') {
+        filteredItems = items.filter(item => item.status === 'vendido');
+      }
+      
+      if (filteredItems.length === 0) {
+        container.innerHTML = '';
+        container.classList.add('hidden');
+        noItemsMessage.classList.remove('hidden');
+        return;
+      }
+      
+      container.classList.remove('hidden');
+      noItemsMessage.classList.add('hidden');
+      
+      const categoriaNome = {
+        'camisas': 'Camisas',
+        'bones': 'Bonés',
+        'casacos': 'Casacos',
+        'chuteiras': 'Chuteiras',
+        'bolas': 'Bolas',
+        'acessorios': 'Acessórios'
+      };
+      
+      container.innerHTML = filteredItems.map(item => `
+        <div class="group relative bg-surface border-2 border-outline-variant p-4 flex gap-4 items-center transition-all hover:bg-surface-container-low ${item.status === 'vendido' ? 'opacity-70 grayscale-[0.5]' : ''}">
+          <div class="w-20 h-20 bg-surface-container-highest flex-shrink-0 border border-outline-variant overflow-hidden rounded">
+            <img src="${item.imagem}" class="w-full h-full object-cover" alt="${item.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Sem+Imagem'">
+          </div>
+          <div class="flex-grow">
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-title-md text-title-md leading-tight">${item.nome}</h3>
+                <p class="font-label-caps text-label-caps text-outline">${categoriaNome[item.categoria] || item.categoria} • SKU: MDC-${item.id}</p>
+              </div>
+              <span class="${item.status === 'ativo' ? 'bg-primary-container text-on-primary-container' : 'bg-secondary text-on-secondary'} font-label-caps text-[10px] px-2 py-1 rounded-full flex items-center gap-1">
+                <span class="material-symbols-outlined !text-[12px]">${item.status === 'ativo' ? 'check_circle' : 'shopping_bag'}</span>
+                ${item.status === 'ativo' ? 'ATIVO' : 'VENDIDO'}
+              </span>
+            </div>
+            <div class="flex items-center gap-4 mt-2">
+              <span class="font-headline-lg text-headline-lg text-primary">R$ ${item.preco.toFixed(2).replace('.', ',')}</span>
+              <span class="font-body-sm text-body-sm text-outline">Tamanho: ${item.tamanho}</span>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            ${item.status === 'ativo' ? `
+              <button onclick="markAsSold(${item.id})" class="p-2 border-2 border-outline-variant hover:bg-secondary-container hover:text-on-secondary-container hover:border-secondary-container transition-all rounded" title="Marcar como vendido">
+                <span class="material-symbols-outlined">sell</span>
+              </button>
+              <button onclick="deleteItem(${item.id})" class="p-2 border-2 border-outline-variant hover:bg-error-container hover:text-on-error-container hover:border-error-container transition-all rounded" title="Excluir item">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            ` : `
+              <button onclick="reactivateItem(${item.id})" class="p-2 border-2 border-outline-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary-container transition-all rounded" title="Reativar item">
+                <span class="material-symbols-outlined">restart_alt</span>
+              </button>
+              <button onclick="deleteItem(${item.id})" class="p-2 border-2 border-outline-variant hover:bg-error-container hover:text-on-error-container hover:border-error-container transition-all rounded" title="Excluir item">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            `}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Upload de imagem
+    const uploadArea = document.getElementById('uploadArea');
+    const imageInput = document.getElementById('imageInput');
+    const previewContainer = document.getElementById('previewContainer');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const imagePreview = document.getElementById('imagePreview');
+
+    uploadArea.addEventListener('click', () => {
+      imageInput.click();
+    });
+
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          currentImageData = event.target.result;
+          imagePreview.src = currentImageData;
+          previewContainer.classList.remove('hidden');
+          uploadPlaceholder.classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+      } else {
+        showToast('⚠️ Por favor, selecione um arquivo JPG ou PNG válido.');
+      }
+    });
+
+    // Publicar item
+    function publicarItem() {
+      const titulo = document.getElementById('produtoTitulo').value.trim();
+      const preco = parseFloat(document.getElementById('produtoPreco').value);
+      const categoria = document.getElementById('produtoCategoria').value;
+      const tamanho = document.getElementById('produtoTamanho').value.trim() || 'Único';
+      const condicao = document.getElementById('produtoCondicao').value;
+      const descricao = document.getElementById('produtoDescricao').value.trim();
+      const aceitaTroca = document.getElementById('aceitaTroca').checked;
+      const entregaImediata = document.getElementById('entregaImediata').checked;
+      
+      // Validações
+      if (!titulo) {
+        showToast('⚠️ Por favor, preencha o título do produto.');
+        return;
+      }
+      if (!preco || preco <= 0) {
+        showToast('⚠️ Por favor, preencha um preço válido.');
+        return;
+      }
+      if (!currentImageData) {
+        showToast('⚠️ Por favor, adicione uma foto do item.');
+        return;
+      }
+      
+      // Criar novo item
+      const novoItem = {
+        id: Date.now(),
+        nome: titulo,
+        preco: preco,
+        categoria: categoria,
+        tamanho: tamanho,
+        condicao: condicao,
+        descricao: descricao || "Item em excelente estado de conservação. Peça original e autêntica.",
+        aceitaTroca: aceitaTroca,
+        entregaImediata: entregaImediata,
+        status: 'ativo',
+        imagem: currentImageData,
+        dataPublicacao: new Date().toISOString()
+      };
+      
+      addNewItem(novoItem);
+      
+      // Limpar formulário
+      document.getElementById('produtoTitulo').value = '';
+      document.getElementById('produtoPreco').value = '';
+      document.getElementById('produtoTamanho').value = '';
+      document.getElementById('produtoDescricao').value = '';
+      document.getElementById('aceitaTroca').checked = false;
+      document.getElementById('entregaImediata').checked = true;
+      document.getElementById('produtoCategoria').value = 'camisas';
+      document.getElementById('produtoCondicao').value = 'Excelente';
+      
+      // Limpar imagem
+      currentImageData = null;
+      previewContainer.classList.add('hidden');
+      uploadPlaceholder.classList.remove('hidden');
+      imagePreview.src = '';
+      imageInput.value = '';
+      
+      showToast('✅ Item publicado com sucesso! Agora ele aparece na vitrine.');
+      
+      // Rolar para a seção de meus itens
+      document.getElementById('meusItensList').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Event Listeners
+    document.getElementById('publicarBtn').addEventListener('click', publicarItem);
+    document.getElementById('filterTodosBtn').addEventListener('click', () => {
+      currentFilter = 'todos';
+      document.getElementById('filterTodosBtn').classList.add('bg-primary', 'text-on-primary');
+      document.getElementById('filterTodosBtn').classList.remove('text-on-surface-variant', 'border-outline-variant');
+      document.getElementById('filterAtivosBtn').classList.remove('bg-primary', 'text-on-primary');
+      document.getElementById('filterAtivosBtn').classList.add('text-on-surface-variant', 'border-outline-variant');
+      document.getElementById('filterVendidosBtn').classList.remove('bg-primary', 'text-on-primary');
+      document.getElementById('filterVendidosBtn').classList.add('text-on-surface-variant', 'border-outline-variant');
+      renderMyItems();
+    });
+    document.getElementById('filterAtivosBtn').addEventListener('click', () => {
+      currentFilter = 'ativos';
+      document.getElementById('filterAtivosBtn').classList.add('bg-primary', 'text-on-primary');
+      document.getElementById('filterAtivosBtn').classList.remove('text-on-surface-variant', 'border-outline-variant');
+      document.getElementById('filterTodosBtn').classList.remove('bg-primary', 'text-on-primary');
+      document.getElementById('filterTodosBtn').classList.add('text-on-surface-variant', 'border-outline-variant');
+      document.getElementById('filterVendidosBtn').classList.remove('bg-primary', 'text-on-primary');
+      document.getElementById('filterVendidosBtn').classList.add('text-on-surface-variant', 'border-outline-variant');
+      renderMyItems();
+    });
+    document.getElementById('filterVendidosBtn').addEventListener('click', () => {
+      currentFilter = 'vendidos';
+      document.getElementById('filterVendidosBtn').classList.add('bg-primary', 'text-on-primary');
+      document.getElementById('filterVendidosBtn').classList.remove('text-on-surface-variant', 'border-outline-variant');
+      document.getElementById('filterTodosBtn').classList.remove('bg-primary', 'text-on-primary');
+      document.getElementById('filterTodosBtn').classList.add('text-on-surface-variant', 'border-outline-variant');
+      document.getElementById('filterAtivosBtn').classList.remove('bg-primary', 'text-on-primary');
+      document.getElementById('filterAtivosBtn').classList.add('text-on-surface-variant', 'border-outline-variant');
+      renderMyItems();
+    });
+    
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', () => {
+      renderMyItems();
+    });
+    
+    // Expor funções globalmente
+    window.deleteItem = deleteItem;
+    window.markAsSold = markAsSold;
+    window.reactivateItem = reactivateItem;
+  </script>
+</body>
+</html>

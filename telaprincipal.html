@@ -4,14 +4,190 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Mercado da Copa | Home</title>
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet"/>
-  <!-- Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .tactile-active:active { transform: translate(2px, 2px); box-shadow: none; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+    .product-card { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    
+    /* Menu Hamburguer - Sidebar */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -320px;
+        width: 320px;
+        height: 100%;
+        background: #f8f9fa;
+        border-right: 2px solid #003215;
+        z-index: 1000;
+        transition: left 0.3s ease-out;
+        overflow-y: auto;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+    }
+    .sidebar.active {
+        left: 0;
+    }
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+        display: none;
+    }
+    .sidebar-overlay.active {
+        display: block;
+    }
+    .sidebar-header {
+        background: #003215;
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .sidebar-header h2 {
+        font-family: 'Anton', sans-serif;
+        font-size: 24px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin: 0;
+    }
+    .close-sidebar {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        transition: background 0.2s;
+    }
+    .close-sidebar:hover {
+        background: rgba(255,255,255,0.2);
+    }
+    .sidebar-section {
+        padding: 8px 0;
+    }
+    .sidebar-section-title {
+        padding: 12px 20px 8px 20px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #705d00;
+        font-weight: 600;
+    }
+    .sidebar-item {
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: 'Hanken Grotesk', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        color: #191c1d;
+    }
+    .sidebar-item:hover {
+        background: #edeeef;
+        padding-left: 28px;
+    }
+    .sidebar-item .material-symbols-outlined {
+        font-size: 24px;
+        color: #003215;
+    }
+    .sidebar-divider {
+        height: 2px;
+        background: #c0c9be;
+        margin: 8px 0;
+    }
+    
+    /* Modal de Notificações */
+    .notification-modal {
+        position: fixed;
+        top: 70px;
+        right: 20px;
+        width: 350px;
+        max-width: calc(100vw - 40px);
+        background: #f8f9fa;
+        border: 2px solid #003215;
+        border-radius: 16px;
+        box-shadow: 8px 8px 0px 0px rgba(0,50,21,0.15);
+        z-index: 1000;
+        display: none;
+        overflow: hidden;
+    }
+    .notification-modal.active {
+        display: block;
+        animation: slideInRight 0.3s ease-out;
+    }
+    @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(50px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    .notification-header {
+        background: #003215;
+        color: white;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+    }
+    .notification-item {
+        padding: 12px 16px;
+        border-bottom: 1px solid #c0c9be;
+        cursor: pointer;
+        transition: background 0.2s;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    .notification-item:hover {
+        background: #edeeef;
+    }
+    .notification-item:last-child {
+        border-bottom: none;
+    }
+    .toast-message {
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #003215;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        z-index: 1001;
+        animation: fadeInOut 3s ease-in-out;
+        box-shadow: 4px 4px 0px 0px #fcd400;
+        border: 1px solid #fcd400;
+        white-space: nowrap;
+    }
+    @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+  </style>
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -41,32 +217,154 @@
       }
     }
   </script>
-  <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .tactile-active:active { transform: translate(2px, 2px); box-shadow: none; }
-    .tactile-shadow { box-shadow: 0px 0px 0px 0px rgba(0,0,0,1); transition: all 0.1s; }
-    .tactile-shadow:active { box-shadow: -2px -2px 0px 0px rgba(0,0,0,1); }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    body { min-height: max(884px, 100dvh); }
-    .product-card { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-  </style>
 </head>
 <body class="bg-background text-on-background min-h-screen pb-24">
 
+  <!-- Sidebar Menu Hamburguer -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+  <div id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <h2>MERCADO DA COPA</h2>
+      <button id="closeSidebarBtn" class="close-sidebar">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    
+    <!-- CATEGORIAS DE PRODUTOS (sem os textos TSHIRT e HOODIE) -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">CATEGORIAS</div>
+      <div class="sidebar-item" data-categoria="todos" onclick="filterByCategory('todos')">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span>Todos os Produtos</span>
+      </div>
+      <div class="sidebar-item" data-categoria="camisas" onclick="filterByCategory('camisas')">
+        <span class="material-symbols-outlined">sports</span>
+        <span>Camisas</span>
+      </div>
+      <div class="sidebar-item" data-categoria="casacos" onclick="filterByCategory('casacos')">
+        <span class="material-symbols-outlined"></span>
+        <span>Casacos e Jaquetas</span>
+      </div>
+      <div class="sidebar-item" data-categoria="bones" onclick="filterByCategory('bones')">
+        <span class="material-symbols-outlined">style</span>
+        <span>Bonés</span>
+      </div>
+      <div class="sidebar-item" data-categoria="chuteiras" onclick="filterByCategory('chuteiras')">
+        <span class="material-symbols-outlined">sports_soccer</span>
+        <span>Chuteiras</span>
+      </div>
+      <div class="sidebar-item" data-categoria="bolas" onclick="filterByCategory('bolas')">
+        <span class="material-symbols-outlined">circle</span>
+        <span>Bolas</span>
+      </div>
+      <div class="sidebar-item" data-categoria="acessorios" onclick="filterByCategory('acessorios')">
+        <span class="material-symbols-outlined">watch</span>
+        <span>Acessórios</span>
+      </div>
+    </div>
+    
+    <div class="sidebar-divider"></div>
+    
+    <!-- NAVEGAÇÃO DO SITE -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">NAVEGAÇÃO</div>
+      <div class="sidebar-item" onclick="navigateTo('telaprincipal.html')">
+        <span class="material-symbols-outlined">home</span>
+        <span>Início</span>
+      </div>
+      <div class="sidebar-item" onclick="navigateTo('carrinho.html')">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span>Meu Carrinho</span>
+      </div>
+      <div class="sidebar-item" onclick="navigateTo('perfil.html')">
+        <span class="material-symbols-outlined">person</span>
+        <span>Meu Perfil</span>
+      </div>
+      <div class="sidebar-item" onclick="navigateTo('historico.html')">
+        <span class="material-symbols-outlined">history</span>
+        <span>Histórico de Pedidos</span>
+      </div>
+      <div class="sidebar-item" onclick="navigateTo('configuracoes.html')">
+        <span class="material-symbols-outlined">settings</span>
+        <span>Configurações</span>
+      </div>
+      <div class="sidebar-item" onclick="navigateTo('suporte.html')">
+        <span class="material-symbols-outlined">support_agent</span>
+        <span>Suporte ao Cliente</span>
+      </div>
+      <div class="sidebar-item" onclick="navigateTo('publicaritens.html')">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span>Vender Item</span>
+      </div>
+    </div>
+    
+    <div class="sidebar-divider"></div>
+    
+    <!-- ÁREA DO USUÁRIO -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-title">CONTA</div>
+      <div class="sidebar-item" onclick="navigateTo('acesso.html')">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Sair da Conta</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Notificações -->
+  <div id="notificationModal" class="notification-modal">
+    <div class="notification-header">
+      <span class="flex items-center gap-2"><span class="material-symbols-outlined">notifications</span> Notificações</span>
+      <button id="closeNotificationBtn" class="hover:opacity-70">&times;</button>
+    </div>
+    <div id="notificationList">
+      <div class="notification-item" onclick="showToast('Nova peça: Camisa Brasil 1994 - Edição especial')">
+        <span class="material-symbols-outlined text-secondary-container">inventory_2</span>
+        <div>
+          <p class="font-body-sm font-bold">Nova peça disponível!</p>
+          <p class="font-body-sm text-on-surface-variant">Camisa Brasil 1994 - Edição especial acabou de chegar</p>
+          <span class="font-label-caps text-[10px] text-outline">Há 2 horas</span>
+        </div>
+      </div>
+      <div class="notification-item" onclick="showToast('Promoção: 10% OFF em todos os bonés vintage')">
+        <span class="material-symbols-outlined text-secondary-container">local_offer</span>
+        <div>
+          <p class="font-body-sm font-bold">Promoção relâmpago!</p>
+          <p class="font-body-sm text-on-surface-variant">10% OFF em todos os bonés vintage por 24h</p>
+          <span class="font-label-caps text-[10px] text-outline">Há 1 dia</span>
+        </div>
+      </div>
+      <div class="notification-item" onclick="showToast('Seu item foi verificado e recebeu o selo Winner\'s Circle')">
+        <span class="material-symbols-outlined text-secondary-container">verified</span>
+        <div>
+          <p class="font-body-sm font-bold">Seu item foi verificado!</p>
+          <p class="font-body-sm text-on-surface-variant">O selo Winner's Circle foi adicionado ao seu anúncio</p>
+          <span class="font-label-caps text-[10px] text-outline">Há 2 dias</span>
+        </div>
+      </div>
+      <div class="notification-item" onclick="showToast('Você recebeu uma proposta de troca para um dos seus itens')">
+        <span class="material-symbols-outlined text-secondary-container">swap_horiz</span>
+        <div>
+          <p class="font-body-sm font-bold">Proposta de troca recebida</p>
+          <p class="font-body-sm text-on-surface-variant">Alguém quer trocar um item com você</p>
+          <span class="font-label-caps text-[10px] text-outline">Há 3 dias</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- TopAppBar -->
-  <header class="bg-surface dark:bg-inverse-surface w-full top-0 sticky z-50 border-b-2 border-outline-variant dark:border-outline">
+  <header class="bg-surface w-full top-0 sticky z-50 border-b-2 border-outline-variant">
     <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
       <div class="flex items-center gap-4">
-        <button class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
+        <button id="menuBtn" class="text-primary hover:opacity-80 transition-opacity">
           <span class="material-symbols-outlined">menu</span>
         </button>
-        <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim tracking-tight">Mercado da Copa</h1>
+        <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Mercado da Copa</h1>
       </div>
       <div class="flex items-center gap-4">
-        <button class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
+        <button id="notificationsBtn" class="text-primary hover:opacity-80 transition-opacity relative">
           <span class="material-symbols-outlined">notifications</span>
+          <span class="absolute -top-1 -right-1 w-3 h-3 bg-secondary-container rounded-full animate-pulse"></span>
         </button>
       </div>
     </div>
@@ -101,9 +399,7 @@
     </div>
 
     <!-- Product Grid -->
-    <section id="productsGrid" class="px-container-margin pb-stack-lg grid grid-cols-2 gap-gutter md:grid-cols-4">
-      <!-- Os produtos serão injetados via JavaScript -->
-    </section>
+    <section id="productsGrid" class="px-container-margin pb-stack-lg grid grid-cols-2 gap-gutter md:grid-cols-4"></section>
 
     <!-- Mensagem quando não encontrar produtos -->
     <div id="noResultsMessage" class="hidden px-container-margin py-10 text-center">
@@ -132,25 +428,25 @@
   </button>
 
   <!-- BottomNavBar -->
-  <nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-inverse-surface border-t-2 border-outline-variant dark:border-outline">
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
     <div class="flex justify-around items-center w-full px-2 py-3">
       <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 transition-all duration-100" href="telaprincipal.html">
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
         <span class="font-label-caps text-label-caps mt-1">Home</span>
       </a>
-      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="telaprincipal.html">
+      <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5" href="telaprincipal.html">
         <span class="material-symbols-outlined">search</span>
         <span class="font-label-caps text-label-caps mt-1">Search</span>
       </a>
-      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="publicaritens.html">
+      <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5" href="publicaritens.html">
         <span class="material-symbols-outlined">add_circle</span>
         <span class="font-label-caps text-label-caps mt-1">Sell</span>
       </a>
-      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="carrinho.html">
+      <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5" href="carrinho.html">
         <span class="material-symbols-outlined">shopping_cart</span>
         <span class="font-label-caps text-label-caps mt-1">Cart</span>
       </a>
-      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="perfil.html">
+      <a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high active:translate-x-0.5 active:translate-y-0.5" href="perfil.html">
         <span class="material-symbols-outlined">person</span>
         <span class="font-label-caps text-label-caps mt-1">Profile</span>
       </a>
@@ -158,165 +454,66 @@
   </nav>
 
   <script>
-    // Banco de dados de produtos com imagens corretas para cada produto
+    // Função para mostrar toast
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast-message';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Funções do Sidebar
+    function openSidebar() {
+      document.getElementById('sidebar').classList.add('active');
+      document.getElementById('sidebarOverlay').classList.add('active');
+    }
+
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('active');
+      document.getElementById('sidebarOverlay').classList.remove('active');
+    }
+
+    function navigateTo(page) {
+      closeSidebar();
+      window.location.href = page;
+    }
+
+    function filterByCategory(categoria) {
+      closeSidebar();
+      applyCategoryFilter(categoria);
+    }
+
+    // Banco de produtos completo
     const produtos = [
-      { 
-        id: 1, 
-        nome: "Camiseta Brasil 1970 - Retrô Pelé", 
-        categoria: "camisas", 
-        preco: 750, 
-        tamanho: "G", 
-        estado: "10/10", 
-        tipo: "DEADSTOCK", 
-        aceitaTroca: true, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUrJNJKiGYJ8IZRYlb3EGdU7kpNlfq5RfbHZJJf6DrkHCutts30cqLNX7EcpLTcODsRSa5C4bqj1ADzmUDj8ZXSBAfkc_2XZwoUU7tjNmU1L9hPF6X6hh1fCSfGaU8iAKcnBfRZ7nfTwBTtTzri8oYDWOtzsjvtnwuFjV1-t3OleVPF9Lr79hbNVF59jrAfOWt2mXI0exTRKDmp9tMitagEgw_dUCLbWkRYPX4zZjzkTgq232XKyNrryw6rItEg7j1aCsBdeUmrYQ",
-        badge: "DEADSTOCK",
-        badgeColor: "bg-secondary-container text-on-secondary-container"
-      },
-      { 
-        id: 2, 
-        nome: "Bola de Couro 1962", 
-        categoria: "bolas", 
-        preco: 420, 
-        tamanho: "Único", 
-        estado: "Colecionador", 
-        tipo: "MATCH READY", 
-        aceitaTroca: false, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCZzPNeJ-mxS0dWNKmFGArqUotDB1wRRxDgEZpf9-iS5Ml-7d42A4zQPI0xe0VWrOY47OzBdaC9S8GlYC3C2xtzNayC1pJ-B3XOu1Qu5DMrTFGzJluJIG4keRWtODMAzu9VFa4NXwFJxt99LC_HBWCeCfxJpKTGW1coiNmTU4jlxMdM034Jv-znAbC5Gwi3uv5SrteVEfpKB46jjMZaqeMGI1DxdqaKiMpvYptaAQoha0u1LjAJeTof2fxD9Vb7UzLS80DeBbJHg2Y",
-        badge: "MATCH READY",
-        badgeColor: "bg-primary-container text-on-primary-container"
-      },
-      { 
-        id: 3, 
-        nome: "Casaco Treino Seleção 94", 
-        categoria: "casacos", 
-        preco: 300, 
-        tamanho: "M", 
-        estado: "Raro", 
-        tipo: "FINAL WHISTLE", 
-        aceitaTroca: true, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC62dQ5kP604-1pftSLJOhRtSspWov-O6EaxXz7gmVa-Xt3cFc3jXnITIocjVpoLRcUad84ghHUDUv434r0EeAeVADgGU-E8AEhxoQvX7Du8xvjMCmCBqFIQPTci0VG6xSMjd1fplQZiK0z27yV_AG59jfofLElbAyZXKEm6CftLA9taCbpMxAjZPLApOwnm4WqhvebjC65dDiyrCRSIifbv1XtEkbam1zNUi-I3cew-nxBzLQUfpy9z2dow1r79OCpkt0VTanPgF0",
-        badge: "FINAL WHISTLE",
-        badgeColor: "bg-tertiary-container text-on-tertiary-container"
-      },
-      { 
-        id: 4, 
-        nome: "Boné Brasil '58 - Ed. Limitada", 
-        categoria: "bones", 
-        preco: 150, 
-        tamanho: "Ajustável", 
-        estado: "Novo", 
-        tipo: "EXCLUSIVO", 
-        aceitaTroca: false, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCvffpDh3VDKVUDkY99jRlrDcfpmHwYXqRWa5wh1ohYdyfgp44s_6rpUeEvoWBlgdyG-HzHvuthAv5ohQ7w-jjXnxpfY61eEE2-8V2KTJrrdD9dlV7a8lqgIm4yc1jofimRNnHcqCvVF2ZQRVypNrrsdp3detv9VRbfMgmrgoPkRyGxkQYov42P3hHcndMf6Jn7yK8txEsQBDV8QRhZ6ribSsGIHqjp2sgZcXkDhK2DDe-v27O1cY1Fj8M6NZg32Rx3qOpp6ZQ4w10",
-        badge: "EXCLUSIVO",
-        badgeColor: "bg-secondary-container text-on-secondary-container"
-      },
-      { 
-        id: 5, 
-        nome: " Camiseta Brasil 1998 Home Retro", 
-        categoria: "camisas", 
-        preco: 349, 
-        tamanho: "G", 
-        estado: "Deadstock", 
-        tipo: "MATCH READY", 
-        aceitaTroca: true, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw",
-        badge: "MATCH READY",
-        badgeColor: "bg-primary-container text-on-primary-container"
-      },
-      { 
-        id: 6, 
-        nome: "Agasalho Argentina '94", 
-        categoria: "casacos", 
-        preco: 520, 
-        tamanho: "M", 
-        estado: "Rare", 
-        tipo: "FINAL WHISTLE", 
-        aceitaTroca: true, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0",
-        badge: "FINAL WHISTLE",
-        badgeColor: "bg-tertiary-container text-on-tertiary-container"
-      },
-      { 
-        id: 7, 
-        nome: "Boné USA '94 Corduroy", 
-        categoria: "bones", 
-        preco: 120, 
-        tamanho: "Único", 
-        estado: "Authentic", 
-        tipo: "WINNER'S CIRCLE", 
-        aceitaTroca: true, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8",
-        badge: "WINNER'S CIRCLE",
-        badgeColor: "bg-primary text-on-primary"
-      },
-      { 
-        id: 8, 
-        nome: "Chuteira Mizuno Morelia 90", 
-        categoria: "chuteiras", 
-        preco: 899, 
-        tamanho: "42", 
-        estado: "Excelente", 
-        tipo: "RARIDADE", 
-        aceitaTroca: false, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8Rw9OWV2WHiwbXVL9IhFfmXoJ__7kT3BLvwPM8kL1PJesmoj9k_WBN_c1MnVX0O52_jnthbmnQJreH4cBz0cED6SgS_vFwCmy969Ddld72kcRYbnM8g484kAMW-yksetd7XSo8bm4q3kWo5zBMQPRjvRqWran758FAPV-VdGHEuyDlhLyZMttOu5tTeRzaQxJ48AUqpJnDF17bivKuSlKWoSHprslQATEyA4vkrOz8C18Br7DgeKNwwW9d7JM74TzEwqTsfhlFXs",
-        badge: "RARIDADE",
-        badgeColor: "bg-secondary-container text-on-secondary-container"
-      },
-      { 
-        id: 9, 
-        nome: "Cachecol Seleção 1982", 
-        categoria: "acessorios", 
-        preco: 89, 
-        tamanho: "Único", 
-        estado: "Vintage", 
-        tipo: "COLEÇÃO", 
-        aceitaTroca: true, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuAboAr0cZsWEcCy9RT32mqYjnodFsJfdr2iw8LRpukqsH5cRT8eUJhqWbRyo6PVZQtZwF2a1iuWOTBkgdcMKYy8GebyGLKjNlEfjhA707HPhavQlTQgTr-PZ_gRti2U3VYMLooRfwvWaaApgI8pfJoum3RThH1RWwPwWlI62f9EExFmRNDpvitajNC4eC1VYixwo5MYArWW4WmtnBleXVoiTPzrThOIN3DEFGqM0vKvKG-iU36e_D0o_gIaMuek1yPiiqyxmucJl0U",
-        badge: "COLEÇÃO",
-        badgeColor: "bg-primary-fixed text-primary"
-      },
-      { 
-        id: 10, 
-        nome: "Jaqueta Itália 90", 
-        categoria: "casacos", 
-        preco: 899, 
-        tamanho: "XL", 
-        estado: "Excelente", 
-        tipo: "ARCHIVE", 
-        aceitaTroca: true, 
-        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU",
-        badge: "ARCHIVE",
-        badgeColor: "bg-primary-container text-on-primary-container"
-      }
+      { id: 1, nome: "Brasil 1970 - Retrô Pelé", categoria: "camisas", preco: 750, tamanho: "G", estado: "10/10", tipo: "DEADSTOCK", aceitaTroca: true, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUrJNJKiGYJ8IZRYlb3EGdU7kpNlfq5RfbHZJJf6DrkHCutts30cqLNX7EcpLTcODsRSa5C4bqj1ADzmUDj8ZXSBAfkc_2XZwoUU7tjNmU1L9hPF6X6hh1fCSfGaU8iAKcnBfRZ7nfTwBTtTzri8oYDWOtzsjvtnwuFjV1-t3OleVPF9Lr79hbNVF59jrAfOWt2mXI0exTRKDmp9tMitagEgw_dUCLbWkRYPX4zZjzkTgq232XKyNrryw6rItEg7j1aCsBdeUmrYQ", badge: "DEADSTOCK", badgeColor: "bg-secondary-container text-on-secondary-container" },
+      { id: 2, nome: "Bola de Couro 1962", categoria: "bolas", preco: 420, tamanho: "Único", estado: "Colecionador", tipo: "MATCH READY", aceitaTroca: false, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCZzPNeJ-mxS0dWNKmFGArqUotDB1wRRxDgEZpf9-iS5Ml-7d42A4zQPI0xe0VWrOY47OzBdaC9S8GlYC3C2xtzNayC1pJ-B3XOu1Qu5DMrTFGzJluJIG4keRWtODMAzu9VFa4NXwFJxt99LC_HBWCeCfxJpKTGW1coiNmTU4jlxMdM034Jv-znAbC5Gwi3uv5SrteVEfpKB46jjMZaqeMGI1DxdqaKiMpvYptaAQoha0u1LjAJeTof2fxD9Vb7UzLS80DeBbJHg2Y", badge: "MATCH READY", badgeColor: "bg-primary-container text-on-primary-container" },
+      { id: 3, nome: "Casaco Treino Seleção 94", categoria: "casacos", preco: 300, tamanho: "M", estado: "Raro", tipo: "FINAL WHISTLE", aceitaTroca: true, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC62dQ5kP604-1pftSLJOhRtSspWov-O6EaxXz7gmVa-Xt3cFc3jXnITIocjVpoLRcUad84ghHUDUv434r0EeAeVADgGU-E8AEhxoQvX7Du8xvjMCmCBqFIQPTci0VG6xSMjd1fplQZiK0z27yV_AG59jfofLElbAyZXKEm6CftLA9taCbpMxAjZPLApOwnm4WqhvebjC65dDiyrCRSIifbv1XtEkbam1zNUi-I3cew-nxBzLQUfpy9z2dow1r79OCpkt0VTanPgF0", badge: "FINAL WHISTLE", badgeColor: "bg-tertiary-container text-on-tertiary-container" },
+      { id: 4, nome: "Boné Brasil '58 - Ed. Limitada", categoria: "bones", preco: 150, tamanho: "Ajustável", estado: "Novo", tipo: "EXCLUSIVO", aceitaTroca: false, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCvffpDh3VDKVUDkY99jRlrDcfpmHwYXqRWa5wh1ohYdyfgp44s_6rpUeEvoWBlgdyG-HzHvuthAv5ohQ7w-jjXnxpfY61eEE2-8V2KTJrrdD9dlV7a8lqgIm4yc1jofimRNnHcqCvVF2ZQRVypNrrsdp3detv9VRbfMgmrgoPkRyGxkQYov42P3hHcndMf6Jn7yK8txEsQBDV8QRhZ6ribSsGIHqjp2sgZcXkDhK2DDe-v27O1cY1Fj8M6NZg32Rx3qOpp6ZQ4w10", badge: "EXCLUSIVO", badgeColor: "bg-secondary-container text-on-secondary-container" },
+      { id: 5, nome: "Brasil 1998 Home Retro", categoria: "camisas", preco: 349, tamanho: "G", estado: "Deadstock", tipo: "MATCH READY", aceitaTroca: true, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw", badge: "MATCH READY", badgeColor: "bg-primary-container text-on-primary-container" },
+      { id: 6, nome: "Agasalho Argentina '94", categoria: "casacos", preco: 520, tamanho: "M", estado: "Rare", tipo: "FINAL WHISTLE", aceitaTroca: true, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0", badge: "FINAL WHISTLE", badgeColor: "bg-tertiary-container text-on-tertiary-container" },
+      { id: 7, nome: "Boné USA '94 Corduroy", categoria: "bones", preco: 120, tamanho: "Único", estado: "Authentic", tipo: "WINNER'S CIRCLE", aceitaTroca: true, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8", badge: "WINNER'S CIRCLE", badgeColor: "bg-primary text-on-primary" },
+      { id: 8, nome: "Chuteira Mizuno Morelia 90", categoria: "chuteiras", preco: 899, tamanho: "42", estado: "Excelente", tipo: "RARIDADE", aceitaTroca: false, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8Rw9OWV2WHiwbXVL9IhFfmXoJ__7kT3BLvwPM8kL1PJesmoj9k_WBN_c1MnVX0O52_jnthbmnQJreH4cBz0cED6SgS_vFwCmy969Ddld72kcRYbnM8g484kAMW-yksetd7XSo8bm4q3kWo5zBMQPRjvRqWran758FAPV-VdGHEuyDlhLyZMttOu5tTeRzaQxJ48AUqpJnDF17bivKuSlKWoSHprslQATEyA4vkrOz8C18Br7DgeKNwwW9d7JM74TzEwqTsfhlFXs", badge: "RARIDADE", badgeColor: "bg-secondary-container text-on-secondary-container" },
+      { id: 9, nome: "Jaqueta Itália 90", categoria: "casacos", preco: 899, tamanho: "XL", estado: "Excelente", tipo: "ARCHIVE", aceitaTroca: true, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU", badge: "ARCHIVE", badgeColor: "bg-primary-container text-on-primary-container" },
+      { id: 10, nome: "Cachecol Seleção 1982", categoria: "acessorios", preco: 89, tamanho: "Único", estado: "Vintage", tipo: "COLEÇÃO", aceitaTroca: true, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuAboAr0cZsWEcCy9RT32mqYjnodFsJfdr2iw8LRpukqsH5cRT8eUJhqWbRyo6PVZQtZwF2a1iuWOTBkgdcMKYy8GebyGLKjNlEfjhA707HPhavQlTQgTr-PZ_gRti2U3VYMLooRfwvWaaApgI8pfJoum3RThH1RWwPwWlI62f9EExFmRNDpvitajNC4eC1VYixwo5MYArWW4WmtnBleXVoiTPzrThOIN3DEFGqM0vKvKG-iU36e_D0o_gIaMuek1yPiiqyxmucJl0U", badge: "COLEÇÃO", badgeColor: "bg-primary-fixed text-primary" }
     ];
 
     let currentCategory = "todos";
     let currentSearch = "";
 
-    // Função para renderizar os produtos
     function renderProducts() {
       const grid = document.getElementById("productsGrid");
       const noResults = document.getElementById("noResultsMessage");
       
       let filtered = [...produtos];
-      
-      // Filtrar por categoria
       if (currentCategory !== "todos") {
         filtered = filtered.filter(p => p.categoria === currentCategory);
       }
-      
-      // Filtrar por busca
       if (currentSearch.trim() !== "") {
         const searchLower = currentSearch.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        filtered = filtered.filter(p => 
-          p.nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(searchLower) ||
-          p.categoria.toLowerCase().includes(searchLower)
-        );
+        filtered = filtered.filter(p => p.nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(searchLower));
       }
       
-      // Mostrar ou esconder mensagem de nenhum resultado
       if (filtered.length === 0) {
         grid.classList.add("hidden");
         noResults.classList.remove("hidden");
@@ -326,14 +523,13 @@
       grid.classList.remove("hidden");
       noResults.classList.add("hidden");
       
-      // Renderizar os cards
       grid.innerHTML = filtered.map(produto => `
         <div class="product-card bg-surface border border-outline-variant flex flex-col group overflow-hidden tactile-active rounded-lg" onclick="goToProductDetail(${produto.id})">
           <div class="relative aspect-[3/4] bg-surface-container-low overflow-hidden">
-            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${produto.imagem}" alt="${produto.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Imagem+Indisponivel'">
+            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${produto.imagem}" alt="${produto.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Imagem'">
             <div class="absolute top-2 left-2">
               <span class="${produto.badgeColor} px-2 py-1 font-label-caps text-[10px] border border-secondary flex items-center gap-1">
-                <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">${produto.badge === 'DEADSTOCK' ? 'stars' : (produto.badge === 'WINNER\'S CIRCLE' ? 'verified' : 'check_circle')}</span> ${produto.badge}
+                <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">${produto.badge === 'DEADSTOCK' ? 'stars' : (produto.badge === "WINNER'S CIRCLE" ? 'verified' : 'check_circle')}</span> ${produto.badge}
               </span>
             </div>
             <div class="absolute bottom-2 left-2 bg-on-surface text-surface px-2 py-1 font-headline-lg text-headline-lg-mobile">
@@ -344,36 +540,26 @@
             <h3 class="font-title-md text-body-lg text-on-surface line-clamp-1">${produto.nome}</h3>
             <p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Tamanho ${produto.tamanho} • ${produto.estado}</p>
             <div class="flex items-center justify-between">
-              ${produto.aceitaTroca ? 
-                `<span class="font-label-caps text-[10px] text-primary flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[14px]">swap_horiz</span> ACEITA TROCA
-                </span>` : 
-                `<span class="font-label-caps text-[10px] text-outline italic uppercase">Somente Venda</span>`
-              }
+              ${produto.aceitaTroca ? `<span class="font-label-caps text-[10px] text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">swap_horiz</span> ACEITA TROCA</span>` : `<span class="font-label-caps text-[10px] text-outline italic uppercase">Somente Venda</span>`}
             </div>
           </div>
         </div>
       `).join("");
     }
 
-    // Função para ir para detalhes do produto
     function goToProductDetail(productId) {
       const produto = produtos.find(p => p.id === productId);
       if (produto) {
         localStorage.setItem('currentProduct', JSON.stringify(produto));
-        window.location.href = 'detalhesproduto.html';
+        window.location.href = `detalhesproduto.html?id=${productId}`;
       }
     }
 
-    // Função para resetar filtros
-    function resetFilters() {
-      currentCategory = "todos";
-      currentSearch = "";
-      document.getElementById("searchInput").value = "";
-      
-      // Atualizar estilo dos botões de categoria
+    function applyCategoryFilter(categoria) {
+      currentCategory = categoria;
+      // Atualizar os botões de categoria
       document.querySelectorAll(".categoria-btn").forEach(btn => {
-        if (btn.dataset.categoria === "todos") {
+        if (btn.dataset.categoria === categoria) {
           btn.classList.add("bg-primary", "text-on-primary", "border-primary");
           btn.classList.remove("border-outline", "text-on-surface-variant", "bg-transparent");
         } else {
@@ -381,17 +567,72 @@
           btn.classList.add("border-outline", "text-on-surface-variant", "bg-transparent");
         }
       });
-      
       renderProducts();
+      
+      const categoriaNome = {
+        'todos': 'Todos os produtos',
+        'camisas': 'Camisas',
+        'casacos': 'Casacos e Jaquetas',
+        'bones': 'Bonés',
+        'chuteiras': 'Chuteiras',
+        'bolas': 'Bolas',
+        'acessorios': 'Acessórios'
+      };
+      showToast(`🔍 ${categoriaNome[categoria] || categoria}`);
+    }
+
+    function resetFilters() {
+      applyCategoryFilter("todos");
+      currentSearch = "";
+      document.getElementById("searchInput").value = "";
+    }
+
+    // Notificações
+    const notificationsBtn = document.getElementById('notificationsBtn');
+    const notificationModal = document.getElementById('notificationModal');
+    const closeNotificationBtn = document.getElementById('closeNotificationBtn');
+    let notificationPermissionGranted = false;
+
+    function openNotifications() {
+      notificationModal.classList.toggle('active');
+    }
+
+    function closeNotifications() {
+      notificationModal.classList.remove('active');
+    }
+
+    function activateNotifications() {
+      if ('Notification' in window) {
+        if (Notification.permission === 'granted') {
+          notificationPermissionGranted = true;
+          showToast('🔔 Notificações ativadas! Você receberá avisos sobre novas peças no seu celular.');
+        } else if (Notification.permission !== 'denied') {
+          Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+              notificationPermissionGranted = true;
+              showToast('🔔 Notificações ativadas! Você receberá avisos sobre novas peças no seu celular.');
+              new Notification('Bem-vindo ao Mercado da Copa!', {
+                body: 'Ative as notificações para não perder nenhuma raridade!'
+              });
+            }
+          });
+        }
+      } else {
+        showToast('⚠️ Seu navegador não suporta notificações push.');
+      }
     }
 
     // Event Listeners
     document.addEventListener("DOMContentLoaded", () => {
       renderProducts();
       
+      // Botão do menu
+      document.getElementById("menuBtn").addEventListener("click", openSidebar);
+      document.getElementById("closeSidebarBtn").addEventListener("click", closeSidebar);
+      document.getElementById("sidebarOverlay").addEventListener("click", closeSidebar);
+      
       // Busca
-      const searchInput = document.getElementById("searchInput");
-      searchInput.addEventListener("input", (e) => {
+      document.getElementById("searchInput").addEventListener("input", (e) => {
         currentSearch = e.target.value;
         renderProducts();
       });
@@ -399,37 +640,44 @@
       // Categorias
       document.querySelectorAll(".categoria-btn").forEach(btn => {
         btn.addEventListener("click", () => {
-          currentCategory = btn.dataset.categoria;
-          
-          // Atualizar estilo dos botões
-          document.querySelectorAll(".categoria-btn").forEach(b => {
-            if (b.dataset.categoria === currentCategory) {
-              b.classList.add("bg-primary", "text-on-primary", "border-primary");
-              b.classList.remove("border-outline", "text-on-surface-variant", "bg-transparent");
-            } else {
-              b.classList.remove("bg-primary", "text-on-primary", "border-primary");
-              b.classList.add("border-outline", "text-on-surface-variant", "bg-transparent");
-            }
-          });
-          
-          renderProducts();
+          applyCategoryFilter(btn.dataset.categoria);
         });
       });
       
-      // Botão limpar filtros
+      // Limpar filtros
       document.getElementById("clearFiltersBtn").addEventListener("click", resetFilters);
+      
+      // Notificações
+      notificationsBtn.addEventListener("click", () => {
+        openNotifications();
+        if (!notificationPermissionGranted) {
+          activateNotifications();
+        } else {
+          showToast('🔔 Notificações já estão ativas! Você receberá avisos de novas peças.');
+        }
+      });
+      closeNotificationBtn.addEventListener("click", closeNotifications);
+      
+      // Fechar notificações ao clicar fora
+      document.addEventListener("click", (e) => {
+        if (!notificationModal.contains(e.target) && e.target !== notificationsBtn && !notificationsBtn.contains(e.target)) {
+          notificationModal.classList.remove("active");
+        }
+      });
+      
+      // Fechar sidebar com tecla ESC
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeSidebar();
+        }
+      });
     });
 
-    // Micro-interactions para botões
-    document.querySelectorAll('.tactile-active').forEach(button => {
-      button.addEventListener('mousedown', () => {
-        button.style.transform = 'translate(2px, 2px)';
-      });
-      button.addEventListener('mouseup', () => {
-        button.style.transform = 'translate(0px, 0px)';
-      });
-      button.addEventListener('mouseleave', () => {
-        button.style.transform = 'translate(0px, 0px)';
-      });
-    });
+    // Expor funções globalmente
+    window.goToProductDetail = goToProductDetail;
+    window.filterByCategory = filterByCategory;
+    window.navigateTo = navigateTo;
+    window.showToast = showToast;
   </script>
+</body>
+</html>

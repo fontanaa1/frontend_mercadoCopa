@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>Propor Troca - Mercado da Copa</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
     .tactile-push:active { transform: translate(2px, 2px); box-shadow: none !important; }
@@ -20,10 +20,13 @@
           colors: {
             "primary": "#003215", "primary-container": "#004b23", "surface": "#f8f9fa",
             "outline": "#707970", "outline-variant": "#c0c9be", "on-surface": "#191c1d",
-            "on-surface-variant": "#404941", "secondary-container": "#fcd400", "error": "#ba1a1a"
+            "on-surface-variant": "#404941", "secondary-container": "#fcd400", "error": "#ba1a1a",
+            "secondary": "#705d00", "background": "#f8f9fa"
           },
-          fontFamily: { "label-caps": ["JetBrains Mono"], "title-md": ["Hanken Grotesk"], "body-lg": ["Hanken Grotesk"] },
-          fontSize: { "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }] }
+          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+          spacing: { gutter: "12px", "container-margin": "20px", "stack-lg": "48px", "stack-md": "24px", "stack-sm": "8px", unit: "4px" },
+          fontFamily: { "headline-lg": ["Anton"], "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-lg": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "body-sm": ["Hanken Grotesk"], "label-caps": ["JetBrains Mono"] },
+          fontSize: { "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }] }
         }
       }
     }
@@ -65,56 +68,19 @@
     <div class="bg-surface border-2 border-primary rounded-xl p-4 neobrutal-shadow">
       <h3 class="font-label-caps text-label-caps text-primary mb-3">SELECIONE O ITEM DESEJADO</h3>
       
-      <div class="space-y-3 max-h-80 overflow-y-auto">
-        <!-- Item para troca 1 -->
-        <div class="flex gap-3 p-3 border-2 border-outline-variant rounded-lg hover:border-primary cursor-pointer transition-all" onclick="selectItem(this)">
-          <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw" class="w-full h-full object-cover" alt="item">
-          </div>
-          <div class="flex-grow">
-            <h4 class="font-title-md">Brasil 1998 Home Retro</h4>
-            <p class="font-body-sm text-on-surface-variant">Tamanho G · Deadstock</p>
-            <span class="font-label-caps text-primary">Vendedor: @camisas_retro</span>
-          </div>
-          <input type="radio" name="targetItem" class="w-5 h-5 accent-primary">
-        </div>
-
-        <!-- Item para troca 2 -->
-        <div class="flex gap-3 p-3 border-2 border-outline-variant rounded-lg hover:border-primary cursor-pointer transition-all" onclick="selectItem(this)">
-          <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0" class="w-full h-full object-cover" alt="item">
-          </div>
-          <div class="flex-grow">
-            <h4 class="font-title-md">Agasalho Argentina '94</h4>
-            <p class="font-body-sm text-on-surface-variant">Tamanho M · Raro</p>
-            <span class="font-label-caps text-primary">Vendedor: @colecionador_ald</span>
-          </div>
-          <input type="radio" name="targetItem" class="w-5 h-5 accent-primary">
-        </div>
-
-        <!-- Item para troca 3 -->
-        <div class="flex gap-3 p-3 border-2 border-outline-variant rounded-lg hover:border-primary cursor-pointer transition-all" onclick="selectItem(this)">
-          <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZzPNeJ-mxS0dWNKmFGArqUotDB1wRRxDgEZpf9-iS5Ml-7d42A4zQPI0xe0VWrOY47OzBdaC9S8GlYC3C2xtzNayC1pJ-B3XOu1Qu5DMrTFGzJluJIG4keRWtODMAzu9VFa4NXwFJxt99LC_HBWCeCfxJpKTGW1coiNmTU4jlxMdM034Jv-znAbC5Gwi3uv5SrteVEfpKB46jjMZaqeMGI1DxdqaKiMpvYptaAQoha0u1LjAJeTof2fxD9Vb7UzLS80DeBbJHg2Y" class="w-full h-full object-cover" alt="item">
-          </div>
-          <div class="flex-grow">
-            <h4 class="font-title-md">Bola de Couro 1962</h4>
-            <p class="font-body-sm text-on-surface-variant">Item de Colecionador</p>
-            <span class="font-label-caps text-primary">Vendedor: @memorabilia_fc</span>
-          </div>
-          <input type="radio" name="targetItem" class="w-5 h-5 accent-primary">
-        </div>
+      <div id="availableItemsList" class="space-y-3 max-h-80 overflow-y-auto">
+        <!-- Os itens disponíveis para troca serão injetados via JavaScript -->
       </div>
     </div>
 
     <!-- Mensagem opcional -->
     <div class="bg-surface border-2 border-outline-variant rounded-xl p-4">
       <label class="font-label-caps text-label-caps text-primary">MENSAGEM PARA O VENDEDOR</label>
-      <textarea rows="3" class="w-full mt-2 bg-transparent border-2 border-outline-variant rounded-lg p-2" placeholder="Olá! Gostaria de propor uma troca..."></textarea>
+      <textarea id="mensagemTroca" rows="3" class="w-full mt-2 bg-transparent border-2 border-outline-variant rounded-lg p-2" placeholder="Olá! Gostaria de propor uma troca..."></textarea>
     </div>
 
     <!-- Botão enviar proposta -->
-    <button onclick="sendProposal()" class="w-full bg-primary text-on-primary py-4 rounded-xl font-headline-lg-mobile uppercase neobrutal-shadow tactile-push flex items-center justify-center gap-2">
+    <button id="enviarPropostaBtn" class="w-full bg-primary text-on-primary py-4 rounded-xl font-headline-lg-mobile uppercase neobrutal-shadow tactile-push flex items-center justify-center gap-2">
       <span class="material-symbols-outlined">send</span>
       ENVIAR PROPOSTA DE TROCA
     </button>
@@ -134,32 +100,102 @@
   </nav>
 
   <script>
-    function selectItem(element) {
-      document.querySelectorAll('input[name="targetItem"]').forEach(radio => radio.checked = false);
-      element.querySelector('input[type="radio"]').checked = true;
+    // Produtos disponíveis para troca (que aceitam troca)
+    const produtosDisponiveisTroca = [
+      { id: 1, nome: "Brasil 1970 - Retrô Pelé", preco: 750, tamanho: "G", estado: "Excelente", vendedor: "@camisas_retro", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUrJNJKiGYJ8IZRYlb3EGdU7kpNlfq5RfbHZJJf6DrkHCutts30cqLNX7EcpLTcODsRSa5C4bqj1ADzmUDj8ZXSBAfkc_2XZwoUU7tjNmU1L9hPF6X6hh1fCSfGaU8iAKcnBfRZ7nfTwBTtTzri8oYDWOtzsjvtnwuFjV1-t3OleVPF9Lr79hbNVF59jrAfOWt2mXI0exTRKDmp9tMitagEgw_dUCLbWkRYPX4zZjzkTgq232XKyNrryw6rItEg7j1aCsBdeUmrYQ" },
+      { id: 3, nome: "Casaco Treino Seleção 94", preco: 300, tamanho: "M", estado: "Raro", vendedor: "@arquivo_94", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC62dQ5kP604-1pftSLJOhRtSspWov-O6EaxXz7gmVa-Xt3cFc3jXnITIocjVpoLRcUad84ghHUDUv434r0EeAeVADgGU-E8AEhxoQvX7Du8xvjMCmCBqFIQPTci0VG6xSMjd1fplQZiK0z27yV_AG59jfofLElbAyZXKEm6CftLA9taCbpMxAjZPLApOwnm4WqhvebjC65dDiyrCRSIifbv1XtEkbam1zNUi-I3cew-nxBzLQUfpy9z2dow1r79OCpkt0VTanPgF0" },
+      { id: 5, nome: "Brasil 1998 Home Retro", preco: 349, tamanho: "G", estado: "Deadstock", vendedor: "@vintage_brasil", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw" },
+      { id: 6, nome: "Agasalho Argentina '94", preco: 520, tamanho: "M", estado: "Rare", vendedor: "@colecionador_ald", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0" },
+      { id: 7, nome: "Boné USA '94 Corduroy", preco: 120, tamanho: "Único", estado: "Authentic", vendedor: "@bonestock", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8" },
+      { id: 9, nome: "Jaqueta Itália 90", preco: 899, tamanho: "XL", estado: "Excelente", vendedor: "@italia_collection", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU" }
+    ];
+
+    let selectedItemId = null;
+    let meuItem = null;
+
+    function loadMyItem() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const itemId = urlParams.get('id');
+      const itemNome = urlParams.get('item');
       
-      document.querySelectorAll('.border-primary').forEach(el => {
-        if(el !== element.parentElement) el.classList.remove('border-primary', 'bg-primary-container/10');
-      });
-      element.classList.add('border-primary', 'bg-primary-container/10');
+      const saved = localStorage.getItem('currentProduct');
+      if (saved && !itemId) {
+        meuItem = JSON.parse(saved);
+      } else if (itemId && produtosDisponiveisTroca.find(p => p.id == itemId)) {
+        meuItem = produtosDisponiveisTroca.find(p => p.id == itemId);
+      } else {
+        meuItem = produtosDisponiveisTroca[5];
+      }
+      
+      if (meuItem) {
+        document.getElementById('myItemImage').src = meuItem.imagem;
+        document.getElementById('myItemName').textContent = meuItem.nome;
+        document.getElementById('myItemSize').innerHTML = `Tamanho ${meuItem.tamanho} · ${meuItem.estado}`;
+        document.getElementById('myItemPrice').innerHTML = `R$ ${meuItem.preco}`;
+      }
+      
+      renderAvailableItems();
     }
 
-    function sendProposal() {
-      const selected = document.querySelector('input[name="targetItem"]:checked');
-      if(!selected) {
+    function renderAvailableItems() {
+      const container = document.getElementById('availableItemsList');
+      const filtered = produtosDisponiveisTroca.filter(p => p.id !== meuItem?.id);
+      
+      container.innerHTML = filtered.map(produto => `
+        <div class="flex gap-3 p-3 border-2 border-outline-variant rounded-lg hover:border-primary cursor-pointer transition-all ${selectedItemId === produto.id ? 'border-primary bg-primary-container/10' : ''}" onclick="selectItem(${produto.id})">
+          <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden flex-shrink-0">
+            <img src="${produto.imagem}" class="w-full h-full object-cover" alt="${produto.nome}">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-title-md">${produto.nome}</h4>
+            <p class="font-body-sm text-on-surface-variant">Tamanho: ${produto.tamanho} · ${produto.estado}</p>
+            <span class="font-label-caps text-primary">Vendedor: ${produto.vendedor}</span>
+          </div>
+          <input type="radio" name="targetItem" value="${produto.id}" ${selectedItemId === produto.id ? 'checked' : ''} class="w-5 h-5 accent-primary">
+        </div>
+      `).join('');
+    }
+
+    function selectItem(id) {
+      selectedItemId = id;
+      renderAvailableItems();
+    }
+
+    function enviarProposta() {
+      if (!selectedItemId) {
         alert('Por favor, selecione um item para troca!');
         return;
       }
-      alert('Proposta de troca enviada com sucesso! O vendedor será notificado.');
+      
+      const targetItem = produtosDisponiveisTroca.find(p => p.id === selectedItemId);
+      const mensagem = document.getElementById('mensagemTroca').value;
+      
+      // Salvar proposta no localStorage
+      const propostas = JSON.parse(localStorage.getItem('propostas_troca') || '[]');
+      propostas.push({
+        id: Date.now(),
+        meuItem: meuItem,
+        itemDesejado: targetItem,
+        mensagem: mensagem,
+        status: 'pendente',
+        data: new Date().toLocaleString('pt-BR')
+      });
+      localStorage.setItem('propostas_troca', JSON.stringify(propostas));
+      
+      alert(`Proposta de troca enviada com sucesso!\n\nVocê propôs trocar ${meuItem.nome} por ${targetItem.nome}.\nO vendedor será notificado e terá 48h para responder.`);
+      
       window.location.href = 'telaprincipal.html';
     }
 
-    // Carregar dados do produto da URL
-    const params = new URLSearchParams(window.location.search);
-    if(params.get('item')) {
-      document.getElementById('myItemName').textContent = params.get('item');
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      loadMyItem();
+      document.getElementById('enviarPropostaBtn').addEventListener('click', enviarProposta);
+    });
+
+    window.selectItem = selectItem;
   </script>
-  <script src="app.js" defer></script>
+</body>
+  <!-- Menu Hamburguer Global -->
+  <script src="menu.js"></script>
 </body>
 </html>

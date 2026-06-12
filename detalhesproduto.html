@@ -1,284 +1,305 @@
 <!DOCTYPE html>
-
-<html class="light" lang="pt-br"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:wght@400;700&amp;family=JetBrains+Mono:wght@600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .active-nav-item .material-symbols-outlined {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .product-image-container::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40%;
-            background: linear-gradient(to top, rgba(248, 249, 250, 1), rgba(248, 249, 250, 0));
-            pointer-events: none;
-        }
-        /* Neobrutalist interaction */
-        .tactile-press:active {
-            transform: translate(2px, 2px);
-            box-shadow: none !important;
-        }
-        .tactile-button:hover {
-            border-bottom: 2px solid #fcd400; /* Championship Gold */
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-error-container": "#93000a",
-                        "surface-container-low": "#f3f4f5",
-                        "on-surface": "#191c1d",
-                        "on-tertiary": "#ffffff",
-                        "surface-container-highest": "#e1e3e4",
-                        "primary-fixed": "#aef2bb",
-                        "on-primary-container": "#79bb87",
-                        "outline": "#707970",
-                        "on-primary-fixed": "#00210c",
-                        "surface-bright": "#f8f9fa",
-                        "on-primary-fixed-variant": "#0b5229",
-                        "on-secondary-container": "#6e5c00",
-                        "on-tertiary-container": "#ff8a86",
-                        "inverse-on-surface": "#f0f1f2",
-                        "surface-container": "#edeeef",
-                        "on-tertiary-fixed": "#410005",
-                        "tertiary-fixed-dim": "#ffb3af",
-                        "inverse-surface": "#2e3132",
-                        "surface-dim": "#d9dadb",
-                        "on-background": "#191c1d",
-                        "tertiary": "#5c000b",
-                        "error-container": "#ffdad6",
-                        "surface-tint": "#2a6a3f",
-                        "surface-container-lowest": "#ffffff",
-                        "on-tertiary-fixed-variant": "#930018",
-                        "on-primary": "#ffffff",
-                        "tertiary-container": "#860015",
-                        "outline-variant": "#c0c9be",
-                        "secondary-fixed": "#ffe16d",
-                        "on-secondary-fixed": "#221b00",
-                        "inverse-primary": "#93d6a0",
-                        "tertiary-fixed": "#ffdad7",
-                        "on-secondary": "#ffffff",
-                        "on-surface-variant": "#404941",
-                        "primary": "#003215",
-                        "primary-fixed-dim": "#93d6a0",
-                        "surface-container-high": "#e7e8e9",
-                        "secondary-container": "#fcd400",
-                        "surface": "#f8f9fa",
-                        "error": "#ba1a1a",
-                        "secondary-fixed-dim": "#e9c400",
-                        "surface-variant": "#e1e3e4",
-                        "on-error": "#ffffff",
-                        "on-secondary-fixed-variant": "#544600",
-                        "background": "#f8f9fa",
-                        "secondary": "#705d00",
-                        "primary-container": "#004b23"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "gutter": "12px",
-                        "container-margin": "20px",
-                        "stack-lg": "48px",
-                        "stack-md": "24px",
-                        "stack-sm": "8px",
-                        "unit": "4px"
-                    },
-                    "fontFamily": {
-                        "headline-lg": ["Anton"],
-                        "title-md": ["Hanken Grotesk"],
-                        "display-lg": ["Anton"],
-                        "body-lg": ["Hanken Grotesk"],
-                        "headline-lg-mobile": ["Anton"],
-                        "body-sm": ["Hanken Grotesk"],
-                        "label-caps": ["JetBrains Mono"]
-                    },
-                    "fontSize": {
-                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "400"}],
-                        "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
-                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400"}],
-                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "400"}],
-                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
-                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
-                    }
-                },
-            },
-        }
-    </script>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
+<html class="light" lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Detalhes do Produto - Mercado da Copa</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .tactile-press:active { transform: translate(2px, 2px); box-shadow: none !important; }
+    .tactile-button:hover { border-bottom: 2px solid #fcd400; }
+    .product-image-container::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(248, 249, 250, 1), rgba(248, 249, 250, 0));
+      pointer-events: none;
     }
+    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
   </style>
-  </head>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error-container": "#93000a", "surface-container-low": "#f3f4f5", "on-surface": "#191c1d",
+            "on-tertiary": "#ffffff", "surface-container-highest": "#e1e3e4", "primary-fixed": "#aef2bb",
+            "on-primary-container": "#79bb87", "outline": "#707970", "on-primary-fixed": "#00210c",
+            "surface-bright": "#f8f9fa", "on-primary-fixed-variant": "#0b5229", "on-secondary-container": "#6e5c00",
+            "on-tertiary-container": "#ff8a86", "inverse-on-surface": "#f0f1f2", "surface-container": "#edeeef",
+            "on-tertiary-fixed": "#410005", "tertiary-fixed-dim": "#ffb3af", "inverse-surface": "#2e3132",
+            "surface-dim": "#d9dadb", "on-background": "#191c1d", "tertiary": "#5c000b", "error-container": "#ffdad6",
+            "surface-tint": "#2a6a3f", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#930018",
+            "on-primary": "#ffffff", "tertiary-container": "#860015", "outline-variant": "#c0c9be", "secondary-fixed": "#ffe16d",
+            "on-secondary-fixed": "#221b00", "inverse-primary": "#93d6a0", "tertiary-fixed": "#ffdad7", "on-secondary": "#ffffff",
+            "on-surface-variant": "#404941", "primary": "#003215", "primary-fixed-dim": "#93d6a0", "surface-container-high": "#e7e8e9",
+            "secondary-container": "#fcd400", "surface": "#f8f9fa", "error": "#ba1a1a", "secondary-fixed-dim": "#e9c400",
+            "surface-variant": "#e1e3e4", "on-error": "#ffffff", "on-secondary-fixed-variant": "#544600", "background": "#f8f9fa",
+            "secondary": "#705d00", "primary-container": "#004b23"
+          },
+          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+          spacing: { gutter: "12px", "container-margin": "20px", "stack-lg": "48px", "stack-md": "24px", "stack-sm": "8px", unit: "4px" },
+          fontFamily: { headlineLg: ["Anton"], titleMd: ["Hanken Grotesk"], displayLg: ["Anton"], bodyLg: ["Hanken Grotesk"], headlineLgMobile: ["Anton"], bodySm: ["Hanken Grotesk"], labelCaps: ["JetBrains Mono"] },
+          fontSize: { headlineLg: ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], titleMd: ["20px", { lineHeight: "1.4", fontWeight: "700" }], displayLg: ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], bodyLg: ["16px", { lineHeight: "1.6", fontWeight: "400" }], headlineLgMobile: ["28px", { lineHeight: "1.2", fontWeight: "400" }], bodySm: ["14px", { lineHeight: "1.5", fontWeight: "400" }], labelCaps: ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }] }
+        }
+      }
+    }
+  </script>
+</head>
 <body class="bg-background text-on-background font-body-lg min-h-screen pb-32">
-<!-- TopAppBar -->
-<header class="w-full top-0 sticky bg-surface dark:bg-inverse-surface border-b-2 border-outline-variant dark:border-outline z-50">
-<div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
-<button class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
-<span class="material-symbols-outlined">arrow_back</span>
-</button>
-<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim tracking-tight">Mercado da Copa</h1>
-<button class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-</div>
-</header>
-<main class="max-w-[1200px] mx-auto">
-<!-- Hero Product Image -->
-<section class="relative w-full aspect-[4/5] md:aspect-video overflow-hidden product-image-container">
-<img alt="Jaqueta Itália 90" class="w-full h-full object-cover object-center" data-alt="A detailed studio photograph of a classic vintage 1990 Italy national team track jacket in a deep azure blue. The garment features high-quality embroidered details, including the Italian flag crest, and is set against a clean, bright minimalist background. Professional lighting emphasizes the archival fabric textures and premium sportswear craftsmanship, maintaining a high-contrast and energetic sports-heritage aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU"/>
-<!-- Floating Winner's Circle Badge -->
-<div class="absolute top-4 right-4 bg-secondary-container p-3 rounded-full shadow-lg border-2 border-secondary z-10 flex items-center justify-center">
-<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
-</div>
-</section>
-<!-- Product Details Canvas -->
-<section class="px-container-margin -mt-12 relative z-20">
-<div class="bg-surface-container-lowest border-2 border-outline-variant p-6 rounded-xl shadow-sm">
-<div class="flex justify-between items-start mb-stack-sm">
-<div>
-<span class="font-label-caps text-label-caps text-secondary uppercase mb-2 block tracking-widest">Archive Collection</span>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Jaqueta Itália 90</h2>
-</div>
-<div class="bg-primary px-3 py-1 rounded-sm border-b-2 border-secondary">
-<span class="font-headline-lg text-headline-lg text-white">R$ 899</span>
-</div>
-</div>
-<!-- Specs Grid -->
-<div class="grid grid-cols-2 gap-gutter my-stack-md">
-<div class="border-2 border-outline-variant p-3 rounded-lg flex flex-col items-center justify-center bg-surface-container">
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase opacity-70">Condition</span>
-<div class="flex items-center gap-1 mt-1">
-<div class="w-2 h-2 rounded-full bg-primary"></div>
-<span class="font-title-md text-title-md text-primary">Excelente</span>
-</div>
-</div>
-<div class="border-2 border-outline-variant p-3 rounded-lg flex flex-col items-center justify-center bg-surface-container">
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase opacity-70">Size</span>
-<span class="font-headline-lg text-headline-lg text-on-surface mt-1">XL</span>
-</div>
-</div>
-<!-- Description -->
-<div class="mb-stack-lg">
-<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase border-b border-outline-variant pb-2">O Relato do Campo</h3>
-<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-                        Peça icônica da Copa do Mundo de 1990. Fabricada na Itália, esta jaqueta de treino captura a essência do "Notti Magiche". O tecido em poliamida apresenta um brilho acetinado típico da era, com o escudo da FIGC bordado em alta definição. Sem sinais de desgaste, elásticos punhos e barra impecáveis. Uma verdadeira cápsula do tempo para colecionadores sérios.
-                    </p>
-</div>
-<!-- Status Tags -->
-<div class="flex gap-2 mb-stack-md">
-<span class="bg-primary/10 text-primary border border-primary px-3 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> Match Ready
-                    </span>
-<span class="bg-secondary-container/30 text-secondary border border-secondary px-3 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">stars</span> Deadstock
-                    </span>
-</div>
-<!-- Actions -->
-<div class="flex flex-col gap-4">
-<button onclick="location.href='carrinho.html'" class="tactile-button tactile-press w-full bg-primary text-white py-4 px-6 rounded-lg font-title-md text-title-md flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
-<span class="material-symbols-outlined">shopping_cart</span>
-                        Adicionar ao Carrinho
-                    </button>
-<button class="tactile-button tactile-press w-full bg-surface-container-highest border-2 border-primary text-primary py-4 px-6 rounded-lg font-title-md text-title-md flex items-center justify-center gap-2 transition-all">
-<span class="material-symbols-outlined">published_with_changes</span>
-                        Propor Troca
-                    </button>
-</div>
-</div>
-</section>
-<!-- Related Items (Bento Style) -->
-<section class="px-container-margin py-stack-lg">
-<h3 class="font-headline-lg text-headline-lg mb-6 text-on-surface">Sugestões do Vestuário</h3>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-<div class="col-span-1 border border-outline-variant overflow-hidden rounded-lg group hover:border-primary transition-colors">
-<div class="aspect-square bg-surface-container relative">
-<img alt="Related Jersey 1" class="w-full h-full object-cover" data-alt="Close-up of a vintage red and white football jersey with classic 90s collar and geometric patterns. The lighting is crisp and editorial, highlighting the high-contrast colors and stadium-inspired aesthetic. Set in a premium, minimalist studio environment with a cool tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj-kBB5dukV5CPKkv8nWwUuMRdlu9lYGTb6eLUuZlBOWcV71qo48ZiYPalDq1PQxlanTreKS8Tzt0FH_baEQibqrp9U3Bz6XFYQN2Onnwwae7xwCpZXnLoaSuZqqkcZPdpM0diZZ-sRUvRVTrUlQUR92nucKFSehfZ3uDxcyi5eRZ33PW7HCCDcv0kfwjZCz_ro_GNOegTUoQM0hXKyUrBAQLeUIOwu4UUy08r_6IVxDTNN2796RQGHXs8G1gltOqba9n2pnQt1BE"/>
-<div class="absolute bottom-2 left-2 bg-primary px-2 py-1">
-<span class="font-headline-lg text-[18px] text-white">R$ 450</span>
-</div>
-</div>
-</div>
-<div class="col-span-1 border border-outline-variant overflow-hidden rounded-lg group hover:border-primary transition-colors">
-<div class="aspect-square bg-surface-container relative">
-<img alt="Related Jersey 2" class="w-full h-full object-cover" data-alt="A vintage yellow and green Brazil national team jersey from the late 1990s, showcasing the iconic crest and sleeve piping. The shot is captured in a bright, modern lighting setup that emphasizes the vibrant colors and fabric weave, echoing a sophisticated archive boutique atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCtZM8epb8shc7ThDLTtfPbklcOVOR18WJWBUNyRlWvfSJU5XpuVlOOM_0zqJPbsRWdeKsj4vkkqkLh6zE2Q9gfTKIrRVhsXs3TLPqjq9ghOVirQI0VLxYYaQlVA4sHQpFb7mLBQgR2whEPDZD-f6pJ_LgFNRMVGSSLPJLfZNQ4lcWn1Br4Cqjs4EBRc-FwTNgAmKsj0xY5CyZU929lZRKfOy1kVsPQyABTrY560WgIZu_En7B64baIHPPMN6-sUvsjK_PgtsYgjU"/>
-<div class="absolute bottom-2 left-2 bg-primary px-2 py-1">
-<span class="font-headline-lg text-[18px] text-white">R$ 520</span>
-</div>
-</div>
-</div>
-<div class="hidden md:block col-span-2 border border-outline-variant overflow-hidden rounded-lg bg-surface-container-high p-6">
-<span class="font-label-caps text-label-caps text-secondary mb-2 block">Collector's Tip</span>
-<p class="font-title-md text-title-md text-on-surface mb-4">Peças da Copa 90 valorizaram 40% no último ano. Invista na história.</p>
-<button class="text-primary font-title-md flex items-center gap-2 hover:translate-x-1 transition-transform">
-                        Ver Guia de Curadoria <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-</div>
-</div>
-</section>
-</main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-inverse-surface border-t-2 border-outline-variant dark:border-outline">
-<div class="flex justify-around items-center w-full px-2 py-3">
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="telaprincipal.html">
-<span class="material-symbols-outlined">home</span>
-<span class="font-label-caps text-label-caps mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="telaprincipal.html">
-<span class="material-symbols-outlined">search</span>
-<span class="font-label-caps text-label-caps mt-1">Search</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="publicaritens.html">
-<span class="material-symbols-outlined">add_circle</span>
-<span class="font-label-caps text-label-caps mt-1">Sell</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active-nav-item active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="carrinho.html">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="font-label-caps text-label-caps mt-1">Cart</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="perfil.html">
-<span class="material-symbols-outlined">person</span>
-<span class="font-label-caps text-label-caps mt-1">Profile</span>
-</a>
-</div>
-</nav>
-<script>
-        // Micro-interaction for back button
-        document.querySelector('header button:first-child').addEventListener('click', () => {
-            window.history.back();
-        });
 
-        // Add to cart simple feedback
-        const cartBtn = document.querySelector('button.bg-primary');
-        cartBtn.addEventListener('click', () => {
-            const originalText = cartBtn.innerHTML;
-            cartBtn.innerHTML = `<span class="material-symbols-outlined">check</span> Adicionado!`;
-            cartBtn.classList.replace('bg-primary', 'bg-secondary');
-            setTimeout(() => {
-                cartBtn.innerHTML = originalText;
-                cartBtn.classList.replace('bg-secondary', 'bg-primary');
-            }, 2000);
-        });
-    </script>
+  <!-- TopAppBar -->
+  <header class="w-full top-0 sticky bg-surface border-b-2 border-outline-variant z-50">
+    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
+      <button onclick="window.history.back()" class="text-primary hover:opacity-80 transition-opacity">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Mercado da Copa</h1>
+      <button class="text-primary hover:opacity-80">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+    </div>
+  </header>
 
-<script src="app.js" defer></script>
-</body></html>
+  <main class="max-w-[1200px] mx-auto">
+    <!-- Hero Product Image -->
+    <section class="relative w-full aspect-[4/5] md:aspect-video overflow-hidden product-image-container">
+      <img id="produtoImagem" class="w-full h-full object-cover object-center" alt="Produto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU"/>
+      <div class="absolute top-4 right-4 bg-secondary-container p-3 rounded-full shadow-lg border-2 border-secondary z-10">
+        <span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+      </div>
+    </section>
+
+    <!-- Product Details Canvas -->
+    <section class="px-container-margin -mt-12 relative z-20">
+      <div class="bg-surface-container-lowest border-2 border-outline-variant p-6 rounded-xl shadow-sm">
+        <div class="flex justify-between items-start mb-stack-sm">
+          <div>
+            <span class="font-label-caps text-label-caps text-secondary uppercase mb-2 block tracking-widest">Archive Collection</span>
+            <h2 id="produtoNome" class="font-headline-lg text-headline-lg text-on-surface mb-1">Jaqueta Itália 90</h2>
+          </div>
+          <div class="bg-primary px-3 py-1 rounded-sm border-b-2 border-secondary">
+            <span id="produtoPreco" class="font-headline-lg text-headline-lg text-white">R$ 899</span>
+          </div>
+        </div>
+
+        <!-- Specs Grid -->
+        <div class="grid grid-cols-2 gap-gutter my-stack-md">
+          <div class="border-2 border-outline-variant p-3 rounded-lg flex flex-col items-center justify-center bg-surface-container">
+            <span class="font-label-caps text-label-caps text-on-surface-variant uppercase opacity-70">Condition</span>
+            <div class="flex items-center gap-1 mt-1">
+              <div class="w-2 h-2 rounded-full bg-primary"></div>
+              <span id="produtoEstado" class="font-title-md text-title-md text-primary">Excelente</span>
+            </div>
+          </div>
+          <div class="border-2 border-outline-variant p-3 rounded-lg flex flex-col items-center justify-center bg-surface-container">
+            <span class="font-label-caps text-label-caps text-on-surface-variant uppercase opacity-70">Size</span>
+            <span id="produtoTamanho" class="font-headline-lg text-headline-lg text-on-surface mt-1">XL</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-stack-lg">
+          <h3 class="font-label-caps text-label-caps text-on-surface-variant mb-stack-sm uppercase border-b border-outline-variant pb-2">O Relato do Campo</h3>
+          <p id="produtoDescricao" class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+            Peça icônica da Copa do Mundo de 1990. Fabricada na Itália, esta jaqueta de treino captura a essência do "Notti Magiche". O tecido em poliamida apresenta um brilho acetinado típico da era, com o escudo da FIGC bordado em alta definição. Sem sinais de desgaste, elásticos punhos e barra impecáveis. Uma verdadeira cápsula do tempo para colecionadores sérios.
+          </p>
+        </div>
+
+        <!-- Status Tags -->
+        <div class="flex gap-2 mb-stack-md">
+          <span id="produtoBadge1" class="bg-primary/10 text-primary border border-primary px-3 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> Match Ready
+          </span>
+          <span id="produtoBadge2" class="bg-secondary-container/30 text-secondary border border-secondary px-3 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">stars</span> Deadstock
+          </span>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex flex-col gap-4">
+          <button id="addToCartBtn" class="tactile-button tactile-press w-full bg-primary text-white py-4 px-6 rounded-lg font-title-md text-title-md flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            Adicionar ao Carrinho
+          </button>
+          <button id="proporTrocaBtn" class="tactile-button tactile-press w-full bg-surface-container-highest border-2 border-primary text-primary py-4 px-6 rounded-lg font-title-md text-title-md flex items-center justify-center gap-2 transition-all">
+            <span class="material-symbols-outlined">published_with_changes</span>
+            Propor Troca
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Items (Bento Style) -->
+    <section class="px-container-margin py-stack-lg">
+      <h3 class="font-headline-lg text-headline-lg mb-6 text-on-surface">Sugestões do Vestuário</h3>
+      <div id="relatedItemsGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Os produtos sugeridos serão injetados via JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- BottomNavBar -->
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
+    <div class="flex justify-around items-center w-full px-2 py-3">
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
+      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
+      <a href="carrinho.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
+      <a href="perfil.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+    </div>
+  </nav>
+
+  <script>
+    // Banco de produtos completo
+    const produtosDB = {
+      1: { id: 1, nome: "Brasil 1970 - Retrô Pelé", preco: 750, tamanho: "G", estado: "10/10", tipo: "DEADSTOCK", badge1: "DEADSTOCK", badge2: "PELÉ", aceitaTroca: true, descricao: "Camisa histórica da seleção brasileira de 1970, utilizada na conquista do tri mundial. Peça rara em excelente estado de conservação.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUrJNJKiGYJ8IZRYlb3EGdU7kpNlfq5RfbHZJJf6DrkHCutts30cqLNX7EcpLTcODsRSa5C4bqj1ADzmUDj8ZXSBAfkc_2XZwoUU7tjNmU1L9hPF6X6hh1fCSfGaU8iAKcnBfRZ7nfTwBTtTzri8oYDWOtzsjvtnwuFjV1-t3OleVPF9Lr79hbNVF59jrAfOWt2mXI0exTRKDmp9tMitagEgw_dUCLbWkRYPX4zZjzkTgq232XKyNrryw6rItEg7j1aCsBdeUmrYQ" },
+      2: { id: 2, nome: "Bola de Couro 1962", preco: 420, tamanho: "Único", estado: "Colecionador", tipo: "MATCH READY", badge1: "MATCH READY", badge2: "VINTAGE", aceitaTroca: false, descricao: "Bola de couro autêntica da Copa de 1962. Perfeita para exposição em museu ou coleção particular.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCZzPNeJ-mxS0dWNKmFGArqUotDB1wRRxDgEZpf9-iS5Ml-7d42A4zQPI0xe0VWrOY47OzBdaC9S8GlYC3C2xtzNayC1pJ-B3XOu1Qu5DMrTFGzJluJIG4keRWtODMAzu9VFa4NXwFJxt99LC_HBWCeCfxJpKTGW1coiNmTU4jlxMdM034Jv-znAbC5Gwi3uv5SrteVEfpKB46jjMZaqeMGI1DxdqaKiMpvYptaAQoha0u1LjAJeTof2fxD9Vb7UzLS80DeBbJHg2Y" },
+      3: { id: 3, nome: "Casaco Treino Seleção 94", preco: 300, tamanho: "M", estado: "Raro", tipo: "FINAL WHISTLE", badge1: "FINAL WHISTLE", badge2: "RARO", aceitaTroca: true, descricao: "Casaco de treino oficial da seleção brasileira de 1994. Utilizado nos treinos que antecederam o tetracampeonato.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC62dQ5kP604-1pftSLJOhRtSspWov-O6EaxXz7gmVa-Xt3cFc3jXnITIocjVpoLRcUad84ghHUDUv434r0EeAeVADgGU-E8AEhxoQvX7Du8xvjMCmCBqFIQPTci0VG6xSMjd1fplQZiK0z27yV_AG59jfofLElbAyZXKEm6CftLA9taCbpMxAjZPLApOwnm4WqhvebjC65dDiyrCRSIifbv1XtEkbam1zNUi-I3cew-nxBzLQUfpy9z2dow1r79OCpkt0VTanPgF0" },
+      4: { id: 4, nome: "Boné Brasil '58 - Ed. Limitada", preco: 150, tamanho: "Ajustável", estado: "Novo", tipo: "EXCLUSIVO", badge1: "EXCLUSIVO", badge2: "LIMITADO", aceitaTroca: false, descricao: "Boné edição limitada em homenagem ao primeiro título mundial do Brasil em 1958. Peça de colecionador.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCvffpDh3VDKVUDkY99jRlrDcfpmHwYXqRWa5wh1ohYdyfgp44s_6rpUeEvoWBlgdyG-HzHvuthAv5ohQ7w-jjXnxpfY61eEE2-8V2KTJrrdD9dlV7a8lqgIm4yc1jofimRNnHcqCvVF2ZQRVypNrrsdp3detv9VRbfMgmrgoPkRyGxkQYov42P3hHcndMf6Jn7yK8txEsQBDV8QRhZ6ribSsGIHqjp2sgZcXkDhK2DDe-v27O1cY1Fj8M6NZg32Rx3qOpp6ZQ4w10" },
+      5: { id: 5, nome: "Brasil 1998 Home Retro", preco: 349, tamanho: "G", estado: "Deadstock", tipo: "MATCH READY", badge1: "MATCH READY", badge2: "DEADSTOCK", aceitaTroca: true, descricao: "Camisa oficial da Copa de 1998, nunca utilizada. Com todos os patches e etiquetas originais.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw" },
+      6: { id: 6, nome: "Agasalho Argentina '94", preco: 520, tamanho: "M", estado: "Rare", tipo: "FINAL WHISTLE", badge1: "FINAL WHISTLE", badge2: "RARE", aceitaTroca: true, descricao: "Agasalho oficial da seleção argentina da Copa de 1994. Peça rara em excelente estado.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0" },
+      7: { id: 7, nome: "Boné USA '94 Corduroy", preco: 120, tamanho: "Único", estado: "Authentic", tipo: "WINNER'S CIRCLE", badge1: "WINNER'S CIRCLE", badge2: "AUTHENTIC", aceitaTroca: true, descricao: "Boné oficial da Copa de 1994, em corduroy. Peça autêntica e rara.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8" },
+      8: { id: 8, nome: "Chuteira Mizuno Morelia 90", preco: 899, tamanho: "42", estado: "Excelente", tipo: "RARIDADE", badge1: "RARIDADE", badge2: "JAPAN", aceitaTroca: false, descricao: "Chuteira clássica Mizuno Morelia, modelo utilizado por grandes craques nos anos 90.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8Rw9OWV2WHiwbXVL9IhFfmXoJ__7kT3BLvwPM8kL1PJesmoj9k_WBN_c1MnVX0O52_jnthbmnQJreH4cBz0cED6SgS_vFwCmy969Ddld72kcRYbnM8g484kAMW-yksetd7XSo8bm4q3kWo5zBMQPRjvRqWran758FAPV-VdGHEuyDlhLyZMttOu5tTeRzaQxJ48AUqpJnDF17bivKuSlKWoSHprslQATEyA4vkrOz8C18Br7DgeKNwwW9d7JM74TzEwqTsfhlFXs" },
+      9: { id: 9, nome: "Jaqueta Itália 90", preco: 899, tamanho: "XL", estado: "Excelente", tipo: "ARCHIVE", badge1: "ARCHIVE", badge2: "ITALIA", aceitaTroca: true, descricao: "Jaqueta oficial da Itália 90, um dos designs mais icônicos da história das Copas.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU" },
+      10: { id: 10, nome: "Cachecol Seleção 1982", preco: 89, tamanho: "Único", estado: "Vintage", tipo: "COLEÇÃO", badge1: "COLEÇÃO", badge2: "1982", aceitaTroca: true, descricao: "Cachecol oficial da seleção brasileira da Copa de 1982. Peça histórica e nostálgica.", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuAboAr0cZsWEcCy9RT32mqYjnodFsJfdr2iw8LRpukqsH5cRT8eUJhqWbRyo6PVZQtZwF2a1iuWOTBkgdcMKYy8GebyGLKjNlEfjhA707HPhavQlTQgTr-PZ_gRti2U3VYMLooRfwvWaaApgI8pfJoum3RThH1RWwPwWlI62f9EExFmRNDpvitajNC4eC1VYixwo5MYArWW4WmtnBleXVoiTPzrThOIN3DEFGqM0vKvKG-iU36e_D0o_gIaMuek1yPiiqyxmucJl0U" }
+    };
+
+    const CART_KEY = 'mercado_copa_cart';
+
+    function loadCart() {
+      const saved = localStorage.getItem(CART_KEY);
+      return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    function addToCart(produto) {
+      const cart = loadCart();
+      const existingItem = cart.find(item => item.id === produto.id);
+      
+      if (existingItem) {
+        existingItem.quantidade += 1;
+      } else {
+        cart.push({
+          id: produto.id,
+          nome: produto.nome,
+          preco: produto.preco,
+          tamanho: produto.tamanho,
+          estado: produto.estado,
+          tipo: produto.tipo,
+          quantidade: 1,
+          imagem: produto.imagem
+        });
+      }
+      
+      saveCart(cart);
+      
+      // Feedback visual
+      const btn = document.getElementById('addToCartBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<span class="material-symbols-outlined">check</span> Adicionado ao Carrinho!`;
+      btn.classList.add('bg-green-600');
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove('bg-green-600');
+      }, 2000);
+      
+      return true;
+    }
+
+    // Carregar produto atual da URL ou localStorage
+    let currentProduct = null;
+
+    function loadCurrentProduct() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+      
+      if (productId && produtosDB[productId]) {
+        currentProduct = produtosDB[productId];
+        localStorage.setItem('currentProduct', JSON.stringify(currentProduct));
+      } else {
+        const saved = localStorage.getItem('currentProduct');
+        if (saved) {
+          currentProduct = JSON.parse(saved);
+        } else {
+          currentProduct = produtosDB[9];
+        }
+      }
+      
+      renderProductPage();
+    }
+
+    function renderProductPage() {
+      if (!currentProduct) return;
+      
+      document.getElementById('produtoImagem').src = currentProduct.imagem;
+      document.getElementById('produtoNome').textContent = currentProduct.nome;
+      document.getElementById('produtoPreco').innerHTML = `R$ ${currentProduct.preco}`;
+      document.getElementById('produtoEstado').textContent = currentProduct.estado;
+      document.getElementById('produtoTamanho').textContent = currentProduct.tamanho;
+      document.getElementById('produtoDescricao').textContent = currentProduct.descricao;
+      document.getElementById('produtoBadge1').innerHTML = `<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> ${currentProduct.badge1}`;
+      document.getElementById('produtoBadge2').innerHTML = `<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">stars</span> ${currentProduct.badge2}`;
+      
+      renderRelatedItems();
+    }
+
+    function renderRelatedItems() {
+      const container = document.getElementById('relatedItemsGrid');
+      const related = Object.values(produtosDB).filter(p => p.id !== currentProduct.id).slice(0, 4);
+      
+      container.innerHTML = related.map(produto => `
+        <div onclick="goToProduct(${produto.id})" class="col-span-1 border border-outline-variant overflow-hidden rounded-lg group hover:border-primary transition-all cursor-pointer">
+          <div class="aspect-square bg-surface-container relative">
+            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${produto.imagem}" alt="${produto.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Imagem'">
+            <div class="absolute bottom-2 left-2 bg-primary px-2 py-1">
+              <span class="font-headline-lg text-[18px] text-white">R$ ${produto.preco}</span>
+            </div>
+          </div>
+          <div class="p-2">
+            <p class="font-title-md text-body-sm line-clamp-1">${produto.nome}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function goToProduct(id) {
+      window.location.href = `detalhesproduto.html?id=${id}`;
+    }
+
+    function proporTroca() {
+      if (currentProduct && currentProduct.aceitaTroca) {
+        window.location.href = `troca.html?item=${encodeURIComponent(currentProduct.nome)}&id=${currentProduct.id}`;
+      } else {
+        alert('Este item não aceita troca no momento. Apenas venda direta.');
+      }
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCurrentProduct();
+      
+      document.getElementById('addToCartBtn').addEventListener('click', () => {
+        if (currentProduct) addToCart(currentProduct);
+      });
+      
+      document.getElementById('proporTrocaBtn').addEventListener('click', proporTroca);
+    });
+
+    window.goToProduct = goToProduct;
+  </script>
+</body>
+  <!-- Menu Hamburguer Global -->
+  <script src="menu.js"></script>
+</body>
+</html>

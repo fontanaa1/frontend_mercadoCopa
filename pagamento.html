@@ -11,6 +11,74 @@
     .active-state:active { transform: translate(2px, 2px); box-shadow: none !important; }
     .neobrutal-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
     body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+    .toast-message {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #003215;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      z-index: 1001;
+      animation: fadeInOut 3s ease-in-out;
+      box-shadow: 4px 4px 0px 0px #fcd400;
+      border: 1px solid #fcd400;
+      white-space: nowrap;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+    /* Modal de endereço */
+    .address-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 500px;
+      background: #f8f9fa;
+      border: 2px solid #003215;
+      border-radius: 16px;
+      box-shadow: 8px 8px 0px 0px rgba(0,50,21,0.15);
+      z-index: 1002;
+      display: none;
+      overflow: hidden;
+    }
+    .address-modal.active {
+      display: block;
+      animation: modalFadeIn 0.3s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+    .address-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1001;
+      display: none;
+    }
+    .address-modal-overlay.active {
+      display: block;
+    }
+    .payment-option {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .payment-option.selected {
+      border-color: #003215;
+      background: #edeeef;
+    }
   </style>
   <script>
     tailwind.config = {
@@ -56,50 +124,58 @@
         <span class="material-symbols-outlined text-primary">location_on</span>
         <h3 class="font-title-md text-title-md">Endereço de Entrega</h3>
       </div>
-      <div class="space-y-2">
-        <p class="font-body-lg"><strong>Ricardo Oliveira</strong></p>
-        <p class="font-body-sm text-on-surface-variant">Rua das Olimpíadas, 1200 - apto 42</p>
-        <p class="font-body-sm text-on-surface-variant">Bairro: Jardim Stadium - São Paulo, SP - CEP: 01234-567</p>
-        <button class="text-primary font-label-caps text-label-caps flex items-center gap-1 mt-2"><span class="material-symbols-outlined text-[16px]">edit</span> ALTERAR ENDEREÇO</button>
+      <div id="enderecoDisplay" class="space-y-2">
+        <p class="font-body-lg"><strong id="enderecoNome">Ricardo Oliveira</strong></p>
+        <p class="font-body-sm text-on-surface-variant" id="enderecoRua">Rua das Olimpíadas, 1200 - apto 42</p>
+        <p class="font-body-sm text-on-surface-variant" id="enderecoComplemento">Bairro: Jardim Stadium - São Paulo, SP - CEP: 01234-567</p>
       </div>
+      <button id="alterarEnderecoBtn" class="text-primary font-label-caps text-label-caps flex items-center gap-1 mt-2 hover:opacity-70 transition-opacity">
+        <span class="material-symbols-outlined text-[16px]">edit</span> ALTERAR ENDEREÇO
+      </button>
     </div>
 
     <!-- Formas de Pagamento -->
     <div class="mb-stack-md">
       <h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tight mb-4">Formas de Pagamento</h3>
       <div class="space-y-gutter">
-        <label class="flex items-center justify-between p-4 bg-surface border-2 border-primary rounded-xl cursor-pointer" id="pixOption">
+        <div id="pixOption" class="payment-option flex items-center justify-between p-4 bg-surface border-2 rounded-xl cursor-pointer" data-payment="pix">
           <div class="flex items-center gap-3">
-            <input type="radio" name="payment" value="pix" class="w-5 h-5 text-primary accent-primary" checked>
+            <div class="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center">
+              <div id="pixRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div>
+            </div>
             <div class="flex flex-col">
               <span class="font-title-md text-primary">PIX</span>
               <span class="text-body-sm text-primary-container font-bold">5% DE DESCONTO</span>
             </div>
           </div>
           <span class="material-symbols-outlined text-primary">qr_code_2</span>
-        </label>
+        </div>
         
-        <label class="flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" id="creditOption">
+        <div id="creditoOption" class="payment-option flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" data-payment="credito">
           <div class="flex items-center gap-3">
-            <input type="radio" name="payment" value="credito" class="w-5 h-5 text-primary accent-primary">
+            <div class="w-5 h-5 rounded-full border-2 border-outline flex items-center justify-center">
+              <div id="creditoRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div>
+            </div>
             <div class="flex flex-col">
               <span class="font-title-md text-on-surface">Cartão de Crédito</span>
               <span class="text-body-sm text-on-surface-variant">Até 12x sem juros</span>
             </div>
           </div>
           <span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
-        </label>
+        </div>
         
-        <label class="flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" id="boletoOption">
+        <div id="boletoOption" class="payment-option flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" data-payment="boleto">
           <div class="flex items-center gap-3">
-            <input type="radio" name="payment" value="boleto" class="w-5 h-5 text-primary accent-primary">
+            <div class="w-5 h-5 rounded-full border-2 border-outline flex items-center justify-center">
+              <div id="boletoRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div>
+            </div>
             <div class="flex flex-col">
               <span class="font-title-md text-on-surface">Boleto Bancário</span>
               <span class="text-body-sm text-on-surface-variant">Desconto de 3%</span>
             </div>
           </div>
           <span class="material-symbols-outlined text-on-surface-variant">description</span>
-        </label>
+        </div>
       </div>
     </div>
 
@@ -107,7 +183,7 @@
     <div class="bg-surface-container-low p-4 rounded-xl border-2 border-outline-variant mb-stack-md">
       <div class="flex justify-between py-2"><span>Subtotal</span><span id="subtotal">R$ 0,00</span></div>
       <div class="flex justify-between py-2"><span>Frete</span><span class="text-primary-container font-bold">GRÁTIS</span></div>
-      <div id="descontoRow" class="flex justify-between py-2 text-green-600 hidden"><span>Desconto PIX (5%)</span><span id="descontoValor">-R$ 0,00</span></div>
+      <div id="descontoRow" class="flex justify-between py-2 text-green-600 hidden"><span>Desconto</span><span id="descontoValor">-R$ 0,00</span></div>
       <div class="flex justify-between py-2 border-t-2 border-outline-variant mt-2 pt-2"><span class="font-title-md text-title-md">TOTAL</span><span id="total" class="font-headline-lg text-headline-lg text-primary">R$ 0,00</span></div>
     </div>
 
@@ -118,46 +194,95 @@
     </button>
   </main>
 
+  <!-- Modal de Endereço -->
+  <div id="addressModalOverlay" class="address-modal-overlay"></div>
+  <div id="addressModal" class="address-modal">
+    <div class="bg-primary text-white p-4 flex justify-between items-center">
+      <span class="font-title-md">Alterar Endereço</span>
+      <button id="closeAddressModal" class="text-white hover:opacity-70">&times;</button>
+    </div>
+    <div class="p-4 space-y-4">
+      <div>
+        <label class="font-label-caps text-label-caps text-primary">Nome completo</label>
+        <input type="text" id="modalNome" class="w-full border-2 border-outline-variant rounded-lg p-2 mt-1 focus:border-primary focus:outline-none">
+      </div>
+      <div>
+        <label class="font-label-caps text-label-caps text-primary">Endereço (Rua, número)</label>
+        <input type="text" id="modalRua" class="w-full border-2 border-outline-variant rounded-lg p-2 mt-1 focus:border-primary focus:outline-none">
+      </div>
+      <div>
+        <label class="font-label-caps text-label-caps text-primary">Complemento (Bairro, Cidade, UF, CEP)</label>
+        <input type="text" id="modalComplemento" class="w-full border-2 border-outline-variant rounded-lg p-2 mt-1 focus:border-primary focus:outline-none">
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button id="salvarEnderecoBtn" class="flex-1 bg-primary text-white py-2 rounded-lg font-label-caps">SALVAR</button>
+        <button id="cancelarEnderecoBtn" class="flex-1 border-2 border-outline-variant py-2 rounded-lg font-label-caps">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+
   <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
     <div class="flex justify-around items-center w-full px-2 py-3">
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
-      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
-      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
-      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
+      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
+      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
+      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 transition-all"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
     </div>
   </nav>
 
   <script>
+    // Chave do carrinho
+    const CART_KEY = 'mercado_copa_cart';
+    
+    // Dados da compra
     let compraData = null;
     let selectedPayment = 'pix';
     let originalTotal = 0;
+    let isProcessing = false; // Para evitar duplo clique
+    
+    // Endereço padrão
     let endereco = {
       nome: "Ricardo Oliveira",
       rua: "Rua das Olimpíadas, 1200 - apto 42",
-      bairro: "Jardim Stadium",
-      cidade: "São Paulo - SP",
-      cep: "01234-567"
+      complemento: "Jardim Stadium - São Paulo, SP - CEP: 01234-567"
     };
 
+    // Função para mostrar toast
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast-message';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // Carregar dados da compra
     function loadCompra() {
       const saved = localStorage.getItem('compra_pendente');
       if (!saved) {
-        window.location.href = 'carrinho.html';
+        showToast('⚠️ Nenhum item no carrinho!');
+        setTimeout(() => {
+          window.location.href = 'carrinho.html';
+        }, 1500);
         return;
       }
       compraData = JSON.parse(saved);
       originalTotal = compraData.total;
       renderItems();
       updateTotals();
+      renderEndereco();
     }
 
+    // Renderizar itens
     function renderItems() {
       const container = document.getElementById('itemsResumo');
+      if (!compraData || !compraData.items) return;
+      
       container.innerHTML = compraData.items.map(item => `
         <div class="flex gap-3 p-3 bg-surface border border-outline-variant rounded-lg">
           <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden flex-shrink-0">
-            <img src="${item.imagem}" class="w-full h-full object-cover" alt="${item.nome}">
+            <img src="${item.imagem}" class="w-full h-full object-cover" alt="${item.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Imagem'">
           </div>
           <div class="flex-grow">
             <h4 class="font-title-md">${item.nome}</h4>
@@ -169,6 +294,14 @@
       document.getElementById('subtotal').textContent = `R$ ${originalTotal.toFixed(2).replace('.', ',')}`;
     }
 
+    // Renderizar endereço
+    function renderEndereco() {
+      document.getElementById('enderecoNome').textContent = endereco.nome;
+      document.getElementById('enderecoRua').textContent = endereco.rua;
+      document.getElementById('enderecoComplemento').textContent = endereco.complemento;
+    }
+
+    // Atualizar totais com base no método de pagamento
     function updateTotals() {
       let finalTotal = originalTotal;
       let desconto = 0;
@@ -179,23 +312,67 @@
         desconto = originalTotal * 0.05;
         finalTotal = originalTotal - desconto;
         document.getElementById('descontoRow').classList.remove('hidden');
-        document.getElementById('descontoValor').textContent = `-R$ ${desconto.toFixed(2).replace('.', ',')}`;
+        document.getElementById('descontoValor').innerHTML = `-R$ ${desconto.toFixed(2).replace('.', ',')} (5%)`;
       } else if (selectedPayment === 'boleto') {
         descontoPercentual = 3;
         desconto = originalTotal * 0.03;
         finalTotal = originalTotal - desconto;
         document.getElementById('descontoRow').classList.remove('hidden');
-        document.getElementById('descontoValor').textContent = `-R$ ${desconto.toFixed(2).replace('.', ',')}`;
+        document.getElementById('descontoValor').innerHTML = `-R$ ${desconto.toFixed(2).replace('.', ',')} (3%)`;
       } else {
         document.getElementById('descontoRow').classList.add('hidden');
       }
       
-      document.getElementById('total').textContent = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
+      document.getElementById('total').innerHTML = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
       return { finalTotal, desconto, descontoPercentual };
     }
 
+    // Selecionar método de pagamento
+    function selectPayment(payment) {
+      selectedPayment = payment;
+      
+      // Atualizar estilos dos cards
+      const pixOption = document.getElementById('pixOption');
+      const creditoOption = document.getElementById('creditoOption');
+      const boletoOption = document.getElementById('boletoOption');
+      const pixRadio = document.getElementById('pixRadio');
+      const creditoRadio = document.getElementById('creditoRadio');
+      const boletoRadio = document.getElementById('boletoRadio');
+      
+      // Resetar todos
+      [pixOption, creditoOption, boletoOption].forEach(opt => {
+        opt.classList.remove('border-primary', 'bg-surface-container-high');
+        opt.classList.add('border-outline-variant');
+      });
+      [pixRadio, creditoRadio, boletoRadio].forEach(radio => radio.classList.add('hidden'));
+      
+      // Ativar o selecionado
+      if (payment === 'pix') {
+        pixOption.classList.add('border-primary', 'bg-surface-container-high');
+        pixOption.classList.remove('border-outline-variant');
+        pixRadio.classList.remove('hidden');
+      } else if (payment === 'credito') {
+        creditoOption.classList.add('border-primary', 'bg-surface-container-high');
+        creditoOption.classList.remove('border-outline-variant');
+        creditoRadio.classList.remove('hidden');
+      } else if (payment === 'boleto') {
+        boletoOption.classList.add('border-primary', 'bg-surface-container-high');
+        boletoOption.classList.remove('border-outline-variant');
+        boletoRadio.classList.remove('hidden');
+      }
+      
+      updateTotals();
+    }
+
+    // Finalizar compra
     function finalizarCompra() {
-      if (!compraData) return;
+      if (isProcessing) return;
+      if (!compraData) {
+        showToast('⚠️ Nenhum item no carrinho!');
+        return;
+      }
+      
+      isProcessing = true;
       
       const { finalTotal, desconto, descontoPercentual } = updateTotals();
       let paymentMethod = '';
@@ -226,19 +403,73 @@
       localStorage.removeItem('compra_pendente');
       localStorage.removeItem(CART_KEY);
       
-      window.location.href = 'compra.html';
+      showToast('✅ Pagamento confirmado! Redirecionando...');
+      
+      setTimeout(() => {
+        window.location.href = 'compra.html';
+      }, 1500);
     }
 
-    document.querySelectorAll('input[name="payment"]').forEach(radio => {
-      radio.addEventListener('change', (e) => {
-        selectedPayment = e.target.value;
-        updateTotals();
-      });
+    // Modal de endereço
+    const addressModal = document.getElementById('addressModal');
+    const addressModalOverlay = document.getElementById('addressModalOverlay');
+    
+    function openAddressModal() {
+      document.getElementById('modalNome').value = endereco.nome;
+      document.getElementById('modalRua').value = endereco.rua;
+      document.getElementById('modalComplemento').value = endereco.complemento;
+      addressModal.classList.add('active');
+      addressModalOverlay.classList.add('active');
+    }
+    
+    function closeAddressModal() {
+      addressModal.classList.remove('active');
+      addressModalOverlay.classList.remove('active');
+    }
+    
+    function salvarEndereco() {
+      const novoNome = document.getElementById('modalNome').value.trim();
+      const novaRua = document.getElementById('modalRua').value.trim();
+      const novoComplemento = document.getElementById('modalComplemento').value.trim();
+      
+      if (!novoNome || !novaRua || !novoComplemento) {
+        showToast('⚠️ Por favor, preencha todos os campos do endereço.');
+        return;
+      }
+      
+      endereco = {
+        nome: novoNome,
+        rua: novaRua,
+        complemento: novoComplemento
+      };
+      
+      renderEndereco();
+      closeAddressModal();
+      showToast('📦 Endereço atualizado com sucesso!');
+    }
+
+    // Event Listeners - usando addEventListener para evitar múltiplos
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCompra();
+      
+      // Botões de pagamento
+      document.getElementById('pixOption').addEventListener('click', () => selectPayment('pix'));
+      document.getElementById('creditoOption').addEventListener('click', () => selectPayment('credito'));
+      document.getElementById('boletoOption').addEventListener('click', () => selectPayment('boleto'));
+      
+      // Botão finalizar
+      document.getElementById('finalizarBtn').addEventListener('click', finalizarCompra);
+      
+      // Botões de endereço
+      document.getElementById('alterarEnderecoBtn').addEventListener('click', openAddressModal);
+      document.getElementById('closeAddressModal').addEventListener('click', closeAddressModal);
+      document.getElementById('addressModalOverlay').addEventListener('click', closeAddressModal);
+      document.getElementById('salvarEnderecoBtn').addEventListener('click', salvarEndereco);
+      document.getElementById('cancelarEnderecoBtn').addEventListener('click', closeAddressModal);
+      
+      // Selecionar PIX por padrão
+      selectPayment('pix');
     });
-    
-    document.getElementById('finalizarBtn').addEventListener('click', finalizarCompra);
-    
-    document.addEventListener('DOMContentLoaded', loadCompra);
   </script>
 </body>
 </html>
