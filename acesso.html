@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | Mercado da Copa</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:wght@400;700&amp;family=JetBrains+Mono:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-stadium-gradient {
+            background: radial-gradient(circle at center, #004b23 0%, #003215 100%);
+        }
+        .tactile-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: none !important;
+        }
+        .tactile-btn:hover {
+            border-bottom-width: 2px;
+            border-color: #fcd400; /* Championship Gold */
+        }
+        input:focus {
+            outline: none;
+            border-bottom-color: #004b23 !important;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#79bb87",
+                      "tertiary-fixed": "#ffdad7",
+                      "on-secondary-fixed-variant": "#544600",
+                      "on-primary-fixed": "#00210c",
+                      "surface-container": "#edeeef",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#93d6a0",
+                      "surface-tint": "#2a6a3f",
+                      "primary": "#003215",
+                      "tertiary-container": "#860015",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#d9dadb",
+                      "primary-fixed-dim": "#93d6a0",
+                      "on-secondary-container": "#6e5c00",
+                      "surface-container-lowest": "#ffffff",
+                      "surface": "#f8f9fa",
+                      "on-tertiary-container": "#ff8a86",
+                      "tertiary": "#5c000b",
+                      "surface-variant": "#e1e3e4",
+                      "surface-bright": "#f8f9fa",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#fcd400",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed": "#221b00",
+                      "inverse-surface": "#2e3132",
+                      "secondary": "#705d00",
+                      "on-surface": "#191c1d",
+                      "surface-container-highest": "#e1e3e4",
+                      "outline-variant": "#c0c9be",
+                      "on-tertiary-fixed": "#410005",
+                      "inverse-on-surface": "#f0f1f2",
+                      "secondary-fixed": "#ffe16d",
+                      "primary-fixed": "#aef2bb",
+                      "on-primary-fixed-variant": "#0b5229",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed-dim": "#e9c400",
+                      "on-background": "#191c1d",
+                      "on-surface-variant": "#404941",
+                      "background": "#f8f9fa",
+                      "primary-container": "#004b23",
+                      "tertiary-fixed-dim": "#ffb3af",
+                      "on-tertiary-fixed-variant": "#930018",
+                      "surface-container-high": "#e7e8e9",
+                      "surface-container-low": "#f3f4f5",
+                      "outline": "#707970",
+                      "on-error": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "12px",
+                      "unit": "4px",
+                      "stack-lg": "48px",
+                      "stack-sm": "8px",
+                      "stack-md": "24px",
+                      "container-margin": "20px"
+              },
+              "fontFamily": {
+                      "title-md": ["Hanken Grotesk"],
+                      "display-lg": ["Anton"],
+                      "body-sm": ["Hanken Grotesk"],
+                      "headline-lg-mobile": ["Anton"],
+                      "headline-lg": ["Anton"],
+                      "label-caps": ["JetBrains Mono"],
+                      "body-lg": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-lg text-on-surface overflow-x-hidden min-h-screen">
+<main class="grid grid-cols-1 lg:grid-cols-12 min-h-screen">
+<!-- Background Imagery Section (Desktop Only) -->
+<section class="hidden lg:flex lg:col-span-7 bg-primary overflow-hidden relative items-center justify-center p-stack-lg">
+<div class="absolute inset-0 opacity-40 z-0">
+<img alt="Estádio de Futebol" class="w-full h-full object-cover grayscale" data-alt="A high-contrast cinematic shot of a majestic, empty football stadium at night under bright arena floodlights. The scene is rendered in deep forest greens and stark whites, echoing a professional and nostalgic sports atmosphere. Volumetric lighting and a slight haze create a premium, editorial feel consistent with the Mercado da Copa brand. The architectural lines of the stadium seats create a rhythmic, structured grid in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAboAr0cZsWEcCy9RT32mqYjnodFsJfdr2iw8LRpukqsH5cRT8eUJhqWbRyo6PVZQtZwF2a1iuWOTBkgdcMKYy8GebyGLKjNlEfjhA707HPhavQlTQgTr-PZ_gRti2U3VYMLooRfwvWaaApgI8pfJoum3RThH1RWwPwWlI62f9EExFmRNDpvitajNC4eC1VYixwo5MYArWW4WmtnBleXVoiTPzrThOIN3DEFGqM0vKvKG-iU36e_D0o_gIaMuek1yPiiqyxmucJl0U"/>
+</div>
+<div class="relative z-10 text-center max-w-xl">
+<h1 class="font-display-lg text-display-lg text-on-primary mb-stack-sm uppercase tracking-tight">O Jogo Começa Aqui.</h1>
+<p class="font-title-md text-title-md text-on-primary-container">Encontre as raridades mais cobiçadas da história das Copas no maior marketplace de colecionadores do Brasil.</p>
+<div class="mt-stack-md flex justify-center space-x-4">
+<div class="px-4 py-2 border-2 border-secondary-container text-secondary-container font-label-caps uppercase">Match Ready</div>
+<div class="px-4 py-2 border-2 border-on-primary text-on-primary font-label-caps uppercase">Deadstock Items</div>
+</div>
+</div>
+<!-- Pitch Lines Decorative Element -->
+<div class="absolute bottom-0 left-0 w-full h-1/3 opacity-20 border-t-4 border-r-4 border-on-primary rounded-tr-full transform -translate-x-1/2 translate-y-1/2"></div>
+</section>
+<!-- Login Form Section -->
+<section class="col-span-1 lg:col-span-5 flex flex-col justify-center items-center px-container-margin py-stack-lg bg-surface">
+<div class="w-full max-w-sm">
+<!-- Brand Anchor -->
+<div class="text-center mb-stack-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight uppercase">Mercado da Copa</h2>
+<span class="font-label-caps text-label-caps text-secondary px-2 py-1 bg-secondary-fixed rounded-sm">Official Collector Portal</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-stack-md shadow-sm">
+<div class="mb-stack-md">
+<h3 class="font-title-md text-title-md text-on-surface mb-1">Acesse sua Conta</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Entre para gerenciar seu acervo e lances.</p>
+</div>
+<form action="telaprincipal.html" method="get" class="space-y-stack-md">
+<div class="group">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-1 block">E-mail ou Usuário</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-outline">person</span>
+<input class="w-full pl-8 py-2 bg-transparent border-b-2 border-outline-variant font-body-lg focus:border-primary transition-colors placeholder:text-outline-variant" placeholder="colecionador@estadio.com" type="text"/>
+</div>
+</div>
+<div class="group">
+<label class="font-label-caps text-label-caps text-on-surface-variant mb-1 block">Sua Senha</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-0 top-1/2 -translate-y-1/2 text-outline">lock</span>
+<input class="w-full pl-8 py-2 bg-transparent border-b-2 border-outline-variant font-body-lg focus:border-primary transition-colors placeholder:text-outline-variant" placeholder="••••••••" type="password"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-outline hover:text-primary" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<label class="flex items-center space-x-2 cursor-pointer">
+<input class="w-4 h-4 rounded-none border-2 border-outline text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lembrar de mim</span>
+</label>
+<a class="font-label-caps text-label-caps text-primary hover:underline" href="#">Esqueci a senha</a>
+</div>
+<button class="tactile-btn w-full py-4 bg-primary text-on-primary font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-wide shadow-[4px_4px_0px_0px_rgba(0,50,21,0.2)] transition-all" type="submit">
+                            Entrar em Campo
+                        </button>
+</form>
+<div class="mt-stack-md relative text-center">
+<hr class="border-outline-variant"/>
+<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 bg-surface-container-lowest font-label-caps text-label-caps text-on-surface-variant">Ou continue com</span>
+</div>
+<div class="grid grid-cols-2 gap-gutter mt-stack-md">
+<button class="flex items-center justify-center space-x-2 py-3 border-2 border-outline-variant hover:border-primary transition-all">
+<img alt="Google" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8Rw9OWV2WHiwbXVL9IhFfmXoJ__7kT3BLvwPM8kL1PJesmoj9k_WBN_c1MnVX0O52_jnthbmnQJreH4cBz0cED6SgS_vFwCmy969Ddld72kcRYbnM8g484kAMW-yksetd7XSo8bm4q3kWo5zBMQPRjvRqWran758FAPV-VdGHEuyDlhLyZMttOu5tTeRzaQxJ48AUqpJnDF17bivKuSlKWoSHprslQATEyA4vkrOz8C18Br7DgeKNwwW9d7JM74TzEwqTsfhlFXs"/>
+<span class="font-label-caps text-label-caps">Google</span>
+</button>
+<button class="flex items-center justify-center space-x-2 py-3 border-2 border-outline-variant hover:border-primary transition-all">
+<span class="material-symbols-outlined text-on-surface">face_nod</span>
+<span class="font-label-caps text-label-caps">Facebook</span>
+</button>
+</div>
+</div>
+<div class="mt-stack-md text-center">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Ainda não tem o manto? 
+                        <a class="text-primary font-bold hover:underline" href="#">Crie sua conta agora</a>
+</p>
+</div>
+<!-- Subtle Decorative Soccer Pattern -->
+<div class="mt-stack-lg flex justify-center opacity-10">
+<div class="grid grid-cols-3 gap-4">
+<span class="material-symbols-outlined text-4xl">sports_soccer</span>
+<span class="material-symbols-outlined text-4xl">stadium</span>
+<span class="material-symbols-outlined text-4xl">military_tech</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Rights (Minimal) -->
+<footer class="fixed bottom-4 right-4 hidden lg:block opacity-30 pointer-events-none">
+<p class="font-label-caps text-label-caps uppercase">Est. 2024 — Archive Collectors</p>
+</footer>
+<script>
+        // Micro-interaction: Active state for buttons
+        const buttons = document.querySelectorAll('.tactile-btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.classList.add('translate-x-[2px]', 'translate-y-[2px]', 'shadow-none');
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.classList.remove('translate-x-[2px]', 'translate-y-[2px]', 'shadow-none');
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.classList.remove('translate-x-[2px]', 'translate-y-[2px]', 'shadow-none');
+            });
+        });
+
+        // Floating particle effect for football theme
+        const section = document.querySelector('section.hidden.lg\\:flex');
+        if(section) {
+            for(let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute bg-on-primary rounded-full opacity-10';
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+                section.appendChild(particle);
+            }
+        }
+
+        // Add float animation keyframe
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes float {
+                0% { transform: translateY(0) translateX(0); }
+                50% { transform: translateY(-50px) translateX(20px); }
+                100% { transform: translateY(0) translateX(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+<script src="app.js" defer></script>
+</body></html>
