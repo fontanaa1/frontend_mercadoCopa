@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Compra Confirmada - Mercado da Copa</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .tactile-push:active { transform: translate(2px, 2px); box-shadow: none !important; }
+    .winner-circle { background: linear-gradient(135deg, #fcd400 0%, #705d00 100%); }
+    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+    /* Modal do Chat */
+    .chat-modal {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 350px;
+      max-width: calc(100vw - 40px);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      border: 2px solid #003215;
+      overflow: hidden;
+    }
+    .chat-modal.active { display: flex; }
+    .chat-header {
+      background: #003215;
+      color: white;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      padding: 12px;
+      background: #f8f9fa;
+    }
+    .chat-input-area {
+      display: flex;
+      padding: 12px;
+      border-top: 1px solid #c0c9be;
+      background: white;
+    }
+    .chat-input-area input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #c0c9be;
+      border-radius: 24px;
+      outline: none;
+    }
+    .chat-input-area button {
+      background: #003215;
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 8px 16px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .message {
+      margin-bottom: 12px;
+      display: flex;
+    }
+    .message.user { justify-content: flex-end; }
+    .message.bot .bubble { background: white; border: 1px solid #c0c9be; }
+    .message.user .bubble { background: #003215; color: white; }
+    .bubble {
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error": "#ba1a1a", "on-primary-container": "#79bb87", "tertiary-fixed": "#ffdad7",
+            "on-secondary-fixed-variant": "#544600", "on-primary-fixed": "#00210c", "surface-container": "#edeeef",
+            "on-secondary": "#ffffff", "inverse-primary": "#93d6a0", "surface-tint": "#2a6a3f", "primary": "#003215",
+            "tertiary-container": "#860015", "error-container": "#ffdad6", "surface-dim": "#d9dadb",
+            "primary-fixed-dim": "#93d6a0", "on-secondary-container": "#6e5c00", "surface-container-lowest": "#ffffff",
+            "surface": "#f8f9fa", "on-tertiary-container": "#ff8a86", "tertiary": "#5c000b", "surface-variant": "#e1e3e4",
+            "surface-bright": "#f8f9fa", "on-primary": "#ffffff", "secondary-container": "#fcd400", "on-tertiary": "#ffffff",
+            "on-secondary-fixed": "#221b00", "inverse-surface": "#2e3132", "secondary": "#705d00", "on-surface": "#191c1d",
+            "surface-container-highest": "#e1e3e4", "outline-variant": "#c0c9be", "on-tertiary-fixed": "#410005",
+            "inverse-on-surface": "#f0f1f2", "secondary-fixed": "#ffe16d", "primary-fixed": "#aef2bb",
+            "on-primary-fixed-variant": "#0b5229", "on-error-container": "#93000a", "secondary-fixed-dim": "#e9c400",
+            "on-background": "#191c1d", "on-surface-variant": "#404941", "background": "#f8f9fa", "primary-container": "#004b23",
+            "tertiary-fixed-dim": "#ffb3af", "on-tertiary-fixed-variant": "#930018", "surface-container-high": "#e7e8e9",
+            "surface-container-low": "#f3f4f5", "outline": "#707970", "on-error": "#ffffff"
+          },
+          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+          spacing: { gutter: "12px", unit: "4px", "stack-lg": "48px", "stack-sm": "8px", "stack-md": "24px", "container-margin": "20px" },
+          fontFamily: { "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-sm": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "headline-lg": ["Anton"], "label-caps": ["JetBrains Mono"], "body-lg": ["Hanken Grotesk"] },
+          fontSize: { "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-lg min-h-screen flex flex-col items-center">
+
+  <header class="w-full top-0 sticky bg-surface border-b-2 border-outline-variant z-40">
+    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
+      <button class="material-symbols-outlined text-primary hover:opacity-80">menu</button>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Mercado da Copa</h1>
+      <button class="material-symbols-outlined text-primary hover:opacity-80">notifications</button>
+    </div>
+  </header>
+
+  <main class="w-full max-w-md md:max-w-4xl px-container-margin py-stack-md flex-grow">
+    <!-- Success Hero -->
+    <section class="flex flex-col items-center text-center mb-stack-lg animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div class="w-24 h-24 winner-circle rounded-full flex items-center justify-center mb-stack-sm shadow-lg">
+        <span class="material-symbols-outlined text-white text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+      </div>
+      <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-1 uppercase tracking-wider">Golaço! Compra realizada!</h2>
+      <p id="pedidoId" class="font-label-caps text-label-caps text-secondary mb-stack-md">PEDIDO #MC-2024-99XJ</p>
+    </section>
+
+    <!-- Receipt Content Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+      <!-- Items Summary Column -->
+      <div class="space-y-gutter">
+        <div class="bg-surface-container-low border-2 border-outline-variant p-stack-md rounded-lg">
+          <h3 class="font-title-md text-title-md mb-stack-sm border-b-2 border-outline-variant pb-2 uppercase italic">Resumo do Pedido</h3>
+          <div id="itemsList" class="space-y-4"></div>
+          <div id="totalSection" class="mt-stack-md pt-4 border-t-2 border-outline-variant border-dashed space-y-2"></div>
+        </div>
+      </div>
+
+      <!-- Logistics Column -->
+      <div class="space-y-gutter">
+        <!-- Payment Details -->
+        <div class="bg-white border-2 border-primary p-stack-md rounded-lg relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-primary text-white px-3 py-1 font-label-caps text-[10px]">PAGAMENTO CONFIRMADO</div>
+          <h3 class="font-title-md text-title-md mb-stack-sm uppercase">Logística & Pagamento</h3>
+          <div class="space-y-stack-md">
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary">local_shipping</span>
+              <div>
+                <p class="font-label-caps text-label-caps text-on-surface-variant">ENTREGA ESTIMADA</p>
+                <p class="font-body-lg font-bold" id="entregaEstimada">3 a 5 dias úteis</p>
+                <p class="font-body-sm text-on-surface-variant" id="enderecoEntrega">Rua das Olimpíadas, 1200 - SP</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="material-symbols-outlined text-primary">credit_card</span>
+              <div>
+                <p class="font-label-caps text-label-caps text-on-surface-variant">FORMA DE PAGAMENTO</p>
+                <p class="font-body-lg font-bold" id="paymentMethod">Cartão de Crédito</p>
+                <p class="font-body-sm text-on-surface-variant" id="paymentDetails">Visa final **** 9012</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Card com Chat Funcional -->
+        <div class="bg-surface-container-highest p-stack-md border-2 border-outline-variant rounded-lg flex items-center justify-between">
+          <div>
+            <p class="font-title-md text-body-lg">Dúvidas sobre o pedido?</p>
+            <p class="font-body-sm text-on-surface-variant">Fale com o VAR do Mercado.</p>
+          </div>
+          <button id="openChatBtn" class="material-symbols-outlined text-primary text-3xl cursor-pointer hover:scale-110 transition-transform">chat_bubble</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Area -->
+    <div class="mt-stack-lg flex flex-col items-center gap-4">
+      <a class="tactile-push bg-primary text-white px-12 py-4 rounded-xl font-headline-lg-mobile text-body-lg uppercase tracking-widest flex items-center gap-2 transition-all w-full md:w-auto justify-center" href="telaprincipal.html">
+        <span class="material-symbols-outlined">home</span>
+        Voltar à Home
+      </a>
+      <button id="verPedidosBtn" class="text-primary font-label-caps text-label-caps border-b-2 border-primary pb-1 hover:opacity-70 transition-all uppercase">
+        Ver Meus Pedidos
+      </button>
+    </div>
+  </main>
+
+  <!-- Modal do Chat VAR -->
+  <div id="chatModal" class="chat-modal">
+    <div class="chat-header">
+      <span class="flex items-center gap-2"><span class="material-symbols-outlined">sports_soccer</span> VAR - Atendimento</span>
+      <button id="closeChatBtn" class="text-white hover:opacity-70">&times;</button>
+    </div>
+    <div id="chatMessages" class="chat-messages">
+      <div class="message bot">
+        <div class="bubble">Olá! Sou o assistente VAR do Mercado da Copa. Como posso ajudar você hoje? ⚽</div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
+    <div class="flex justify-around items-center w-full px-2 py-3">
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
+      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
+      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
+      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+    </div>
+  </nav>
+
+  <script>
+    let compraData = null;
+
+    function loadCompraData() {
+      const saved = localStorage.getItem('compra_finalizada');
+      if (!saved) {
+        // Dados de exemplo para demonstração
+        compraData = {
+          items: [
+            { id: 5, nome: "Brasil 1998 Home Retro", preco: 349, tamanho: "G", quantidade: 1, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw" },
+            { id: 6, nome: "Agasalho Argentina '94", preco: 520, tamanho: "M", quantidade: 1, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0" },
+            { id: 7, nome: "Boné USA '94 Corduroy", preco: 120, tamanho: "Único", quantidade: 2, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8" }
+          ],
+          total: 1109,
+          paymentMethod: "PIX",
+          paymentDetails: { chave: "colecionador@mercadodacopa.com", desconto: "5%" },
+          finalTotal: 1053.55,
+          endereco: { nome: "Ricardo Oliveira", rua: "Rua das Olimpíadas, 1200 - apto 42", bairro: "Jardim Stadium", cidade: "São Paulo - SP", cep: "01234-567" },
+          dataCompra: new Date().toLocaleString('pt-BR')
+        };
+      } else {
+        compraData = JSON.parse(saved);
+      }
+      
+      renderItems();
+      renderTotal();
+      renderPaymentInfo();
+      renderAddressInfo();
+      
+      // Gerar número do pedido aleatório
+      const pedidoNum = 'MC-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+      document.getElementById('pedidoId').textContent = `PEDIDO #${pedidoNum}`;
+    }
+    
+    function renderItems() {
+      const container = document.getElementById('itemsList');
+      container.innerHTML = compraData.items.map(item => `
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 bg-surface-variant border border-outline-variant overflow-hidden rounded-sm flex-shrink-0">
+            <img src="${item.imagem}" class="w-full h-full object-cover" alt="${item.nome}">
+          </div>
+          <div class="flex-grow">
+            <p class="font-title-md text-body-lg leading-tight">${item.nome}</p>
+            <p class="font-label-caps text-label-caps text-on-surface-variant">TAMANHO: ${item.tamanho} | QTD: ${item.quantidade}</p>
+          </div>
+          <span class="font-headline-lg-mobile text-body-lg text-primary">R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</span>
+        </div>
+      `).join('');
+    }
+    
+    function renderTotal() {
+      const container = document.getElementById('totalSection');
+      const finalTotal = compraData.finalTotal || compraData.total;
+      container.innerHTML = `
+        <div class="flex justify-between font-body-sm text-on-surface-variant">
+          <span>Subtotal</span>
+          <span>R$ ${compraData.total.toFixed(2).replace('.', ',')}</span>
+        </div>
+        <div class="flex justify-between font-body-sm text-on-surface-variant">
+          <span>Frete Sedex</span>
+          <span class="text-primary-container font-bold">GRÁTIS</span>
+        </div>
+        ${compraData.desconto ? `
+        <div class="flex justify-between font-body-sm text-green-600">
+          <span>Desconto</span>
+          <span>-R$ ${compraData.desconto.toFixed(2).replace('.', ',')}</span>
+        </div>
+        ` : ''}
+        <div class="flex justify-between font-title-md text-title-md pt-2">
+          <span>TOTAL</span>
+          <span class="text-primary">R$ ${finalTotal.toFixed(2).replace('.', ',')}</span>
+        </div>
+      `;
+    }
+    
+    function renderPaymentInfo() {
+      const methodElement = document.getElementById('paymentMethod');
+      const detailsElement = document.getElementById('paymentDetails');
+      
+      if (compraData.paymentMethod === 'PIX') {
+        methodElement.textContent = 'PIX';
+        detailsElement.textContent = `Chave: ${compraData.paymentDetails?.chave || 'colecionador@mercadodacopa.com'} | 5% desconto`;
+      } else if (compraData.paymentMethod === 'Cartão de Crédito') {
+        methodElement.textContent = 'Cartão de Crédito';
+        detailsElement.textContent = `${compraData.paymentDetails?.bandeira || 'Visa'} final **** ${compraData.paymentDetails?.final || '9012'} | ${compraData.paymentDetails?.parcelas || '1x sem juros'}`;
+      } else if (compraData.paymentMethod === 'Boleto Bancário') {
+        methodElement.textContent = 'Boleto Bancário';
+        detailsElement.textContent = `Vencimento em ${compraData.paymentDetails?.vencimento || '3 dias úteis'} | ${compraData.paymentDetails?.desconto || '3%'} desconto`;
+      } else {
+        methodElement.textContent = compraData.paymentMethod || 'PIX';
+        detailsElement.textContent = 'Pagamento confirmado';
+      }
+    }
+    
+    function renderAddressInfo() {
+      const enderecoElement = document.getElementById('enderecoEntrega');
+      if (compraData.endereco) {
+        enderecoElement.textContent = `${compraData.endereco.rua}, ${compraData.endereco.bairro} - ${compraData.endereco.cidade}`;
+      } else {
+        enderecoElement.textContent = 'Rua das Olimpíadas, 1200 - Jardim Stadium, São Paulo - SP';
+      }
+    }
+    
+    // Chat VAR Funcional
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      if (!message) return;
+      
+      const messagesContainer = document.getElementById('chatMessages');
+      
+      // Adicionar mensagem do usuário
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.className = 'message user';
+      userMsgDiv.innerHTML = `<div class="bubble">${escapeHtml(message)}</div>`;
+      messagesContainer.appendChild(userMsgDiv);
+      
+      input.value = '';
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      
+      // Resposta automática do VAR
+      setTimeout(() => {
+        let resposta = '';
+        const lowerMsg = message.toLowerCase();
+        
+        if (lowerMsg.includes('prazo') || lowerMsg.includes('entrega')) {
+          resposta = 'O prazo de entrega é de 3 a 7 dias úteis para a região Sudeste e 5 a 12 dias para as demais regiões. 🚚';
+        } else if (lowerMsg.includes('troca') || lowerMsg.includes('devolução')) {
+          resposta = 'Você tem 7 dias corridos após o recebimento para solicitar troca ou devolução. Entre em contato pelo e-mail trocas@mercadodacopa.com 📦';
+        } else if (lowerMsg.includes('pagamento') || lowerMsg.includes('pix') || lowerMsg.includes('cartão')) {
+          resposta = 'Seu pagamento foi processado com sucesso! Em até 1 hora você receberá a confirmação por e-mail. 💳';
+        } else if (lowerMsg.includes('rastreio') || lowerMsg.includes('código')) {
+          resposta = 'Assim que seu pedido for despachado, você receberá o código de rastreio por e-mail e SMS. 📍';
+        } else if (lowerMsg.includes('obrigado') || lowerMsg.includes('valeu')) {
+          resposta = 'Por nada! É um prazer ajudar você a construir seu acervo de campeão! 🏆⚽';
+        } else {
+          resposta = 'Obrigado pelo contato! Nosso time de especialistas analisará sua mensagem e retornará em até 24h. Enquanto isso, posso ajudar com informações sobre entrega, troca ou pagamento?';
+        }
+        
+        const botMsgDiv = document.createElement('div');
+        botMsgDiv.className = 'message bot';
+        botMsgDiv.innerHTML = `<div class="bubble">${resposta}</div>`;
+        messagesContainer.appendChild(botMsgDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }, 500);
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    // Abrir/fechar chat
+    document.getElementById('openChatBtn').addEventListener('click', () => {
+      document.getElementById('chatModal').classList.add('active');
+    });
+    
+    document.getElementById('closeChatBtn').addEventListener('click', () => {
+      document.getElementById('chatModal').classList.remove('active');
+    });
+    
+    document.getElementById('verPedidosBtn').addEventListener('click', () => {
+      window.location.href = 'historico.html';
+    });
+    
+    document.addEventListener('DOMContentLoaded', loadCompraData);
+  </script>
+</body>
+</html>

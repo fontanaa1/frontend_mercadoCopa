@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Mercado da Copa | Home</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet"/>
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error-container": "#93000a", "surface-container-low": "#f3f4f5", "on-surface": "#191c1d",
+            "on-tertiary": "#ffffff", "surface-container-highest": "#e1e3e4", "primary-fixed": "#aef2bb",
+            "on-primary-container": "#79bb87", "outline": "#707970", "on-primary-fixed": "#00210c",
+            "surface-bright": "#f8f9fa", "on-primary-fixed-variant": "#0b5229", "on-secondary-container": "#6e5c00",
+            "on-tertiary-container": "#ff8a86", "inverse-on-surface": "#f0f1f2", "surface-container": "#edeeef",
+            "on-tertiary-fixed": "#410005", "tertiary-fixed-dim": "#ffb3af", "inverse-surface": "#2e3132",
+            "surface-dim": "#d9dadb", "on-background": "#191c1d", "tertiary": "#5c000b", "error-container": "#ffdad6",
+            "surface-tint": "#2a6a3f", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#930018",
+            "on-primary": "#ffffff", "tertiary-container": "#860015", "outline-variant": "#c0c9be", "secondary-fixed": "#ffe16d",
+            "on-secondary-fixed": "#221b00", "inverse-primary": "#93d6a0", "tertiary-fixed": "#ffdad7", "on-secondary": "#ffffff",
+            "on-surface-variant": "#404941", "primary": "#003215", "primary-fixed-dim": "#93d6a0", "surface-container-high": "#e7e8e9",
+            "secondary-container": "#fcd400", "surface": "#f8f9fa", "error": "#ba1a1a", "secondary-fixed-dim": "#e9c400",
+            "surface-variant": "#e1e3e4", "on-error": "#ffffff", "on-secondary-fixed-variant": "#544600", "background": "#f8f9fa",
+            "secondary": "#705d00", "primary-container": "#004b23"
+          },
+          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+          spacing: { gutter: "12px", "container-margin": "20px", "stack-lg": "48px", "stack-md": "24px", "stack-sm": "8px", unit: "4px" },
+          fontFamily: { "headline-lg": ["Anton"], "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-lg": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "body-sm": ["Hanken Grotesk"], "label-caps": ["JetBrains Mono"] },
+          fontSize: { "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .tactile-active:active { transform: translate(2px, 2px); box-shadow: none; }
+    .tactile-shadow { box-shadow: 0px 0px 0px 0px rgba(0,0,0,1); transition: all 0.1s; }
+    .tactile-shadow:active { box-shadow: -2px -2px 0px 0px rgba(0,0,0,1); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body { min-height: max(884px, 100dvh); }
+    .product-card { transition: transform 0.2s ease, box-shadow 0.2s ease; cursor: pointer; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+
+  <!-- TopAppBar -->
+  <header class="bg-surface dark:bg-inverse-surface w-full top-0 sticky z-50 border-b-2 border-outline-variant dark:border-outline">
+    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
+      <div class="flex items-center gap-4">
+        <button class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim tracking-tight">Mercado da Copa</h1>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto md:max-w-7xl md:px-container-margin">
+    <!-- Hero Search Section -->
+    <section class="px-container-margin py-stack-md bg-primary-container/10 border-b-2 border-outline-variant">
+      <div class="relative group">
+        <input id="searchInput" class="w-full h-14 bg-surface border-b-2 border-primary focus:ring-0 focus:border-secondary transition-all font-body-lg text-body-lg px-4 pr-12 shadow-sm" placeholder="Buscar raridades vintage..." type="text"/>
+        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-primary">search</span>
+      </div>
+    </section>
+
+    <!-- Category Chips -->
+    <section class="py-stack-md">
+      <div class="flex overflow-x-auto no-scrollbar gap-gutter px-container-margin">
+        <button data-categoria="todos" class="categoria-btn flex-shrink-0 px-6 py-2 border-2 border-primary bg-primary text-on-primary font-label-caps text-label-caps rounded-none tactile-active">TODOS</button>
+        <button data-categoria="camisas" class="categoria-btn flex-shrink-0 px-6 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps rounded-none hover:bg-surface-container-high transition-colors tactile-active">CAMISAS</button>
+        <button data-categoria="bones" class="categoria-btn flex-shrink-0 px-6 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps rounded-none hover:bg-surface-container-high transition-colors tactile-active">BONÉS</button>
+        <button data-categoria="casacos" class="categoria-btn flex-shrink-0 px-6 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps rounded-none hover:bg-surface-container-high transition-colors tactile-active">CASACOS</button>
+        <button data-categoria="chuteiras" class="categoria-btn flex-shrink-0 px-6 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps rounded-none hover:bg-surface-container-high transition-colors tactile-active">CHUTEIRAS</button>
+        <button data-categoria="bolas" class="categoria-btn flex-shrink-0 px-6 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps rounded-none hover:bg-surface-container-high transition-colors tactile-active">BOLAS</button>
+        <button data-categoria="acessorios" class="categoria-btn flex-shrink-0 px-6 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps rounded-none hover:bg-surface-container-high transition-colors tactile-active">ACESSÓRIOS</button>
+      </div>
+    </section>
+
+    <!-- Featured Section Headline -->
+    <div class="px-container-margin mb-stack-sm flex justify-between items-end">
+      <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">ARQUIVO HISTÓRICO</h2>
+      <span id="clearFiltersBtn" class="font-label-caps text-label-caps text-secondary underline cursor-pointer hover:opacity-70">LIMPAR FILTROS</span>
+    </div>
+
+    <!-- Product Grid -->
+    <section id="productsGrid" class="px-container-margin pb-stack-lg grid grid-cols-2 gap-gutter md:grid-cols-4">
+      <!-- Os produtos serão injetados via JavaScript -->
+    </section>
+
+    <!-- Mensagem quando não encontrar produtos -->
+    <div id="noResultsMessage" class="hidden px-container-margin py-10 text-center">
+      <span class="material-symbols-outlined text-surface-variant text-6xl mb-4">search_off</span>
+      <h3 class="font-headline-lg-mobile text-primary">Nenhum item encontrado</h3>
+      <p class="text-on-surface-variant mt-2">Tente buscar por outro termo ou categoria.</p>
+    </div>
+
+    <!-- Winners Circle Badge CTA -->
+    <section class="px-container-margin py-stack-lg mb-stack-lg">
+      <div class="bg-secondary-container p-6 flex items-center gap-6 border-2 border-secondary shadow-[4px_4px_0px_0px_#705d00]">
+        <div class="w-16 h-16 flex-shrink-0 bg-secondary flex items-center justify-center rounded-full">
+          <span class="material-symbols-outlined text-on-secondary text-4xl" style="font-variation-settings: 'FILL' 1;">verified</span>
+        </div>
+        <div>
+          <h4 class="font-headline-lg-mobile text-headline-lg-mobile text-on-secondary-container leading-tight">WINNER'S CIRCLE</h4>
+          <p class="font-body-sm text-body-sm text-on-secondary-fixed-variant mt-1">Todos os itens com este selo foram verificados por nossos especialistas em história do futebol.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FAB: Vender Item -->
+  <button onclick="location.href='publicaritens.html'" class="fixed bottom-24 right-container-margin w-16 h-16 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center z-50 tactile-active border-2 border-secondary group">
+    <span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform">add</span>
+  </button>
+
+  <!-- BottomNavBar -->
+  <nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-inverse-surface border-t-2 border-outline-variant dark:border-outline">
+    <div class="flex justify-around items-center w-full px-2 py-3">
+      <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 transition-all duration-100" href="telaprincipal.html">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+        <span class="font-label-caps text-label-caps mt-1">Home</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="telaprincipal.html">
+        <span class="material-symbols-outlined">search</span>
+        <span class="font-label-caps text-label-caps mt-1">Search</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="publicaritens.html">
+        <span class="material-symbols-outlined">add_circle</span>
+        <span class="font-label-caps text-label-caps mt-1">Sell</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="carrinho.html">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span class="font-label-caps text-label-caps mt-1">Cart</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5" href="perfil.html">
+        <span class="material-symbols-outlined">person</span>
+        <span class="font-label-caps text-label-caps mt-1">Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Banco de dados de produtos com imagens corretas para cada produto
+    const produtos = [
+      { 
+        id: 1, 
+        nome: "Camiseta Brasil 1970 - Retrô Pelé", 
+        categoria: "camisas", 
+        preco: 750, 
+        tamanho: "G", 
+        estado: "10/10", 
+        tipo: "DEADSTOCK", 
+        aceitaTroca: true, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUrJNJKiGYJ8IZRYlb3EGdU7kpNlfq5RfbHZJJf6DrkHCutts30cqLNX7EcpLTcODsRSa5C4bqj1ADzmUDj8ZXSBAfkc_2XZwoUU7tjNmU1L9hPF6X6hh1fCSfGaU8iAKcnBfRZ7nfTwBTtTzri8oYDWOtzsjvtnwuFjV1-t3OleVPF9Lr79hbNVF59jrAfOWt2mXI0exTRKDmp9tMitagEgw_dUCLbWkRYPX4zZjzkTgq232XKyNrryw6rItEg7j1aCsBdeUmrYQ",
+        badge: "DEADSTOCK",
+        badgeColor: "bg-secondary-container text-on-secondary-container"
+      },
+      { 
+        id: 2, 
+        nome: "Bola de Couro 1962", 
+        categoria: "bolas", 
+        preco: 420, 
+        tamanho: "Único", 
+        estado: "Colecionador", 
+        tipo: "MATCH READY", 
+        aceitaTroca: false, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCZzPNeJ-mxS0dWNKmFGArqUotDB1wRRxDgEZpf9-iS5Ml-7d42A4zQPI0xe0VWrOY47OzBdaC9S8GlYC3C2xtzNayC1pJ-B3XOu1Qu5DMrTFGzJluJIG4keRWtODMAzu9VFa4NXwFJxt99LC_HBWCeCfxJpKTGW1coiNmTU4jlxMdM034Jv-znAbC5Gwi3uv5SrteVEfpKB46jjMZaqeMGI1DxdqaKiMpvYptaAQoha0u1LjAJeTof2fxD9Vb7UzLS80DeBbJHg2Y",
+        badge: "MATCH READY",
+        badgeColor: "bg-primary-container text-on-primary-container"
+      },
+      { 
+        id: 3, 
+        nome: "Casaco Treino Seleção 94", 
+        categoria: "casacos", 
+        preco: 300, 
+        tamanho: "M", 
+        estado: "Raro", 
+        tipo: "FINAL WHISTLE", 
+        aceitaTroca: true, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC62dQ5kP604-1pftSLJOhRtSspWov-O6EaxXz7gmVa-Xt3cFc3jXnITIocjVpoLRcUad84ghHUDUv434r0EeAeVADgGU-E8AEhxoQvX7Du8xvjMCmCBqFIQPTci0VG6xSMjd1fplQZiK0z27yV_AG59jfofLElbAyZXKEm6CftLA9taCbpMxAjZPLApOwnm4WqhvebjC65dDiyrCRSIifbv1XtEkbam1zNUi-I3cew-nxBzLQUfpy9z2dow1r79OCpkt0VTanPgF0",
+        badge: "FINAL WHISTLE",
+        badgeColor: "bg-tertiary-container text-on-tertiary-container"
+      },
+      { 
+        id: 4, 
+        nome: "Boné Brasil '58 - Ed. Limitada", 
+        categoria: "bones", 
+        preco: 150, 
+        tamanho: "Ajustável", 
+        estado: "Novo", 
+        tipo: "EXCLUSIVO", 
+        aceitaTroca: false, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCvffpDh3VDKVUDkY99jRlrDcfpmHwYXqRWa5wh1ohYdyfgp44s_6rpUeEvoWBlgdyG-HzHvuthAv5ohQ7w-jjXnxpfY61eEE2-8V2KTJrrdD9dlV7a8lqgIm4yc1jofimRNnHcqCvVF2ZQRVypNrrsdp3detv9VRbfMgmrgoPkRyGxkQYov42P3hHcndMf6Jn7yK8txEsQBDV8QRhZ6ribSsGIHqjp2sgZcXkDhK2DDe-v27O1cY1Fj8M6NZg32Rx3qOpp6ZQ4w10",
+        badge: "EXCLUSIVO",
+        badgeColor: "bg-secondary-container text-on-secondary-container"
+      },
+      { 
+        id: 5, 
+        nome: " Camiseta Brasil 1998 Home Retro", 
+        categoria: "camisas", 
+        preco: 349, 
+        tamanho: "G", 
+        estado: "Deadstock", 
+        tipo: "MATCH READY", 
+        aceitaTroca: true, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw",
+        badge: "MATCH READY",
+        badgeColor: "bg-primary-container text-on-primary-container"
+      },
+      { 
+        id: 6, 
+        nome: "Agasalho Argentina '94", 
+        categoria: "casacos", 
+        preco: 520, 
+        tamanho: "M", 
+        estado: "Rare", 
+        tipo: "FINAL WHISTLE", 
+        aceitaTroca: true, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0",
+        badge: "FINAL WHISTLE",
+        badgeColor: "bg-tertiary-container text-on-tertiary-container"
+      },
+      { 
+        id: 7, 
+        nome: "Boné USA '94 Corduroy", 
+        categoria: "bones", 
+        preco: 120, 
+        tamanho: "Único", 
+        estado: "Authentic", 
+        tipo: "WINNER'S CIRCLE", 
+        aceitaTroca: true, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8",
+        badge: "WINNER'S CIRCLE",
+        badgeColor: "bg-primary text-on-primary"
+      },
+      { 
+        id: 8, 
+        nome: "Chuteira Mizuno Morelia 90", 
+        categoria: "chuteiras", 
+        preco: 899, 
+        tamanho: "42", 
+        estado: "Excelente", 
+        tipo: "RARIDADE", 
+        aceitaTroca: false, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC8Rw9OWV2WHiwbXVL9IhFfmXoJ__7kT3BLvwPM8kL1PJesmoj9k_WBN_c1MnVX0O52_jnthbmnQJreH4cBz0cED6SgS_vFwCmy969Ddld72kcRYbnM8g484kAMW-yksetd7XSo8bm4q3kWo5zBMQPRjvRqWran758FAPV-VdGHEuyDlhLyZMttOu5tTeRzaQxJ48AUqpJnDF17bivKuSlKWoSHprslQATEyA4vkrOz8C18Br7DgeKNwwW9d7JM74TzEwqTsfhlFXs",
+        badge: "RARIDADE",
+        badgeColor: "bg-secondary-container text-on-secondary-container"
+      },
+      { 
+        id: 9, 
+        nome: "Cachecol Seleção 1982", 
+        categoria: "acessorios", 
+        preco: 89, 
+        tamanho: "Único", 
+        estado: "Vintage", 
+        tipo: "COLEÇÃO", 
+        aceitaTroca: true, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuAboAr0cZsWEcCy9RT32mqYjnodFsJfdr2iw8LRpukqsH5cRT8eUJhqWbRyo6PVZQtZwF2a1iuWOTBkgdcMKYy8GebyGLKjNlEfjhA707HPhavQlTQgTr-PZ_gRti2U3VYMLooRfwvWaaApgI8pfJoum3RThH1RWwPwWlI62f9EExFmRNDpvitajNC4eC1VYixwo5MYArWW4WmtnBleXVoiTPzrThOIN3DEFGqM0vKvKG-iU36e_D0o_gIaMuek1yPiiqyxmucJl0U",
+        badge: "COLEÇÃO",
+        badgeColor: "bg-primary-fixed text-primary"
+      },
+      { 
+        id: 10, 
+        nome: "Jaqueta Itália 90", 
+        categoria: "casacos", 
+        preco: 899, 
+        tamanho: "XL", 
+        estado: "Excelente", 
+        tipo: "ARCHIVE", 
+        aceitaTroca: true, 
+        imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU",
+        badge: "ARCHIVE",
+        badgeColor: "bg-primary-container text-on-primary-container"
+      }
+    ];
+
+    let currentCategory = "todos";
+    let currentSearch = "";
+
+    // Função para renderizar os produtos
+    function renderProducts() {
+      const grid = document.getElementById("productsGrid");
+      const noResults = document.getElementById("noResultsMessage");
+      
+      let filtered = [...produtos];
+      
+      // Filtrar por categoria
+      if (currentCategory !== "todos") {
+        filtered = filtered.filter(p => p.categoria === currentCategory);
+      }
+      
+      // Filtrar por busca
+      if (currentSearch.trim() !== "") {
+        const searchLower = currentSearch.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        filtered = filtered.filter(p => 
+          p.nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(searchLower) ||
+          p.categoria.toLowerCase().includes(searchLower)
+        );
+      }
+      
+      // Mostrar ou esconder mensagem de nenhum resultado
+      if (filtered.length === 0) {
+        grid.classList.add("hidden");
+        noResults.classList.remove("hidden");
+        return;
+      }
+      
+      grid.classList.remove("hidden");
+      noResults.classList.add("hidden");
+      
+      // Renderizar os cards
+      grid.innerHTML = filtered.map(produto => `
+        <div class="product-card bg-surface border border-outline-variant flex flex-col group overflow-hidden tactile-active rounded-lg" onclick="goToProductDetail(${produto.id})">
+          <div class="relative aspect-[3/4] bg-surface-container-low overflow-hidden">
+            <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${produto.imagem}" alt="${produto.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Imagem+Indisponivel'">
+            <div class="absolute top-2 left-2">
+              <span class="${produto.badgeColor} px-2 py-1 font-label-caps text-[10px] border border-secondary flex items-center gap-1">
+                <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">${produto.badge === 'DEADSTOCK' ? 'stars' : (produto.badge === 'WINNER\'S CIRCLE' ? 'verified' : 'check_circle')}</span> ${produto.badge}
+              </span>
+            </div>
+            <div class="absolute bottom-2 left-2 bg-on-surface text-surface px-2 py-1 font-headline-lg text-headline-lg-mobile">
+              R$ ${produto.preco}
+            </div>
+          </div>
+          <div class="p-stack-sm">
+            <h3 class="font-title-md text-body-lg text-on-surface line-clamp-1">${produto.nome}</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Tamanho ${produto.tamanho} • ${produto.estado}</p>
+            <div class="flex items-center justify-between">
+              ${produto.aceitaTroca ? 
+                `<span class="font-label-caps text-[10px] text-primary flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">swap_horiz</span> ACEITA TROCA
+                </span>` : 
+                `<span class="font-label-caps text-[10px] text-outline italic uppercase">Somente Venda</span>`
+              }
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // Função para ir para detalhes do produto
+    function goToProductDetail(productId) {
+      const produto = produtos.find(p => p.id === productId);
+      if (produto) {
+        localStorage.setItem('currentProduct', JSON.stringify(produto));
+        window.location.href = 'detalhesproduto.html';
+      }
+    }
+
+    // Função para resetar filtros
+    function resetFilters() {
+      currentCategory = "todos";
+      currentSearch = "";
+      document.getElementById("searchInput").value = "";
+      
+      // Atualizar estilo dos botões de categoria
+      document.querySelectorAll(".categoria-btn").forEach(btn => {
+        if (btn.dataset.categoria === "todos") {
+          btn.classList.add("bg-primary", "text-on-primary", "border-primary");
+          btn.classList.remove("border-outline", "text-on-surface-variant", "bg-transparent");
+        } else {
+          btn.classList.remove("bg-primary", "text-on-primary", "border-primary");
+          btn.classList.add("border-outline", "text-on-surface-variant", "bg-transparent");
+        }
+      });
+      
+      renderProducts();
+    }
+
+    // Event Listeners
+    document.addEventListener("DOMContentLoaded", () => {
+      renderProducts();
+      
+      // Busca
+      const searchInput = document.getElementById("searchInput");
+      searchInput.addEventListener("input", (e) => {
+        currentSearch = e.target.value;
+        renderProducts();
+      });
+      
+      // Categorias
+      document.querySelectorAll(".categoria-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentCategory = btn.dataset.categoria;
+          
+          // Atualizar estilo dos botões
+          document.querySelectorAll(".categoria-btn").forEach(b => {
+            if (b.dataset.categoria === currentCategory) {
+              b.classList.add("bg-primary", "text-on-primary", "border-primary");
+              b.classList.remove("border-outline", "text-on-surface-variant", "bg-transparent");
+            } else {
+              b.classList.remove("bg-primary", "text-on-primary", "border-primary");
+              b.classList.add("border-outline", "text-on-surface-variant", "bg-transparent");
+            }
+          });
+          
+          renderProducts();
+        });
+      });
+      
+      // Botão limpar filtros
+      document.getElementById("clearFiltersBtn").addEventListener("click", resetFilters);
+    });
+
+    // Micro-interactions para botões
+    document.querySelectorAll('.tactile-active').forEach(button => {
+      button.addEventListener('mousedown', () => {
+        button.style.transform = 'translate(2px, 2px)';
+      });
+      button.addEventListener('mouseup', () => {
+        button.style.transform = 'translate(0px, 0px)';
+      });
+      button.addEventListener('mouseleave', () => {
+        button.style.transform = 'translate(0px, 0px)';
+      });
+    });
+  </script>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-container-low": "#f3f4f5",
+                    "on-surface": "#191c1d",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e1e3e4",
+                    "primary-fixed": "#aef2bb",
+                    "on-primary-container": "#79bb87",
+                    "outline": "#707970",
+                    "on-primary-fixed": "#00210c",
+                    "surface-bright": "#f8f9fa",
+                    "on-primary-fixed-variant": "#0b5229",
+                    "on-secondary-container": "#6e5c00",
+                    "on-tertiary-container": "#ff8a86",
+                    "inverse-on-surface": "#f0f1f2",
+                    "surface-container": "#edeeef",
+                    "on-tertiary-fixed": "#410005",
+                    "tertiary-fixed-dim": "#ffb3af",
+                    "inverse-surface": "#2e3132",
+                    "surface-dim": "#d9dadb",
+                    "on-background": "#191c1d",
+                    "tertiary": "#5c000b",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#2a6a3f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#930018",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#860015",
+                    "outline-variant": "#c0c9be",
+                    "secondary-fixed": "#ffe16d",
+                    "on-secondary-fixed": "#221b00",
+                    "inverse-primary": "#93d6a0",
+                    "tertiary-fixed": "#ffdad7",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#404941",
+                    "primary": "#003215",
+                    "primary-fixed-dim": "#93d6a0",
+                    "surface-container-high": "#e7e8e9",
+                    "secondary-container": "#fcd400",
+                    "surface": "#f8f9fa",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#e9c400",
+                    "surface-variant": "#e1e3e4",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed-variant": "#544600",
+                    "background": "#f8f9fa",
+                    "secondary": "#705d00",
+                    "primary-container": "#004b23"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "12px",
+                    "container-margin": "20px",
+                    "stack-lg": "48px",
+                    "stack-md": "24px",
+                    "stack-sm": "8px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Anton"],
+                    "title-md": ["Hanken Grotesk"],
+                    "display-lg": ["Anton"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Anton"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "label-caps": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .neobrutalist-push:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0 0 0 transparent !important;
+        }
+        .neobrutalist-shadow {
+            box-shadow: 4px 4px 0px #000;
+        }
+        .glass-overlay {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-surface dark:bg-inverse-surface border-b-2 border-outline-variant dark:border-outline flex justify-between items-center px-container-margin py-stack-sm w-full">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-surface-variant hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim tracking-tight">Mercado da Copa</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-surface-variant hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1200px] mx-auto px-container-margin pt-stack-md">
+<!-- Section: Anunciar Novo Item -->
+<section class="mb-stack-lg">
+<div class="flex items-baseline justify-between mb-stack-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Anunciar Novo Item</h2>
+<span class="font-label-caps text-label-caps text-primary bg-primary-fixed px-2 py-1 rounded">VENDEDOR PRO</span>
+</div>
+<div class="bg-surface-container border-2 border-outline-variant p-gutter rounded-lg">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Photo Upload Placeholder -->
+<div class="md:col-span-4 aspect-square border-2 border-dashed border-outline flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container-high transition-colors cursor-pointer group rounded-lg">
+<span class="material-symbols-outlined text-4xl text-outline mb-2 group-hover:scale-110 transition-transform" data-icon="add_a_photo">add_a_photo</span>
+<p class="font-label-caps text-label-caps text-on-surface-variant">SUBIR FOTO DO ITEM</p>
+<p class="font-body-sm text-body-sm text-outline-variant mt-1 text-center px-4">JPEG ou PNG (Máx 5MB)</p>
+</div>
+<!-- Item Details Form -->
+<div class="md:col-span-8 flex flex-col gap-stack-sm">
+<div class="group">
+<label class="font-label-caps text-label-caps text-outline block mb-1">TÍTULO DO PRODUTO</label>
+<input class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-title-md text-title-md transition-colors placeholder:text-surface-variant" placeholder="Ex: Camisa Brasil 1994 Original" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-gutter">
+<div>
+<label class="font-label-caps text-label-caps text-outline block mb-1">PREÇO (R$)</label>
+<input class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-title-md text-title-md transition-colors" placeholder="0,00" type="number"/>
+</div>
+<div>
+<label class="font-label-caps text-label-caps text-outline block mb-1">CATEGORIA</label>
+<select class="w-full bg-transparent border-b-2 border-outline focus:border-primary focus:ring-0 px-0 py-2 font-body-lg text-body-lg transition-colors appearance-none">
+<option>Camisas Históricas</option>
+<option>Acessórios</option>
+<option>Colecionáveis</option>
+<option>Agasalhos</option>
+</select>
+</div>
+</div>
+<button class="mt-4 bg-primary text-on-primary font-headline-lg-mobile text-headline-lg-mobile py-4 rounded-lg flex items-center justify-center gap-2 hover:border-b-2 hover:border-secondary transition-all active:translate-y-0.5 neobrutalist-push">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+                            PUBLICAR ITEM
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Meus Itens -->
+<section>
+<div class="flex items-center justify-between mb-stack-sm border-b-2 border-primary-container pb-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile uppercase tracking-tight">Meus Itens</h2>
+<div class="flex gap-2">
+<button class="bg-primary text-on-primary px-3 py-1 rounded border-2 border-primary font-label-caps text-label-caps">TODOS</button>
+<button class="text-on-surface-variant px-3 py-1 border-2 border-outline-variant rounded font-label-caps text-label-caps hover:bg-surface-container-high transition-colors">VENDIDOS</button>
+</div>
+</div>
+<!-- Items List -->
+<div class="space-y-4">
+<!-- Item Card 1: Ativo -->
+<div class="group relative bg-surface border-2 border-outline-variant p-4 flex gap-4 items-center transition-all hover:bg-surface-container-low">
+<div class="w-20 h-20 bg-surface-container-highest flex-shrink-0 border border-outline-variant overflow-hidden rounded">
+<img alt="Camisa Retro" class="w-full h-full object-cover" data-alt="A vintage 1994 Brazil national football team yellow jersey displayed on a clean white professional studio background. The fabric shows subtle mesh textures and classic green details. The lighting is crisp and high-contrast, emphasizing the historical authenticity and vibrant stadium green and yellow colors of a premium sports collectible marketplace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR2SFps_OcZ7J84-EZs2b9tLAjrGJ3MaDIwQ1Rt7HJXU2zilW84Gl9GnvmTAcRQTjR4_2jvGSbYgUqpc23Ja0R8c9p7kpDS4kz8o2poQ8_RrvPKj16Dn_3WKtwqJd4ZgDN__t2i2jeGSv2XGi0oTZ1vm3rdjPf6EYK_CvXWvAePiap1MquC1HGTdmG3ZecII_nH24zcUtDZ8zRiAObBOyzaTGAtoEDqspOP3l9hHRYAAKxHxWwJdVCTTKoKTGyFbJsDiFkHiVZuMs"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-title-md leading-tight">Camisa Brasil 94 - Edição Tetra</h3>
+<p class="font-label-caps text-label-caps text-outline">SKU: CBF-94-XL</p>
+</div>
+<span class="bg-primary-container text-on-primary-container font-label-caps text-[10px] px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined !text-[12px]" data-icon="check_circle">check_circle</span>
+                                ATIVO
+                            </span>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<span class="font-headline-lg text-headline-lg text-primary">R$ 890,00</span>
+<span class="font-body-sm text-body-sm text-outline">Estoque: 1 un.</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 border-2 border-outline-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary-container transition-all rounded active:translate-x-0.5 active:translate-y-0.5">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="p-2 border-2 border-outline-variant hover:bg-error-container hover:text-on-error-container hover:border-error-container transition-all rounded active:translate-x-0.5 active:translate-y-0.5">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<!-- Item Card 2: Vendido -->
+<div class="group relative bg-surface-dim border-2 border-outline-variant p-4 flex gap-4 items-center opacity-70 grayscale-[0.5]">
+<div class="w-20 h-20 bg-surface-container-highest flex-shrink-0 border border-outline-variant overflow-hidden rounded">
+<img alt="Jaqueta Vintage" class="w-full h-full object-cover" data-alt="A classic 1990s vintage Adidas tracksuit jacket in deep navy and vibrant white, laid flat in an editorial style. The lighting is soft and natural, highlighting the retro nylon texture. The composition is clean and organized, fitting a premium digital archive store aesthetic with a focus on sports heritage and authenticity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0SxJs1SZ8EH1NtEGKKS0kJr14Wcjy-d74yG4xIDlkaOC5d8YD70HOmE0nyM7Cag8IiDBP6mQHSK-AYAeeD4VuNl2V9N2CvaLPNa0eAT7IDTbYPuC5Qj5Rg6NIe1OVL7kNeeeU9289y6WyBio1mn2TDHdOcDMM99s7K8zKf2iMU1nsDcgL4H_HJ05j8k7EBzX-NFHSWkObYNuLx6XjKth3lYeLRKyH5iheMdtyYWkqYE02A-IONnzIWquT_h2snUGSEWeVRF3QAbk"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-title-md leading-tight">Jaqueta Corta-Vento Retro 90s</h3>
+<p class="font-label-caps text-label-caps text-outline">SKU: ADI-WV-M</p>
+</div>
+<span class="bg-secondary text-on-secondary font-label-caps text-[10px] px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined !text-[12px]" data-icon="shopping_bag">shopping_bag</span>
+                                VENDIDO
+                            </span>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<span class="font-headline-lg text-headline-lg text-on-surface-variant">R$ 450,00</span>
+<span class="font-body-sm text-body-sm text-outline italic">Vendido em 12/10</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 border-2 border-outline-variant hover:bg-surface-container-highest transition-all rounded cursor-not-allowed opacity-50">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Item Card 3: Pendente -->
+<div class="group relative bg-surface border-2 border-outline-variant p-4 flex gap-4 items-center transition-all hover:bg-surface-container-low">
+<div class="w-20 h-20 bg-surface-container-highest flex-shrink-0 border border-outline-variant overflow-hidden rounded">
+<img alt="Bola Historica" class="w-full h-full object-cover" data-alt="A premium close-up of a classic leather football from the 1970s, showing aged textures and hand-stitched details. The lighting is dramatic and warm, like a sunset on a stadium pitch, creating deep shadows and bright highlights. The style is nostalgic and energetic, reflecting the grit and authenticity of high-end sports memorabilia." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPWzlZTKKpnqAbFE1VhB1TkCE5hUwVl2WrX_OrvChi-hY41VQGb4g_CEZQB96jcQSHJKz939o8NlkV9i9ubv_Afs-6V8P-ckYl56hg19ljU1JEh7bNlh-18qJEUUfwnI8uM0xqOuFZA4E2yh_R7Nz7fPA7SUTigA_My7bp0ZQo3JM5pq1h_SmEYlfRKKrwgyE6vWfn7GPbvKwhIy2s-xoszx7OY4A9_KUvQYYx343erG9Y403Hd9zQO32mMkAYzqBY014KwVFnTe4"/>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-title-md text-title-md leading-tight">Bola de Couro Réplica 1970</h3>
+<p class="font-label-caps text-label-caps text-outline">SKU: HIS-BAL-O</p>
+</div>
+<span class="bg-secondary-container text-on-secondary-container font-label-caps text-[10px] px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined !text-[12px]" data-icon="pending">pending</span>
+                                PENDENTE
+                            </span>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<span class="font-headline-lg text-headline-lg text-primary">R$ 320,00</span>
+<span class="font-body-sm text-body-sm text-outline">Aguardando revisão</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 border-2 border-outline-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary-container transition-all rounded active:translate-x-0.5 active:translate-y-0.5">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface dark:bg-inverse-surface border-t-2 border-outline-variant dark:border-outline flex justify-around items-center w-full px-2 py-3">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="telaprincipal.html">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-caps text-label-caps mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="telaprincipal.html">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-label-caps text-label-caps mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="publicaritens.html">
+<span class="material-symbols-outlined" data-icon="add_circle" style="font-variation-settings: 'FILL' 1;">add_circle</span>
+<span class="font-label-caps text-label-caps mt-1">Sell</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="carrinho.html">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-caps text-label-caps mt-1">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest active:translate-x-0.5 active:translate-y-0.5 transition-all duration-100" href="perfil.html">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-caps text-label-caps mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for the file upload placeholder
+        const dropzone = document.querySelector('.aspect-square');
+        dropzone.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.click();
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    alert(`Arquivo selecionado: ${file.name}`);
+                    // In a real app, we would handle the upload preview here
+                }
+            }
+        });
+    </script>
+
+<script src="app.js" defer></script>
+</body></html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Carrinho - Mercado da Copa</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .active-state:active { transform: translate(2px, 2px); box-shadow: none !important; }
+    .neobrutal-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-error-container": "#93000a", "surface-container-low": "#f3f4f5", "on-surface": "#191c1d",
+            "on-tertiary": "#ffffff", "surface-container-highest": "#e1e3e4", "primary-fixed": "#aef2bb",
+            "on-primary-container": "#79bb87", "outline": "#707970", "on-primary-fixed": "#00210c",
+            "surface-bright": "#f8f9fa", "on-primary-fixed-variant": "#0b5229", "on-secondary-container": "#6e5c00",
+            "on-tertiary-container": "#ff8a86", "inverse-on-surface": "#f0f1f2", "surface-container": "#edeeef",
+            "on-tertiary-fixed": "#410005", "tertiary-fixed-dim": "#ffb3af", "inverse-surface": "#2e3132",
+            "surface-dim": "#d9dadb", "on-background": "#191c1d", "tertiary": "#5c000b", "error-container": "#ffdad6",
+            "surface-tint": "#2a6a3f", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#930018",
+            "on-primary": "#ffffff", "tertiary-container": "#860015", "outline-variant": "#c0c9be", "secondary-fixed": "#ffe16d",
+            "on-secondary-fixed": "#221b00", "inverse-primary": "#93d6a0", "tertiary-fixed": "#ffdad7", "on-secondary": "#ffffff",
+            "on-surface-variant": "#404941", "primary": "#003215", "primary-fixed-dim": "#93d6a0", "surface-container-high": "#e7e8e9",
+            "secondary-container": "#fcd400", "surface": "#f8f9fa", "error": "#ba1a1a", "secondary-fixed-dim": "#e9c400",
+            "surface-variant": "#e1e3e4", "on-error": "#ffffff", "on-secondary-fixed-variant": "#544600", "background": "#f8f9fa",
+            "secondary": "#705d00", "primary-container": "#004b23"
+          },
+          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+          spacing: { gutter: "12px", "container-margin": "20px", "stack-lg": "48px", "stack-md": "24px", "stack-sm": "8px", unit: "4px" },
+          fontFamily: { "headline-lg": ["Anton"], "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-lg": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "body-sm": ["Hanken Grotesk"], "label-caps": ["JetBrains Mono"] },
+          fontSize: { "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col font-body-lg text-body-lg">
+
+  <!-- TopAppBar -->
+  <header class="w-full top-0 sticky z-40 bg-surface border-b-2 border-outline-variant">
+    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
+      <button onclick="window.history.back()" class="text-primary hover:opacity-80 transition-opacity">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Mercado da Copa</h1>
+      <button class="text-primary hover:opacity-80">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow w-full max-w-[1200px] mx-auto px-container-margin py-stack-md pb-40">
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-stack-md">
+      <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tight">Seu Carrinho</h2>
+      <span id="cartItemCount" class="font-label-caps text-label-caps bg-secondary-container text-on-secondary-container px-3 py-1 rounded-xl">0 ITENS</span>
+    </div>
+
+    <!-- Cart Items List -->
+    <div id="cart-container" class="space-y-gutter"></div>
+
+    <!-- Empty State -->
+    <div id="empty-cart" class="hidden flex-col items-center justify-center py-20 text-center">
+      <span class="material-symbols-outlined text-surface-variant text-[80px] mb-4">shopping_bag</span>
+      <h3 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Seu carrinho está vazio</h3>
+      <p class="text-on-surface-variant mb-stack-md max-w-xs">Parece que você ainda não escalou nenhum item para o seu time vintage.</p>
+      <button onclick="location.href='telaprincipal.html'" class="bg-primary text-on-primary font-label-caps text-label-caps py-4 px-8 rounded-xl neobrutal-shadow active-state">VOLTAR PARA A LOJA</button>
+    </div>
+
+    <!-- Summary Section -->
+    <div id="summarySection" class="mt-stack-lg border-t-2 border-outline-variant pt-stack-md space-y-4 hidden">
+      <div class="flex justify-between font-body-lg text-body-lg text-on-surface-variant">
+        <span>Subtotal</span>
+        <span id="subtotal">R$ 0,00</span>
+      </div>
+      <div class="flex justify-between font-body-lg text-body-lg text-on-surface-variant">
+        <span>Frete (Estádio)</span>
+        <span class="text-primary-container font-bold">GRÁTIS</span>
+      </div>
+      <div class="flex justify-between items-center py-2">
+        <span class="font-display-lg text-headline-lg text-primary uppercase">Total</span>
+        <span id="total" class="font-display-lg text-headline-lg text-primary">R$ 0,00</span>
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <div id="actionButton" class="mt-stack-md hidden">
+      <button onclick="finalizarCompra()" class="w-full bg-primary text-on-primary font-headline-lg-mobile text-headline-lg-mobile py-6 rounded-xl neobrutal-shadow active-state border-b-4 border-secondary-container hover:bg-primary-container transition-all flex items-center justify-center gap-3">
+        FINALIZAR COMPRA
+        <span class="material-symbols-outlined">sports_soccer</span>
+      </button>
+      <p class="text-center text-body-sm font-label-caps mt-4 text-on-surface-variant">PAGAMENTO 100% SEGURO COM CERTIFICADO FIFA</p>
+    </div>
+  </main>
+
+  <!-- BottomNavBar -->
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
+    <div class="flex justify-around items-center w-full px-2 py-3">
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
+      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
+      <a href="carrinho.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
+      <a href="perfil.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+    </div>
+  </nav>
+
+  <script>
+    const CART_KEY = 'mercado_copa_cart';
+
+    function loadCart() {
+      const saved = localStorage.getItem(CART_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+      return [
+        { id: 5, nome: "Brasil 1998 Home Retro", preco: 349, tamanho: "G", estado: "Deadstock", tipo: "MATCH READY", quantidade: 1, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw" },
+        { id: 6, nome: "Agasalho Argentina '94", preco: 520, tamanho: "M", estado: "Rare", tipo: "FINAL WHISTLE", quantidade: 1, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0" },
+        { id: 7, nome: "Boné USA '94 Corduroy", preco: 120, tamanho: "Único", estado: "Authentic", tipo: "WINNER'S CIRCLE", quantidade: 2, imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8" }
+      ];
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    }
+
+    function calculateTotal(cart) {
+      return cart.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+    }
+
+    function renderCart() {
+      const cart = loadCart();
+      const container = document.getElementById('cart-container');
+      const emptyDiv = document.getElementById('empty-cart');
+      const summarySection = document.getElementById('summarySection');
+      const actionButton = document.getElementById('actionButton');
+      const cartItemCount = document.getElementById('cartItemCount');
+      
+      if (cart.length === 0) {
+        container.innerHTML = '';
+        container.classList.add('hidden');
+        emptyDiv.classList.remove('hidden');
+        summarySection.classList.add('hidden');
+        actionButton.classList.add('hidden');
+        cartItemCount.textContent = '0 ITENS';
+        return;
+      }
+      
+      container.classList.remove('hidden');
+      emptyDiv.classList.add('hidden');
+      summarySection.classList.remove('hidden');
+      actionButton.classList.remove('hidden');
+      
+      const totalItems = cart.reduce((sum, item) => sum + item.quantidade, 0);
+      cartItemCount.textContent = `${totalItems} ITEM${totalItems !== 1 ? 'S' : ''}`;
+      
+      container.innerHTML = cart.map(item => `
+        <div class="cart-item flex gap-4 p-4 bg-surface border-2 border-outline-variant rounded-xl group transition-all hover:border-primary" data-id="${item.id}">
+          <div class="relative w-24 h-24 flex-shrink-0 bg-surface-container-highest rounded overflow-hidden border border-outline-variant">
+            <img class="w-full h-full object-cover" src="${item.imagem}" alt="${item.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Imagem'">
+            <div class="absolute bottom-1 left-1 bg-secondary-container px-1.5 py-0.5 rounded-sm">
+              <span class="font-headline-lg-mobile text-[14px] text-on-secondary-container">R$${item.preco}</span>
+            </div>
+          </div>
+          <div class="flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex justify-between items-start">
+                <h3 class="font-title-md text-title-md leading-tight text-primary">${item.nome}</h3>
+                <button onclick="removeItem(${item.id})" class="text-on-surface-variant hover:text-error transition-colors">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </div>
+              <p class="font-label-caps text-label-caps text-on-surface-variant mt-1">TAMANHO: ${item.tamanho} | ${item.estado.toUpperCase()}</p>
+            </div>
+            <div class="flex justify-between items-end">
+              <span class="font-label-caps text-label-caps ${item.tipo === 'MATCH READY' ? 'bg-primary-fixed text-primary' : (item.tipo === 'FINAL WHISTLE' ? 'bg-tertiary-fixed text-tertiary-fixed-variant' : 'bg-primary text-on-primary')} px-2 py-0.5 rounded-sm">${item.tipo}</span>
+              <div class="flex items-center border-2 border-outline rounded-xl overflow-hidden">
+                <button onclick="updateQuantity(${item.id}, -1)" class="px-3 py-1 hover:bg-surface-container-high transition-colors">-</button>
+                <span class="px-3 font-title-md text-[16px] border-x-2 border-outline min-w-[40px] text-center">${item.quantidade}</span>
+                <button onclick="updateQuantity(${item.id}, 1)" class="px-3 py-1 hover:bg-surface-container-high transition-colors">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+      
+      const total = calculateTotal(cart);
+      document.getElementById('subtotal').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+      document.getElementById('total').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
+    
+    function updateQuantity(id, delta) {
+      const cart = loadCart();
+      const itemIndex = cart.findIndex(i => i.id === id);
+      if (itemIndex !== -1) {
+        const newQty = cart[itemIndex].quantidade + delta;
+        if (newQty <= 0) {
+          cart.splice(itemIndex, 1);
+        } else {
+          cart[itemIndex].quantidade = newQty;
+        }
+        saveCart(cart);
+        renderCart();
+      }
+    }
+    
+    function removeItem(id) {
+      const cart = loadCart();
+      const newCart = cart.filter(i => i.id !== id);
+      saveCart(newCart);
+      renderCart();
+    }
+    
+    function finalizarCompra() {
+      const cart = loadCart();
+      if (cart.length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+      }
+      localStorage.setItem('compra_pendente', JSON.stringify({
+        items: cart,
+        total: calculateTotal(cart),
+        data: new Date().toISOString()
+      }));
+      window.location.href = 'pagamento.html';
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCart();
+    });
+    
+    window.updateQuantity = updateQuantity;
+    window.removeItem = removeItem;
+    window.finalizarCompra = finalizarCompra;
+  </script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="light" lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Pagamento - Mercado da Copa</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .active-state:active { transform: translate(2px, 2px); box-shadow: none !important; }
+    .neobrutal-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#003215", "primary-container": "#004b23", "surface": "#f8f9fa",
+            "outline": "#707970", "outline-variant": "#c0c9be", "on-surface": "#191c1d",
+            "on-surface-variant": "#404941", "secondary-container": "#fcd400", "error": "#ba1a1a",
+            "secondary": "#705d00", "background": "#f8f9fa"
+          },
+          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+          spacing: { gutter: "12px", "container-margin": "20px", "stack-lg": "48px", "stack-md": "24px", "stack-sm": "8px", unit: "4px" },
+          fontFamily: { "headline-lg": ["Anton"], "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-lg": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "body-sm": ["Hanken Grotesk"], "label-caps": ["JetBrains Mono"] },
+          fontSize: { "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+
+  <header class="w-full top-0 sticky z-40 bg-surface border-b-2 border-outline-variant">
+    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
+      <button onclick="window.history.back()" class="text-primary"><span class="material-symbols-outlined">arrow_back</span></button>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Pagamento</h1>
+      <button class="text-primary"><span class="material-symbols-outlined">help</span></button>
+    </div>
+  </header>
+
+  <main class="flex-grow w-full max-w-[1200px] mx-auto px-container-margin py-stack-md pb-40">
+    
+    <!-- Resumo dos Itens -->
+    <div class="mb-stack-md">
+      <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tight mb-4">Resumo do Pedido</h2>
+      <div id="itemsResumo" class="space-y-3"></div>
+    </div>
+
+    <!-- Endereço de Entrega -->
+    <div class="bg-surface border-2 border-outline-variant rounded-xl p-4 mb-stack-md">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="material-symbols-outlined text-primary">location_on</span>
+        <h3 class="font-title-md text-title-md">Endereço de Entrega</h3>
+      </div>
+      <div class="space-y-2">
+        <p class="font-body-lg"><strong>Ricardo Oliveira</strong></p>
+        <p class="font-body-sm text-on-surface-variant">Rua das Olimpíadas, 1200 - apto 42</p>
+        <p class="font-body-sm text-on-surface-variant">Bairro: Jardim Stadium - São Paulo, SP - CEP: 01234-567</p>
+        <button class="text-primary font-label-caps text-label-caps flex items-center gap-1 mt-2"><span class="material-symbols-outlined text-[16px]">edit</span> ALTERAR ENDEREÇO</button>
+      </div>
+    </div>
+
+    <!-- Formas de Pagamento -->
+    <div class="mb-stack-md">
+      <h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tight mb-4">Formas de Pagamento</h3>
+      <div class="space-y-gutter">
+        <label class="flex items-center justify-between p-4 bg-surface border-2 border-primary rounded-xl cursor-pointer" id="pixOption">
+          <div class="flex items-center gap-3">
+            <input type="radio" name="payment" value="pix" class="w-5 h-5 text-primary accent-primary" checked>
+            <div class="flex flex-col">
+              <span class="font-title-md text-primary">PIX</span>
+              <span class="text-body-sm text-primary-container font-bold">5% DE DESCONTO</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-primary">qr_code_2</span>
+        </label>
+        
+        <label class="flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" id="creditOption">
+          <div class="flex items-center gap-3">
+            <input type="radio" name="payment" value="credito" class="w-5 h-5 text-primary accent-primary">
+            <div class="flex flex-col">
+              <span class="font-title-md text-on-surface">Cartão de Crédito</span>
+              <span class="text-body-sm text-on-surface-variant">Até 12x sem juros</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+        </label>
+        
+        <label class="flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" id="boletoOption">
+          <div class="flex items-center gap-3">
+            <input type="radio" name="payment" value="boleto" class="w-5 h-5 text-primary accent-primary">
+            <div class="flex flex-col">
+              <span class="font-title-md text-on-surface">Boleto Bancário</span>
+              <span class="text-body-sm text-on-surface-variant">Desconto de 3%</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant">description</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Resumo de Valores -->
+    <div class="bg-surface-container-low p-4 rounded-xl border-2 border-outline-variant mb-stack-md">
+      <div class="flex justify-between py-2"><span>Subtotal</span><span id="subtotal">R$ 0,00</span></div>
+      <div class="flex justify-between py-2"><span>Frete</span><span class="text-primary-container font-bold">GRÁTIS</span></div>
+      <div id="descontoRow" class="flex justify-between py-2 text-green-600 hidden"><span>Desconto PIX (5%)</span><span id="descontoValor">-R$ 0,00</span></div>
+      <div class="flex justify-between py-2 border-t-2 border-outline-variant mt-2 pt-2"><span class="font-title-md text-title-md">TOTAL</span><span id="total" class="font-headline-lg text-headline-lg text-primary">R$ 0,00</span></div>
+    </div>
+
+    <!-- Botão Finalizar -->
+    <button id="finalizarBtn" class="w-full bg-primary text-on-primary font-headline-lg-mobile text-headline-lg-mobile py-6 rounded-xl neobrutal-shadow active-state flex items-center justify-center gap-3">
+      CONFIRMAR PAGAMENTO
+      <span class="material-symbols-outlined">check_circle</span>
+    </button>
+  </main>
+
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
+    <div class="flex justify-around items-center w-full px-2 py-3">
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
+      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
+      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
+      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+    </div>
+  </nav>
+
+  <script>
+    let compraData = null;
+    let selectedPayment = 'pix';
+    let originalTotal = 0;
+    let endereco = {
+      nome: "Ricardo Oliveira",
+      rua: "Rua das Olimpíadas, 1200 - apto 42",
+      bairro: "Jardim Stadium",
+      cidade: "São Paulo - SP",
+      cep: "01234-567"
+    };
+
+    function loadCompra() {
+      const saved = localStorage.getItem('compra_pendente');
+      if (!saved) {
+        window.location.href = 'carrinho.html';
+        return;
+      }
+      compraData = JSON.parse(saved);
+      originalTotal = compraData.total;
+      renderItems();
+      updateTotals();
+    }
+
+    function renderItems() {
+      const container = document.getElementById('itemsResumo');
+      container.innerHTML = compraData.items.map(item => `
+        <div class="flex gap-3 p-3 bg-surface border border-outline-variant rounded-lg">
+          <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden flex-shrink-0">
+            <img src="${item.imagem}" class="w-full h-full object-cover" alt="${item.nome}">
+          </div>
+          <div class="flex-grow">
+            <h4 class="font-title-md">${item.nome}</h4>
+            <p class="font-body-sm text-on-surface-variant">Tamanho: ${item.tamanho} | Quantidade: ${item.quantidade}</p>
+            <span class="font-headline-lg text-headline-lg-mobile text-primary">R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</span>
+          </div>
+        </div>
+      `).join('');
+      document.getElementById('subtotal').textContent = `R$ ${originalTotal.toFixed(2).replace('.', ',')}`;
+    }
+
+    function updateTotals() {
+      let finalTotal = originalTotal;
+      let desconto = 0;
+      let descontoPercentual = 0;
+      
+      if (selectedPayment === 'pix') {
+        descontoPercentual = 5;
+        desconto = originalTotal * 0.05;
+        finalTotal = originalTotal - desconto;
+        document.getElementById('descontoRow').classList.remove('hidden');
+        document.getElementById('descontoValor').textContent = `-R$ ${desconto.toFixed(2).replace('.', ',')}`;
+      } else if (selectedPayment === 'boleto') {
+        descontoPercentual = 3;
+        desconto = originalTotal * 0.03;
+        finalTotal = originalTotal - desconto;
+        document.getElementById('descontoRow').classList.remove('hidden');
+        document.getElementById('descontoValor').textContent = `-R$ ${desconto.toFixed(2).replace('.', ',')}`;
+      } else {
+        document.getElementById('descontoRow').classList.add('hidden');
+      }
+      
+      document.getElementById('total').textContent = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
+      return { finalTotal, desconto, descontoPercentual };
+    }
+
+    function finalizarCompra() {
+      if (!compraData) return;
+      
+      const { finalTotal, desconto, descontoPercentual } = updateTotals();
+      let paymentMethod = '';
+      let paymentDetails = {};
+      
+      if (selectedPayment === 'pix') {
+        paymentMethod = 'PIX';
+        paymentDetails = { chave: 'colecionador@mercadodacopa.com', desconto: `${descontoPercentual}%` };
+      } else if (selectedPayment === 'credito') {
+        paymentMethod = 'Cartão de Crédito';
+        paymentDetails = { bandeira: 'Visa', final: '9012', parcelas: '1x sem juros' };
+      } else {
+        paymentMethod = 'Boleto Bancário';
+        paymentDetails = { desconto: `${descontoPercentual}%`, vencimento: '3 dias úteis' };
+      }
+      
+      const compraFinalizada = {
+        ...compraData,
+        paymentMethod: paymentMethod,
+        paymentDetails: paymentDetails,
+        finalTotal: finalTotal,
+        desconto: desconto,
+        endereco: endereco,
+        dataCompra: new Date().toLocaleString('pt-BR')
+      };
+      
+      localStorage.setItem('compra_finalizada', JSON.stringify(compraFinalizada));
+      localStorage.removeItem('compra_pendente');
+      localStorage.removeItem(CART_KEY);
+      
+      window.location.href = 'compra.html';
+    }
+
+    document.querySelectorAll('input[name="payment"]').forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        selectedPayment = e.target.value;
+        updateTotals();
+      });
+    });
+    
+    document.getElementById('finalizarBtn').addEventListener('click', finalizarCompra);
+    
+    document.addEventListener('DOMContentLoaded', loadCompra);
+  </script>
+</body>
+</html>

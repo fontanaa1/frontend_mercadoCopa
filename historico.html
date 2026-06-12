@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico - Mercado da Copa</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .tactile-push:active { transform: translate(2px, 2px); box-shadow: none !important; }
+    .neobrutal-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error": "#ba1a1a", "on-primary-container": "#79bb87", "tertiary-fixed": "#ffdad7",
+            "on-secondary-fixed-variant": "#544600", "on-primary-fixed": "#00210c", "surface-container": "#edeeef",
+            "on-secondary": "#ffffff", "inverse-primary": "#93d6a0", "surface-tint": "#2a6a3f", "primary": "#003215",
+            "tertiary-container": "#860015", "error-container": "#ffdad6", "surface-dim": "#d9dadb",
+            "primary-fixed-dim": "#93d6a0", "on-secondary-container": "#6e5c00", "surface-container-lowest": "#ffffff",
+            "surface": "#f8f9fa", "on-tertiary-container": "#ff8a86", "tertiary": "#5c000b", "surface-variant": "#e1e3e4",
+            "surface-bright": "#f8f9fa", "on-primary": "#ffffff", "secondary-container": "#fcd400", "on-tertiary": "#ffffff",
+            "on-secondary-fixed": "#221b00", "inverse-surface": "#2e3132", "secondary": "#705d00", "on-surface": "#191c1d",
+            "surface-container-highest": "#e1e3e4", "outline-variant": "#c0c9be", "on-tertiary-fixed": "#410005",
+            "inverse-on-surface": "#f0f1f2", "secondary-fixed": "#ffe16d", "primary-fixed": "#aef2bb",
+            "on-primary-fixed-variant": "#0b5229", "on-error-container": "#93000a", "secondary-fixed-dim": "#e9c400",
+            "on-background": "#191c1d", "on-surface-variant": "#404941", "background": "#f8f9fa", "primary-container": "#004b23",
+            "tertiary-fixed-dim": "#ffb3af", "on-tertiary-fixed-variant": "#930018", "surface-container-high": "#e7e8e9",
+            "surface-container-low": "#f3f4f5", "outline": "#707970", "on-error": "#ffffff"
+          },
+          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+          spacing: { gutter: "12px", unit: "4px", "stack-lg": "48px", "stack-sm": "8px", "stack-md": "24px", "container-margin": "20px" },
+          fontFamily: { "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-sm": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "headline-lg": ["Anton"], "label-caps": ["JetBrains Mono"], "body-lg": ["Hanken Grotesk"] },
+          fontSize: { "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }] }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-28">
+
+  <!-- TopAppBar -->
+  <header class="w-full top-0 sticky z-40 bg-surface border-b-2 border-outline-variant">
+    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
+      <button onclick="window.history.back()" class="text-primary hover:opacity-80 transition-opacity active:translate-x-0.5 active:translate-y-0.5">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Mercado da Copa</h1>
+      <button class="text-primary hover:opacity-80 transition-opacity">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto px-container-margin py-stack-md">
+    <!-- Header -->
+    <div class="mb-stack-md">
+      <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary uppercase tracking-tight">Histórico de Pedidos</h2>
+      <p class="font-body-sm text-on-surface-variant">Acompanhe seus pedidos e relíquias adquiridas.</p>
+    </div>
+
+    <!-- Filtros de Status -->
+    <div class="flex gap-2 overflow-x-auto no-scrollbar mb-stack-md pb-2">
+      <button class="px-4 py-2 border-2 border-primary bg-primary text-on-primary font-label-caps text-label-caps tactile-push">TODOS</button>
+      <button class="px-4 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high tactile-push">PREPARANDO</button>
+      <button class="px-4 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high tactile-push">ENVIADO</button>
+      <button class="px-4 py-2 border-2 border-outline text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high tactile-push">ENTREGUE</button>
+    </div>
+
+    <!-- Lista de Pedidos -->
+    <div class="space-y-4">
+      
+      <!-- Pedido 1 - ENVIADO -->
+      <div class="bg-surface border-2 border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all">
+        <div class="p-4 border-b-2 border-outline-variant bg-surface-container-low flex justify-between items-center">
+          <div>
+            <span class="font-label-caps text-label-caps text-primary">PEDIDO #MC-2024-99XJ</span>
+            <p class="font-body-sm text-on-surface-variant">15/01/2025</p>
+          </div>
+          <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-caps text-[10px] flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">local_shipping</span> ENVIADO
+          </span>
+        </div>
+        <div class="p-4 flex gap-3">
+          <div class="w-16 h-16 bg-surface-container-highest rounded-md overflow-hidden flex-shrink-0 border border-outline-variant">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw" class="w-full h-full object-cover" alt="item">
+          </div>
+          <div class="flex-grow">
+            <h3 class="font-title-md text-title-md leading-tight">Brasil 1998 Home Retro</h3>
+            <p class="font-label-caps text-label-caps text-outline">Tamanho G · 1 unidade</p>
+            <div class="flex justify-between items-center mt-2">
+              <span class="font-headline-lg text-headline-lg-mobile text-primary">R$ 349</span>
+              <button class="text-primary font-label-caps text-label-caps border-b border-primary">DETALHES</button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 border-t-2 border-outline-variant bg-surface-container-low">
+          <div class="flex justify-between items-center">
+            <span class="font-label-caps text-label-caps">Código de rastreio: BR123456789</span>
+            <span class="material-symbols-outlined text-primary">content_copy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pedido 2 - ENTREGUE -->
+      <div class="bg-surface border-2 border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all">
+        <div class="p-4 border-b-2 border-outline-variant bg-surface-container-low flex justify-between items-center">
+          <div>
+            <span class="font-label-caps text-label-caps text-primary">PEDIDO #MC-2024-88AB</span>
+            <p class="font-body-sm text-on-surface-variant">02/12/2024</p>
+          </div>
+          <span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full font-label-caps text-[10px] flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">check_circle</span> ENTREGUE
+          </span>
+        </div>
+        <div class="p-4 flex gap-3">
+          <div class="w-16 h-16 bg-surface-container-highest rounded-md overflow-hidden flex-shrink-0 border border-outline-variant">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0" class="w-full h-full object-cover" alt="item">
+          </div>
+          <div class="flex-grow">
+            <h3 class="font-title-md text-title-md leading-tight">Agasalho Argentina '94</h3>
+            <p class="font-label-caps text-label-caps text-outline">Tamanho M · 1 unidade</p>
+            <div class="flex justify-between items-center mt-2">
+              <span class="font-headline-lg text-headline-lg-mobile text-primary">R$ 520</span>
+              <button class="text-primary font-label-caps text-label-caps border-b border-primary">DETALHES</button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4 border-t-2 border-outline-variant bg-surface-container-low flex justify-between">
+          <button class="text-primary font-label-caps text-label-caps flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">rate_review</span> Avaliar</button>
+          <button class="text-primary font-label-caps text-label-caps flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">shopping_bag</span> Comprar novamente</button>
+        </div>
+      </div>
+
+      <!-- Pedido 3 - PREPARANDO -->
+      <div class="bg-surface border-2 border-outline-variant rounded-xl overflow-hidden hover:border-primary transition-all">
+        <div class="p-4 border-b-2 border-outline-variant bg-surface-container-low flex justify-between items-center">
+          <div>
+            <span class="font-label-caps text-label-caps text-primary">PEDIDO #MC-2025-01CD</span>
+            <p class="font-body-sm text-on-surface-variant">20/01/2025</p>
+          </div>
+          <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full font-label-caps text-[10px] flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">pending</span> PREPARANDO
+          </span>
+        </div>
+        <div class="p-4 flex gap-3">
+          <div class="w-16 h-16 bg-surface-container-highest rounded-md overflow-hidden flex-shrink-0 border border-outline-variant">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvffpDh3VDKVUDkY99jRlrDcfpmHwYXqRWa5wh1ohYdyfgp44s_6rpUeEvoWBlgdyG-HzHvuthAv5ohQ7w-jjXnxpfY61eEE2-8V2KTJrrdD9dlV7a8lqgIm4yc1jofimRNnHcqCvVF2ZQRVypNrrsdp3detv9VRbfMgmrgoPkRyGxkQYov42P3hHcndMf6Jn7yK8txEsQBDV8QRhZ6ribSsGIHqjp2sgZcXkDhK2DDe-v27O1cY1Fj8M6NZg32Rx3qOpp6ZQ4w10" class="w-full h-full object-cover" alt="item">
+          </div>
+          <div class="flex-grow">
+            <h3 class="font-title-md text-title-md leading-tight">Boné Brasil '58 - Ed. Limitada</h3>
+            <p class="font-label-caps text-label-caps text-outline">Único · 2 unidades</p>
+            <div class="flex justify-between items-center mt-2">
+              <span class="font-headline-lg text-headline-lg-mobile text-primary">R$ 300</span>
+              <button class="text-primary font-label-caps text-label-caps border-b border-primary">DETALHES</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensagem se vazio (hidden) -->
+    <div class="hidden flex-col items-center justify-center py-20 text-center" id="empty-orders">
+      <span class="material-symbols-outlined text-surface-variant text-[80px] mb-4">receipt_long</span>
+      <h3 class="font-headline-lg-mobile text-primary">Nenhum pedido ainda</h3>
+      <p class="text-on-surface-variant mb-stack-md">Seu histórico de glórias começa aqui.</p>
+      <button onclick="location.href='telaprincipal.html'" class="bg-primary text-on-primary px-6 py-3 rounded-xl neobrutal-shadow tactile-push">EXPLORAR ACERVO</button>
+    </div>
+  </main>
+
+  <!-- BottomNavBar -->
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
+    <div class="flex justify-around items-center w-full px-2 py-3">
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
+      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
+      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
+      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+    </div>
+  </nav>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

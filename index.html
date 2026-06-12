@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mercado da Copa — Marketplace de Memorabilia Esportiva</title>
+<meta name="description" content="Mercado da Copa: marketplace neobrutalista de itens vintage e raros do futebol. Compre, venda e troque memorabilia verificada." />
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: "#003215",
+          "primary-light": "#004b23",
+          "primary-fixed": "#aef2bb",
+          "on-primary": "#ffffff",
+          surface: "#f8f9fa",
+          "surface-container": "#edeeef",
+          "on-surface": "#191c1d",
+          "on-surface-variant": "#404941",
+          outline: "#707970",
+          "outline-variant": "#c0c9be",
+          secondary: "#fcd400",
+          "secondary-dark": "#705d00",
+          tertiary: "#5c000b",
+          "tertiary-container": "#860015",
+        },
+        fontFamily: {
+          display: ['"Anton"', "sans-serif"],
+          body: ['"Hanken Grotesk"', "sans-serif"],
+          mono: ['"JetBrains Mono"', "monospace"],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  body { font-family: "Hanken Grotesk", sans-serif; }
+  .display { font-family: "Anton", sans-serif; letter-spacing: 0.02em; }
+  .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 500; }
+  .neobrutal { box-shadow: 6px 6px 0 0 #003215; transition: transform .12s, box-shadow .12s; }
+  .neobrutal:hover { transform: translate(-2px,-2px); box-shadow: 10px 10px 0 0 #003215; }
+  .neobrutal:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 0 #003215; }
+  .neobrutal-gold { box-shadow: 6px 6px 0 0 #705d00; transition: transform .12s, box-shadow .12s; }
+  .neobrutal-gold:hover { transform: translate(-2px,-2px); box-shadow: 10px 10px 0 0 #705d00; }
+  .stadium-bg {
+    background:
+      radial-gradient(ellipse at top, rgba(252,212,0,0.10), transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(0,75,35,0.25), transparent 60%),
+      linear-gradient(180deg, #003215 0%, #00210c 100%);
+  }
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .ticker { animation: ticker 30s linear infinite; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+
+<!-- Top Bar -->
+<header class="sticky top-0 z-40 bg-surface border-b-2 border-on-surface">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-primary text-on-primary flex items-center justify-center border-2 border-on-surface">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">sports_soccer</span>
+      </div>
+      <div class="leading-none">
+        <div class="display text-2xl text-primary">MERCADO DA COPA</div>
+        <div class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">Est. 1950 · Marketplace</div>
+      </div>
+    </div>
+    <a href="acesso.html" class="hidden sm:inline-flex items-center gap-2 bg-primary text-on-primary font-bold uppercase text-xs tracking-widest px-4 py-2 border-2 border-on-surface neobrutal">
+      Entrar <span class="material-symbols-outlined text-base">arrow_forward</span>
+    </a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="stadium-bg text-on-primary relative overflow-hidden border-b-2 border-on-surface">
+  <div class="grid-overlay absolute inset-0 pointer-events-none"></div>
+  <div class="max-w-6xl mx-auto px-4 py-16 sm:py-24 relative">
+    <span class="inline-flex items-center gap-2 bg-secondary text-primary px-3 py-1 font-mono text-[11px] uppercase tracking-widest border-2 border-on-surface">
+      <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span> Edição 2026 · ao vivo
+    </span>
+    <h1 class="display text-5xl sm:text-7xl md:text-8xl mt-6 leading-[0.95]">
+      A HISTÓRIA DO FUTEBOL,<br/>
+      <span class="text-secondary">EM SUAS MÃOS.</span>
+    </h1>
+    <p class="mt-6 max-w-2xl text-base sm:text-lg text-white/80">
+      Marketplace curado de camisas vintage, bolas históricas e memorabilia rara — cada item verificado pelo <strong class="text-secondary">Winner's Circle</strong>.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a href="telaprincipal.html" class="bg-secondary text-primary font-bold uppercase tracking-widest text-sm px-6 py-4 border-2 border-on-surface neobrutal-gold inline-flex items-center gap-2">
+        <span class="material-symbols-outlined">storefront</span> Explorar acervo
+      </a>
+      <a href="acesso.html" class="bg-white text-primary font-bold uppercase tracking-widest text-sm px-6 py-4 border-2 border-on-surface inline-flex items-center gap-2 hover:bg-secondary transition-colors">
+        <span class="material-symbols-outlined">login</span> Entrar em campo
+      </a>
+    </div>
+
+    <!-- stats -->
+    <div class="mt-12 grid grid-cols-3 gap-4 max-w-xl">
+      <div>
+        <div class="display text-3xl sm:text-4xl text-secondary">12k+</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-white/70">Itens raros</div>
+      </div>
+      <div>
+        <div class="display text-3xl sm:text-4xl text-secondary">98%</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-white/70">Verificados</div>
+      </div>
+      <div>
+        <div class="display text-3xl sm:text-4xl text-secondary">24h</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest text-white/70">Envio médio</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div class="bg-on-surface text-secondary border-t-2 border-secondary overflow-hidden">
+    <div class="ticker whitespace-nowrap py-2 font-mono text-xs uppercase tracking-widest flex gap-12">
+      <span>★ Brasil 1970 — Pelé · Deadstock</span>
+      <span>★ Bola Adidas Telstar 1970</span>
+      <span>★ Camisa Maradona '86</span>
+      <span>★ Casaco Treino Seleção '94</span>
+      <span>★ Chuteira Mizuno Morelia '90</span>
+      <span>★ Brasil 1970 — Pelé · Deadstock</span>
+      <span>★ Bola Adidas Telstar 1970</span>
+      <span>★ Camisa Maradona '86</span>
+      <span>★ Casaco Treino Seleção '94</span>
+      <span>★ Chuteira Mizuno Morelia '90</span>
+    </div>
+  </div>
+</section>
+
+<!-- App launcher -->
+<section class="max-w-6xl mx-auto px-4 py-16">
+  <div class="flex items-end justify-between mb-8">
+    <div>
+      <div class="font-mono text-[11px] uppercase tracking-widest text-tertiary">/ navegação</div>
+      <h2 class="display text-4xl sm:text-5xl text-primary mt-1">Acesse o app</h2>
+    </div>
+    <span class="hidden sm:inline-flex font-mono text-xs uppercase tracking-widest text-on-surface-variant">8 telas · protótipo</span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- card template -->
+    <a href="acesso.html" class="group bg-white border-2 border-on-surface p-6 neobrutal block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl">login</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-on-primary px-2 py-1">01</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Acesso</h3>
+      <p class="text-sm text-on-surface-variant mt-1">Login do colecionador. Social ou e-mail.</p>
+    </a>
+
+    <a href="telaprincipal.html" class="group bg-white border-2 border-on-surface p-6 neobrutal block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl">storefront</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-on-primary px-2 py-1">02</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Vitrine</h3>
+      <p class="text-sm text-on-surface-variant mt-1">Arquivo histórico com itens em destaque.</p>
+    </a>
+
+    <a href="detalhesproduto.html" class="group bg-white border-2 border-on-surface p-6 neobrutal block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl">inventory_2</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-on-primary px-2 py-1">03</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Detalhes do item</h3>
+      <p class="text-sm text-on-surface-variant mt-1">Ficha técnica, procedência e selo Winner's Circle.</p>
+    </a>
+
+    <a href="carrinho.html" class="group bg-white border-2 border-on-surface p-6 neobrutal block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl">shopping_cart</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-on-primary px-2 py-1">04</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Carrinho</h3>
+      <p class="text-sm text-on-surface-variant mt-1">Resumo, frete e cupom de fidelidade.</p>
+    </a>
+
+    <a href="pagamento.html" class="group bg-white border-2 border-on-surface p-6 neobrutal block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl">credit_card</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-on-primary px-2 py-1">05</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Pagamento</h3>
+      <p class="text-sm text-on-surface-variant mt-1">Pix, cartão ou boleto — 100% seguro.</p>
+    </a>
+
+    <a href="compra.html" class="group bg-secondary border-2 border-on-surface p-6 neobrutal-gold block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings:'FILL' 1;">emoji_events</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-secondary px-2 py-1">06</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Compra confirmada</h3>
+      <p class="text-sm text-primary/80 mt-1">Tela de vitória. Você marcou o gol.</p>
+    </a>
+
+    <a href="publicaritens.html" class="group bg-white border-2 border-on-surface p-6 neobrutal block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl">add_circle</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-on-primary px-2 py-1">07</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Publicar item</h3>
+      <p class="text-sm text-on-surface-variant mt-1">Anuncie sua relíquia em minutos.</p>
+    </a>
+
+    <a href="perfil.html" class="group bg-white border-2 border-on-surface p-6 neobrutal block">
+      <div class="flex items-center justify-between">
+        <span class="material-symbols-outlined text-primary text-4xl">person</span>
+        <span class="font-mono text-[10px] uppercase tracking-widest bg-primary text-on-primary px-2 py-1">08</span>
+      </div>
+      <h3 class="display text-2xl mt-6 text-primary">Perfil</h3>
+      <p class="text-sm text-on-surface-variant mt-1">Acervo pessoal, vendas e reputação.</p>
+    </a>
+  </div>
+</section>
+
+<!-- Flow -->
+<section class="bg-primary text-on-primary border-y-2 border-on-surface py-16">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="font-mono text-[11px] uppercase tracking-widest text-secondary">/ jornada do colecionador</div>
+    <h2 class="display text-4xl sm:text-5xl mt-1">Da arquibancada ao acervo.</h2>
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
+      <div class="border-2 border-secondary p-4">
+        <div class="display text-secondary text-3xl">01</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest mt-2">Entrar</div>
+      </div>
+      <div class="hidden md:flex items-center justify-center text-secondary text-3xl">›</div>
+      <div class="border-2 border-secondary p-4 md:col-span-1">
+        <div class="display text-secondary text-3xl">02</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest mt-2">Garimpar</div>
+      </div>
+      <div class="hidden md:flex items-center justify-center text-secondary text-3xl">›</div>
+      <div class="border-2 border-secondary p-4">
+        <div class="display text-secondary text-3xl">03</div>
+        <div class="font-mono text-[10px] uppercase tracking-widest mt-2">Conquistar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-on-surface text-white py-10">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+    <div>
+      <div class="display text-2xl text-secondary">MERCADO DA COPA</div>
+      <div class="font-mono text-[10px] uppercase tracking-widest text-white/60 mt-1">© 2026 · Curado por colecionadores.</div>
+    </div>
+    <div class="flex gap-6 font-mono text-[11px] uppercase tracking-widest text-white/70">
+      <a href="telaprincipal.html" class="hover:text-secondary">Vitrine</a>
+      <a href="publicaritens.html" class="hover:text-secondary">Vender</a>
+      <a href="perfil.html" class="hover:text-secondary">Perfil</a>
+      <a href="acesso.html" class="hover:text-secondary">Entrar</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

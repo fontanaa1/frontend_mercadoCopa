@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - Mercado da Copa</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .tactile-push:active { transform: translate(2px, 2px); box-shadow: none !important; }
+    .toggle-switch { transition: all 0.2s ease; }
+    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: { extend: { colors: { "primary": "#003215", "primary-container": "#004b23", "surface": "#f8f9fa", "outline": "#707970", "outline-variant": "#c0c9be", "on-surface": "#191c1d", "on-surface-variant": "#404941", "secondary-container": "#fcd400", "error": "#ba1a1a", "error-container": "#ffdad6" }, fontFamily: { "label-caps": ["JetBrains Mono"], "title-md": ["Hanken Grotesk"], "body-lg": ["Hanken Grotesk"] }, fontSize: { "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }] } } }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-28">
+
+  <header class="w-full top-0 sticky z-40 bg-surface border-b-2 border-outline-variant">
+    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
+      <button onclick="window.history.back()" class="text-primary"><span class="material-symbols-outlined">arrow_back</span></button>
+      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Configurações</h1>
+      <button class="text-primary"><span class="material-symbols-outlined">settings</span></button>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto px-container-margin py-stack-md space-y-6">
+
+    <!-- Seção Perfil -->
+    <div class="space-y-2">
+      <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Perfil</h3>
+      <div class="bg-surface border-2 border-outline-variant rounded-xl p-4 space-y-4">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-full bg-primary-container overflow-hidden border-2 border-primary"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCajt5p3St7mamgcsMF5kdy-f2fM06GklxNlVWcUO1bz7iTdjiD7QxcEbbDoKhrrBp8Gb6hPx1shJE6C6rI2zLCzP6oYZbe5XblWx6H5cvleZuV220wXL1yLwdmLKCA0roY4CTuVfof6ZLc0WYacs3p-sFbvnOL6syviflmBogZK8LIxzAs7Rp5b9pTdyYuCXyZOBDXEMH_R7OcQ_H83p2Mq8Jmjai0AqLGGdOH9LG_6myGaOGGFUf__nakWTFl_7kbH6a8s4PKVi0" class="w-full h-full object-cover" alt="avatar"></div>
+          <div><p class="font-title-md">Ricardo Oliveira</p><p class="font-body-sm text-on-surface-variant">ricardo@colecionador.com</p></div>
+          <button class="ml-auto text-primary font-label-caps border-b border-primary">EDITAR</button>
+        </div>
+        <div class="border-t border-outline-variant pt-3">
+          <div class="flex justify-between"><span class="font-body-sm">Username</span><span class="font-title-md text-primary">@ricardo_arquivo</span></div>
+          <div class="flex justify-between mt-2"><span class="font-body-sm">Telefone</span><span class="font-title-md text-primary">(11) 98765-4321</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção Segurança -->
+    <div class="space-y-2">
+      <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Segurança</h3>
+      <div class="bg-surface border-2 border-outline-variant rounded-xl divide-y-2 divide-outline-variant">
+        <div class="p-4 flex justify-between items-center"><span class="font-title-md">Alterar Senha</span><span class="material-symbols-outlined text-primary">chevron_right</span></div>
+        <div class="p-4 flex justify-between items-center"><span class="font-title-md">Autenticação em 2 fatores</span><span class="material-symbols-outlined text-primary">toggle_on</span></div>
+        <div class="p-4 flex justify-between items-center"><span class="font-title-md">Dispositivos conectados</span><span class="material-symbols-outlined text-primary">chevron_right</span></div>
+      </div>
+    </div>
+
+    <!-- Seção Notificações -->
+    <div class="space-y-2">
+      <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Notificações</h3>
+      <div class="bg-surface border-2 border-outline-variant rounded-xl divide-y-2 divide-outline-variant">
+        <div class="p-4 flex justify-between items-center"><span class="font-body-lg">Promoções e novidades</span><span class="text-primary font-bold">SIM</span></div>
+        <div class="p-4 flex justify-between items-center"><span class="font-body-lg">Atualizações de pedido</span><span class="text-primary font-bold">SIM</span></div>
+        <div class="p-4 flex justify-between items-center"><span class="font-body-lg">Lembretes de lances</span><span class="text-on-surface-variant">NÃO</span></div>
+      </div>
+    </div>
+
+    <!-- Seção Preferências de Conteúdo -->
+    <div class="space-y-2">
+      <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Preferências</h3>
+      <div class="bg-surface border-2 border-outline-variant rounded-xl p-4 space-y-3">
+        <div class="flex justify-between items-center"><span class="font-body-lg">Modo escuro automático</span><input type="checkbox" class="toggle-switch w-10 h-5 rounded-full bg-outline-variant checked:bg-primary"></div>
+        <div class="flex justify-between items-center"><span class="font-body-lg">Economia de dados (imagens)</span><input type="checkbox" class="toggle-switch"></div>
+        <div class="flex justify-between items-center"><span class="font-body-lg">Moeda exibida</span><select class="bg-transparent border-b border-outline font-title-md"><option>Real (R$)</option><option>Dólar (US$)</option></select></div>
+      </div>
+    </div>
+
+    <!-- Ações Destrutivas -->
+    <div class="pt-4 space-y-3">
+      <button class="w-full py-4 border-2 border-error text-error font-label-caps uppercase tactile-push">LIMPAR HISTÓRICO DE BUSCA</button>
+      <button class="w-full py-4 bg-error-container text-error font-label-caps uppercase tactile-push rounded-lg">EXCLUIR MINHA CONTA</button>
+    </div>
+
+  </main>
+
+  <!-- BottomNavBar igual ao histórico -->
+  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
+    <div class="flex justify-around items-center w-full px-2 py-3">
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
+      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
+      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
+      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
+      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
+    </div>
+  </nav>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
