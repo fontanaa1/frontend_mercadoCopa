@@ -1,7 +1,7 @@
 // js/api.js — Camada de comunicação com o backend do Mercado da Copa
 // Todas as funções fazem fetch para a API Express rodando no backend.
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = 'https://backend-mercado-copa.vercel.app/api/';
 
 // ─── Sessão / Auth local (localStorage) ─────────────────────
 
