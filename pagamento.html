@@ -1,475 +1,285 @@
 <!DOCTYPE html>
 <html class="light" lang="pt-BR">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Pagamento - Mercado da Copa</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-  <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .active-state:active { transform: translate(2px, 2px); box-shadow: none !important; }
-    .neobrutal-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
-    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
-    .toast-message {
-      position: fixed;
-      bottom: 100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #003215;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 50px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      z-index: 1001;
-      animation: fadeInOut 3s ease-in-out;
-      box-shadow: 4px 4px 0px 0px #fcd400;
-      border: 1px solid #fcd400;
-      white-space: nowrap;
-    }
-    @keyframes fadeInOut {
-      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-    }
-    /* Modal de endereço */
-    .address-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 500px;
-      background: #f8f9fa;
-      border: 2px solid #003215;
-      border-radius: 16px;
-      box-shadow: 8px 8px 0px 0px rgba(0,50,21,0.15);
-      z-index: 1002;
-      display: none;
-      overflow: hidden;
-    }
-    .address-modal.active {
-      display: block;
-      animation: modalFadeIn 0.3s ease-out;
-    }
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
-      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    }
-    .address-modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 1001;
-      display: none;
-    }
-    .address-modal-overlay.active {
-      display: block;
-    }
-    .payment-option {
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    .payment-option.selected {
-      border-color: #003215;
-      background: #edeeef;
-    }
-  </style>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#003215", "primary-container": "#004b23", "surface": "#f8f9fa",
-            "outline": "#707970", "outline-variant": "#c0c9be", "on-surface": "#191c1d",
-            "on-surface-variant": "#404941", "secondary-container": "#fcd400", "error": "#ba1a1a",
-            "secondary": "#705d00", "background": "#f8f9fa"
-          },
-          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
-          spacing: { gutter: "12px", "container-margin": "20px", "stack-lg": "48px", "stack-md": "24px", "stack-sm": "8px", unit: "4px" },
-          fontFamily: { "headline-lg": ["Anton"], "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-lg": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "body-sm": ["Hanken Grotesk"], "label-caps": ["JetBrains Mono"] },
-          fontSize: { "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }] }
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Pagamento - Mercado da Copa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script type="module" src="./js/api.js"></script>
+    <script src="menu.js"></script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .active-state:active { transform: translate(2px, 2px); box-shadow: none !important; }
+        body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
+        .toast-message {
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+            background: #003215; color: white; padding: 12px 24px; border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px; z-index: 1001;
+            animation: fadeInOut 3s ease-in-out; box-shadow: 4px 4px 0px 0px #fcd400;
+            border: 1px solid #fcd400; white-space: nowrap;
         }
-      }
-    }
-  </script>
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+        .payment-option.selected { border-color: #003215; background: #edeeef; }
+    </style>
 </head>
-<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
-  <header class="w-full top-0 sticky z-40 bg-surface border-b-2 border-outline-variant">
-    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
-      <button onclick="window.history.back()" class="text-primary"><span class="material-symbols-outlined">arrow_back</span></button>
-      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Pagamento</h1>
-      <button class="text-primary"><span class="material-symbols-outlined">help</span></button>
-    </div>
-  </header>
-
-  <main class="flex-grow w-full max-w-[1200px] mx-auto px-container-margin py-stack-md pb-40">
-    
-    <!-- Resumo dos Itens -->
-    <div class="mb-stack-md">
-      <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tight mb-4">Resumo do Pedido</h2>
-      <div id="itemsResumo" class="space-y-3"></div>
-    </div>
-
-    <!-- Endereço de Entrega -->
-    <div class="bg-surface border-2 border-outline-variant rounded-xl p-4 mb-stack-md">
-      <div class="flex items-center gap-2 mb-3">
-        <span class="material-symbols-outlined text-primary">location_on</span>
-        <h3 class="font-title-md text-title-md">Endereço de Entrega</h3>
-      </div>
-      <div id="enderecoDisplay" class="space-y-2">
-        <p class="font-body-lg"><strong id="enderecoNome">Ricardo Oliveira</strong></p>
-        <p class="font-body-sm text-on-surface-variant" id="enderecoRua">Rua das Olimpíadas, 1200 - apto 42</p>
-        <p class="font-body-sm text-on-surface-variant" id="enderecoComplemento">Bairro: Jardim Stadium - São Paulo, SP - CEP: 01234-567</p>
-      </div>
-      <button id="alterarEnderecoBtn" class="text-primary font-label-caps text-label-caps flex items-center gap-1 mt-2 hover:opacity-70 transition-opacity">
-        <span class="material-symbols-outlined text-[16px]">edit</span> ALTERAR ENDEREÇO
-      </button>
-    </div>
-
-    <!-- Formas de Pagamento -->
-    <div class="mb-stack-md">
-      <h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase tracking-tight mb-4">Formas de Pagamento</h3>
-      <div class="space-y-gutter">
-        <div id="pixOption" class="payment-option flex items-center justify-between p-4 bg-surface border-2 rounded-xl cursor-pointer" data-payment="pix">
-          <div class="flex items-center gap-3">
-            <div class="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center">
-              <div id="pixRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-title-md text-primary">PIX</span>
-              <span class="text-body-sm text-primary-container font-bold">5% DE DESCONTO</span>
-            </div>
-          </div>
-          <span class="material-symbols-outlined text-primary">qr_code_2</span>
+    <header class="w-full top-0 sticky z-40 bg-white border-b-2 border-gray-200">
+        <div class="flex justify-between items-center px-4 py-3 w-full">
+            <button onclick="window.history.back()" class="text-primary"><span class="material-symbols-outlined">arrow_back</span></button>
+            <h1 class="font-['Anton'] text-2xl text-primary tracking-tight">Pagamento</h1>
+            <button class="text-primary"><span class="material-symbols-outlined">help</span></button>
         </div>
-        
-        <div id="creditoOption" class="payment-option flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" data-payment="credito">
-          <div class="flex items-center gap-3">
-            <div class="w-5 h-5 rounded-full border-2 border-outline flex items-center justify-center">
-              <div id="creditoRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-title-md text-on-surface">Cartão de Crédito</span>
-              <span class="text-body-sm text-on-surface-variant">Até 12x sem juros</span>
-            </div>
-          </div>
-          <span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+    </header>
+
+    <main class="flex-grow w-full max-w-[1200px] mx-auto px-4 py-6 pb-40">
+        <div class="mb-6">
+            <h2 class="font-['Anton'] text-2xl text-gray-800 uppercase tracking-tight mb-4">Resumo do Pedido</h2>
+            <div id="itemsResumo" class="space-y-3"></div>
         </div>
-        
-        <div id="boletoOption" class="payment-option flex items-center justify-between p-4 bg-surface border-2 border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-colors" data-payment="boleto">
-          <div class="flex items-center gap-3">
-            <div class="w-5 h-5 rounded-full border-2 border-outline flex items-center justify-center">
-              <div id="boletoRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div>
+
+        <!-- Endereço de Entrega -->
+        <div class="bg-white border-2 border-gray-200 rounded-xl p-4 mb-6">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="material-symbols-outlined text-primary">location_on</span>
+                <h3 class="font-bold">Endereço de Entrega</h3>
             </div>
-            <div class="flex flex-col">
-              <span class="font-title-md text-on-surface">Boleto Bancário</span>
-              <span class="text-body-sm text-on-surface-variant">Desconto de 3%</span>
+            <div id="enderecoDisplay" class="space-y-2">
+                <select id="enderecoSelect" class="w-full border-2 border-gray-200 rounded-lg p-2 focus:border-primary focus:outline-none">
+                    <option value="">Selecione um endereço</option>
+                </select>
+                <div id="enderecoDetalhes" class="mt-2 p-2 bg-gray-50 rounded-lg hidden"></div>
             </div>
-          </div>
-          <span class="material-symbols-outlined text-on-surface-variant">description</span>
+            <button id="novoEnderecoBtn" class="text-primary font-mono text-xs flex items-center gap-1 mt-2">
+                <span class="material-symbols-outlined text-[16px]">add</span> ADICIONAR NOVO ENDEREÇO
+            </button>
         </div>
-      </div>
-    </div>
 
-    <!-- Resumo de Valores -->
-    <div class="bg-surface-container-low p-4 rounded-xl border-2 border-outline-variant mb-stack-md">
-      <div class="flex justify-between py-2"><span>Subtotal</span><span id="subtotal">R$ 0,00</span></div>
-      <div class="flex justify-between py-2"><span>Frete</span><span class="text-primary-container font-bold">GRÁTIS</span></div>
-      <div id="descontoRow" class="flex justify-between py-2 text-green-600 hidden"><span>Desconto</span><span id="descontoValor">-R$ 0,00</span></div>
-      <div class="flex justify-between py-2 border-t-2 border-outline-variant mt-2 pt-2"><span class="font-title-md text-title-md">TOTAL</span><span id="total" class="font-headline-lg text-headline-lg text-primary">R$ 0,00</span></div>
-    </div>
+        <!-- Formas de Pagamento -->
+        <div class="mb-6">
+            <h3 class="font-['Anton'] text-2xl text-gray-800 uppercase tracking-tight mb-4">Formas de Pagamento</h3>
+            <div class="space-y-3">
+                <div id="pixOption" class="payment-option flex items-center justify-between p-4 bg-white border-2 border-gray-200 rounded-xl cursor-pointer" data-payment="pix">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center"><div id="pixRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div></div>
+                        <div><span class="font-bold text-primary">PIX</span><span class="text-sm text-primary block">5% DE DESCONTO</span></div>
+                    </div>
+                    <span class="material-symbols-outlined text-primary">qr_code_2</span>
+                </div>
+                <div id="creditoOption" class="payment-option flex items-center justify-between p-4 bg-white border-2 border-gray-200 rounded-xl cursor-pointer" data-payment="credito">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center"><div id="creditoRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div></div>
+                        <div><span class="font-bold">Cartão de Crédito</span><span class="text-sm text-gray-500 block">Até 12x sem juros</span></div>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-500">credit_card</span>
+                </div>
+                <div id="boletoOption" class="payment-option flex items-center justify-between p-4 bg-white border-2 border-gray-200 rounded-xl cursor-pointer" data-payment="boleto">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center"><div id="boletoRadio" class="w-3 h-3 rounded-full bg-primary hidden"></div></div>
+                        <div><span class="font-bold">Boleto Bancário</span><span class="text-sm text-gray-500 block">Desconto de 3%</span></div>
+                    </div>
+                    <span class="material-symbols-outlined text-gray-500">description</span>
+                </div>
+            </div>
+        </div>
 
-    <!-- Botão Finalizar -->
-    <button id="finalizarBtn" class="w-full bg-primary text-on-primary font-headline-lg-mobile text-headline-lg-mobile py-6 rounded-xl neobrutal-shadow active-state flex items-center justify-center gap-3">
-      CONFIRMAR PAGAMENTO
-      <span class="material-symbols-outlined">check_circle</span>
-    </button>
-  </main>
+        <!-- Resumo de Valores -->
+        <div class="bg-gray-100 p-4 rounded-xl border-2 border-gray-200 mb-6">
+            <div class="flex justify-between py-2"><span>Subtotal</span><span id="subtotal">R$ 0,00</span></div>
+            <div class="flex justify-between py-2"><span>Frete</span><span class="text-primary font-bold">GRÁTIS</span></div>
+            <div id="descontoRow" class="flex justify-between py-2 text-green-600 hidden"><span>Desconto</span><span id="descontoValor">-R$ 0,00</span></div>
+            <div class="flex justify-between py-2 border-t-2 border-gray-300 mt-2 pt-2"><span class="font-bold text-lg">TOTAL</span><span id="total" class="font-['Anton'] text-2xl text-primary">R$ 0,00</span></div>
+        </div>
 
-  <!-- Modal de Endereço -->
-  <div id="addressModalOverlay" class="address-modal-overlay"></div>
-  <div id="addressModal" class="address-modal">
-    <div class="bg-primary text-white p-4 flex justify-between items-center">
-      <span class="font-title-md">Alterar Endereço</span>
-      <button id="closeAddressModal" class="text-white hover:opacity-70">&times;</button>
-    </div>
-    <div class="p-4 space-y-4">
-      <div>
-        <label class="font-label-caps text-label-caps text-primary">Nome completo</label>
-        <input type="text" id="modalNome" class="w-full border-2 border-outline-variant rounded-lg p-2 mt-1 focus:border-primary focus:outline-none">
-      </div>
-      <div>
-        <label class="font-label-caps text-label-caps text-primary">Endereço (Rua, número)</label>
-        <input type="text" id="modalRua" class="w-full border-2 border-outline-variant rounded-lg p-2 mt-1 focus:border-primary focus:outline-none">
-      </div>
-      <div>
-        <label class="font-label-caps text-label-caps text-primary">Complemento (Bairro, Cidade, UF, CEP)</label>
-        <input type="text" id="modalComplemento" class="w-full border-2 border-outline-variant rounded-lg p-2 mt-1 focus:border-primary focus:outline-none">
-      </div>
-      <div class="flex gap-3 pt-2">
-        <button id="salvarEnderecoBtn" class="flex-1 bg-primary text-white py-2 rounded-lg font-label-caps">SALVAR</button>
-        <button id="cancelarEnderecoBtn" class="flex-1 border-2 border-outline-variant py-2 rounded-lg font-label-caps">CANCELAR</button>
-      </div>
-    </div>
-  </div>
+        <button id="finalizarBtn" class="w-full bg-primary text-white font-bold py-6 rounded-xl flex items-center justify-center gap-3">
+            CONFIRMAR PAGAMENTO <span class="material-symbols-outlined">check_circle</span>
+        </button>
+    </main>
 
-  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
-    <div class="flex justify-around items-center w-full px-2 py-3">
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
-      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
-      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
-      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2 transition-all"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
-    </div>
-  </nav>
+    <nav class="fixed bottom-0 w-full z-50 bg-white border-t-2 border-gray-200 flex justify-around items-center py-2">
+        <a href="telaprincipal.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">home</span><span class="text-[10px] mt-1">Home</span></a>
+        <a href="telaprincipal.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">search</span><span class="text-[10px] mt-1">Search</span></a>
+        <a href="publicaritens.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">add_circle</span><span class="text-[10px] mt-1">Sell</span></a>
+        <a href="carrinho.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="text-[10px] mt-1">Cart</span></a>
+        <a href="perfil.html" class="flex flex-col items-center bg-primary/10 text-primary rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="text-[10px] mt-1">Profile</span></a>
+    </nav>
 
-  <script>
-    // Chave do carrinho
-    const CART_KEY = 'mercado_copa_cart';
+    <script type="module">
+        import { getCarrinho, clearCart, criarPedido, getEnderecos, getToken } from './js/api.js';
+
+        const API_BASE_URL = window.API_BASE_URL || "http://localhost:3000";
+
+        let compraData = null;
+        let selectedPayment = 'pix';
+        let originalTotal = 0;
+        let enderecos = [];
+        let selectedEnderecoId = null;
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        async function loadCompra() {
+            const carrinho = await getCarrinho();
+            if (carrinho.error || !carrinho.itens || carrinho.itens.length === 0) {
+                showToast('⚠️ Carrinho vazio!');
+                setTimeout(() => { window.location.href = 'carrinho.html'; }, 1500);
+                return;
+            }
+            
+            compraData = carrinho;
+            originalTotal = carrinho.total;
+            renderItems();
+            updateTotals();
+        }
+
+        function renderItems() {
+            const container = document.getElementById('itemsResumo');
+            container.innerHTML = compraData.itens.map(item => `
+                <div class="flex gap-3 p-3 bg-white border border-gray-200 rounded-lg">
+                    <div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                        <img src="${item.produto.imagem_url || 'https://placehold.co/400x500/e0e0e0/333?text=Imagem'}" class="w-full h-full object-cover" alt="${item.produto.titulo}">
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold">${item.produto.titulo}</h4>
+                        <p class="text-sm text-gray-500">Tamanho: ${item.produto.tamanho || 'Único'} | Quantidade: ${item.quantidade}</p>
+                        <span class="font-['Anton'] text-lg text-primary">R$ ${(item.produto.preco * item.quantidade).toFixed(2).replace('.', ',')}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadEnderecos() {
+            const result = await getEnderecos();
+            if (result.error) return;
+            
+            enderecos = result;
+            const select = document.getElementById('enderecoSelect');
+            if (enderecos.length === 0) {
+                select.innerHTML = '<option value="">Nenhum endereço cadastrado</option>';
+                return;
+            }
+
+            select.innerHTML = '<option value="">Selecione um endereço</option>' + 
+                enderecos.map(end => `<option value="${end.id}" ${end.principal ? 'selected' : ''}>${end.rua}, ${end.numero || 's/n'} - ${end.cidade}</option>`).join('');
+            
+            if (select.value) mostrarDetalhesEndereco(select.value);
+        }
+
+        function mostrarDetalhesEndereco(enderecoId) {
+            const end = enderecos.find(e => e.id === enderecoId);
+            if (!end) return;
+            selectedEnderecoId = enderecoId;
+            document.getElementById('enderecoDetalhes').innerHTML = `
+                <p class="font-bold">${end.nome_completo}</p>
+                <p class="text-sm text-gray-600">${end.rua}, ${end.numero || 's/n'}${end.bairro ? ` - ${end.bairro}` : ''}</p>
+                <p class="text-sm text-gray-600">${end.cidade} - ${end.estado}</p>
+            `;
+            document.getElementById('enderecoDetalhes').classList.remove('hidden');
+        }
+
+        function updateTotals() {
+            let finalTotal = originalTotal;
+            let desconto = 0;
+            if (selectedPayment === 'pix') {
+                desconto = originalTotal * 0.05;
+                finalTotal = originalTotal - desconto;
+                document.getElementById('descontoRow').classList.remove('hidden');
+                document.getElementById('descontoValor').innerHTML = `-R$ ${desconto.toFixed(2).replace('.', ',')} (5%)`;
+            } else if (selectedPayment === 'boleto') {
+                desconto = originalTotal * 0.03;
+                finalTotal = originalTotal - desconto;
+                document.getElementById('descontoRow').classList.remove('hidden');
+                document.getElementById('descontoValor').innerHTML = `-R$ ${desconto.toFixed(2).replace('.', ',')} (3%)`;
+            } else {
+                document.getElementById('descontoRow').classList.add('hidden');
+            }
+            document.getElementById('subtotal').textContent = `R$ ${originalTotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('total').innerHTML = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
+            return { finalTotal, desconto };
+        }
+
+        function selectPayment(payment) {
+            selectedPayment = payment;
+            const pixOpt = document.getElementById('pixOption'), credOpt = document.getElementById('creditoOption'), bolOpt = document.getElementById('boletoOption');
+            const pixRad = document.getElementById('pixRadio'), credRad = document.getElementById('creditoRadio'), bolRad = document.getElementById('boletoRadio');
+            [pixOpt, credOpt, bolOpt].forEach(opt => opt.classList.remove('selected', 'border-primary', 'bg-gray-100'));
+            [pixRad, credRad, bolRad].forEach(rad => rad.classList.add('hidden'));
+            if (payment === 'pix') { pixOpt.classList.add('selected', 'border-primary', 'bg-gray-100'); pixRad.classList.remove('hidden'); }
+            else if (payment === 'credito') { credOpt.classList.add('selected', 'border-primary', 'bg-gray-100'); credRad.classList.remove('hidden'); }
+            else if (payment === 'boleto') { bolOpt.classList.add('selected', 'border-primary', 'bg-gray-100'); bolRad.classList.remove('hidden'); }
+            updateTotals();
+        }
+
+        async function finalizarCompra() {
+    if (!selectedEnderecoId) {
+        showToast('⚠️ Selecione um endereço de entrega!');
+        return;
+    }
     
-    // Dados da compra
-    let compraData = null;
-    let selectedPayment = 'pix';
-    let originalTotal = 0;
-    let isProcessing = false; // Para evitar duplo clique
-    
-    // Endereço padrão
-    let endereco = {
-      nome: "Ricardo Oliveira",
-      rua: "Rua das Olimpíadas, 1200 - apto 42",
-      complemento: "Jardim Stadium - São Paulo, SP - CEP: 01234-567"
+    const endereco = enderecos.find(e => e.id === selectedEnderecoId);
+    if (!endereco) {
+        showToast('⚠️ Endereço não encontrado!');
+        return;
+    }
+
+    const { finalTotal } = updateTotals();
+    const pedido = {
+        items: compraData.itens.map(item => ({
+            produto_id: item.produto.id,
+            quantidade: item.quantidade,
+            preco_unitario: item.produto.preco
+        })),
+        total: finalTotal,
+        forma_pagamento: selectedPayment,
+        endereco_entrega: {  // <-- envia objeto completo
+            nome_completo: endereco.nome_completo,
+            rua: endereco.rua,
+            numero: endereco.numero,
+            bairro: endereco.bairro,
+            cidade: endereco.cidade,
+            estado: endereco.estado,
+            cep: endereco.cep,
+            complemento: endereco.complemento
+        }
     };
 
-    // Função para mostrar toast
-    function showToast(message) {
-      const toast = document.createElement('div');
-      toast.className = 'toast-message';
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      setTimeout(() => toast.remove(), 3000);
-    }
-
-    // Carregar dados da compra
-    function loadCompra() {
-      const saved = localStorage.getItem('compra_pendente');
-      if (!saved) {
-        showToast('⚠️ Nenhum item no carrinho!');
-        setTimeout(() => {
-          window.location.href = 'carrinho.html';
-        }, 1500);
+    const result = await criarPedido(pedido);
+    
+    if (result.error) {
+        showToast('❌ ' + result.error);
         return;
-      }
-      compraData = JSON.parse(saved);
-      originalTotal = compraData.total;
-      renderItems();
-      updateTotals();
-      renderEndereco();
     }
-
-    // Renderizar itens
-    function renderItems() {
-      const container = document.getElementById('itemsResumo');
-      if (!compraData || !compraData.items) return;
-      
-      container.innerHTML = compraData.items.map(item => `
-        <div class="flex gap-3 p-3 bg-surface border border-outline-variant rounded-lg">
-          <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden flex-shrink-0">
-            <img src="${item.imagem}" class="w-full h-full object-cover" alt="${item.nome}" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Imagem'">
-          </div>
-          <div class="flex-grow">
-            <h4 class="font-title-md">${item.nome}</h4>
-            <p class="font-body-sm text-on-surface-variant">Tamanho: ${item.tamanho} | Quantidade: ${item.quantidade}</p>
-            <span class="font-headline-lg text-headline-lg-mobile text-primary">R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}</span>
-          </div>
-        </div>
-      `).join('');
-      document.getElementById('subtotal').textContent = `R$ ${originalTotal.toFixed(2).replace('.', ',')}`;
-    }
-
-    // Renderizar endereço
-    function renderEndereco() {
-      document.getElementById('enderecoNome').textContent = endereco.nome;
-      document.getElementById('enderecoRua').textContent = endereco.rua;
-      document.getElementById('enderecoComplemento').textContent = endereco.complemento;
-    }
-
-    // Atualizar totais com base no método de pagamento
-    function updateTotals() {
-      let finalTotal = originalTotal;
-      let desconto = 0;
-      let descontoPercentual = 0;
-      
-      if (selectedPayment === 'pix') {
-        descontoPercentual = 5;
-        desconto = originalTotal * 0.05;
-        finalTotal = originalTotal - desconto;
-        document.getElementById('descontoRow').classList.remove('hidden');
-        document.getElementById('descontoValor').innerHTML = `-R$ ${desconto.toFixed(2).replace('.', ',')} (5%)`;
-      } else if (selectedPayment === 'boleto') {
-        descontoPercentual = 3;
-        desconto = originalTotal * 0.03;
-        finalTotal = originalTotal - desconto;
-        document.getElementById('descontoRow').classList.remove('hidden');
-        document.getElementById('descontoValor').innerHTML = `-R$ ${desconto.toFixed(2).replace('.', ',')} (3%)`;
-      } else {
-        document.getElementById('descontoRow').classList.add('hidden');
-      }
-      
-      document.getElementById('total').innerHTML = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
-      return { finalTotal, desconto, descontoPercentual };
-    }
-
-    // Selecionar método de pagamento
-    function selectPayment(payment) {
-      selectedPayment = payment;
-      
-      // Atualizar estilos dos cards
-      const pixOption = document.getElementById('pixOption');
-      const creditoOption = document.getElementById('creditoOption');
-      const boletoOption = document.getElementById('boletoOption');
-      const pixRadio = document.getElementById('pixRadio');
-      const creditoRadio = document.getElementById('creditoRadio');
-      const boletoRadio = document.getElementById('boletoRadio');
-      
-      // Resetar todos
-      [pixOption, creditoOption, boletoOption].forEach(opt => {
-        opt.classList.remove('border-primary', 'bg-surface-container-high');
-        opt.classList.add('border-outline-variant');
-      });
-      [pixRadio, creditoRadio, boletoRadio].forEach(radio => radio.classList.add('hidden'));
-      
-      // Ativar o selecionado
-      if (payment === 'pix') {
-        pixOption.classList.add('border-primary', 'bg-surface-container-high');
-        pixOption.classList.remove('border-outline-variant');
-        pixRadio.classList.remove('hidden');
-      } else if (payment === 'credito') {
-        creditoOption.classList.add('border-primary', 'bg-surface-container-high');
-        creditoOption.classList.remove('border-outline-variant');
-        creditoRadio.classList.remove('hidden');
-      } else if (payment === 'boleto') {
-        boletoOption.classList.add('border-primary', 'bg-surface-container-high');
-        boletoOption.classList.remove('border-outline-variant');
-        boletoRadio.classList.remove('hidden');
-      }
-      
-      updateTotals();
-    }
-
-    // Finalizar compra
-    function finalizarCompra() {
-      if (isProcessing) return;
-      if (!compraData) {
-        showToast('⚠️ Nenhum item no carrinho!');
-        return;
-      }
-      
-      isProcessing = true;
-      
-      const { finalTotal, desconto, descontoPercentual } = updateTotals();
-      let paymentMethod = '';
-      let paymentDetails = {};
-      
-      if (selectedPayment === 'pix') {
-        paymentMethod = 'PIX';
-        paymentDetails = { chave: 'colecionador@mercadodacopa.com', desconto: `${descontoPercentual}%` };
-      } else if (selectedPayment === 'credito') {
-        paymentMethod = 'Cartão de Crédito';
-        paymentDetails = { bandeira: 'Visa', final: '9012', parcelas: '1x sem juros' };
-      } else {
-        paymentMethod = 'Boleto Bancário';
-        paymentDetails = { desconto: `${descontoPercentual}%`, vencimento: '3 dias úteis' };
-      }
-      
-      const compraFinalizada = {
-        ...compraData,
-        paymentMethod: paymentMethod,
-        paymentDetails: paymentDetails,
+    
+    await clearCart();
+    
+    localStorage.setItem('compra_finalizada', JSON.stringify({
+        items: compraData.itens.map(item => ({
+            nome: item.produto.titulo,
+            preco: item.produto.preco,
+            tamanho: item.produto.tamanho,
+            quantidade: item.quantidade,
+            imagem: item.produto.imagem_url
+        })),
+        total: originalTotal,
         finalTotal: finalTotal,
-        desconto: desconto,
-        endereco: endereco,
-        dataCompra: new Date().toLocaleString('pt-BR')
-      };
-      
-      localStorage.setItem('compra_finalizada', JSON.stringify(compraFinalizada));
-      localStorage.removeItem('compra_pendente');
-      localStorage.removeItem(CART_KEY);
-      
-      showToast('✅ Pagamento confirmado! Redirecionando...');
-      
-      setTimeout(() => {
-        window.location.href = 'compra.html';
-      }, 1500);
-    }
+        paymentMethod: selectedPayment,
+        endereco: endereco
+    }));
 
-    // Modal de endereço
-    const addressModal = document.getElementById('addressModal');
-    const addressModalOverlay = document.getElementById('addressModalOverlay');
-    
-    function openAddressModal() {
-      document.getElementById('modalNome').value = endereco.nome;
-      document.getElementById('modalRua').value = endereco.rua;
-      document.getElementById('modalComplemento').value = endereco.complemento;
-      addressModal.classList.add('active');
-      addressModalOverlay.classList.add('active');
-    }
-    
-    function closeAddressModal() {
-      addressModal.classList.remove('active');
-      addressModalOverlay.classList.remove('active');
-    }
-    
-    function salvarEndereco() {
-      const novoNome = document.getElementById('modalNome').value.trim();
-      const novaRua = document.getElementById('modalRua').value.trim();
-      const novoComplemento = document.getElementById('modalComplemento').value.trim();
-      
-      if (!novoNome || !novaRua || !novoComplemento) {
-        showToast('⚠️ Por favor, preencha todos os campos do endereço.');
-        return;
-      }
-      
-      endereco = {
-        nome: novoNome,
-        rua: novaRua,
-        complemento: novoComplemento
-      };
-      
-      renderEndereco();
-      closeAddressModal();
-      showToast('📦 Endereço atualizado com sucesso!');
-    }
-
-    // Event Listeners - usando addEventListener para evitar múltiplos
-    document.addEventListener('DOMContentLoaded', () => {
-      loadCompra();
-      
-      // Botões de pagamento
-      document.getElementById('pixOption').addEventListener('click', () => selectPayment('pix'));
-      document.getElementById('creditoOption').addEventListener('click', () => selectPayment('credito'));
-      document.getElementById('boletoOption').addEventListener('click', () => selectPayment('boleto'));
-      
-      // Botão finalizar
-      document.getElementById('finalizarBtn').addEventListener('click', finalizarCompra);
-      
-      // Botões de endereço
-      document.getElementById('alterarEnderecoBtn').addEventListener('click', openAddressModal);
-      document.getElementById('closeAddressModal').addEventListener('click', closeAddressModal);
-      document.getElementById('addressModalOverlay').addEventListener('click', closeAddressModal);
-      document.getElementById('salvarEnderecoBtn').addEventListener('click', salvarEndereco);
-      document.getElementById('cancelarEnderecoBtn').addEventListener('click', closeAddressModal);
-      
-      // Selecionar PIX por padrão
-      selectPayment('pix');
-    });
-  </script>
+    showToast('✅ Pedido realizado!');
+    setTimeout(() => { window.location.href = 'compra.html'; }, 1500);
+}
+    </script>
 </body>
 </html>

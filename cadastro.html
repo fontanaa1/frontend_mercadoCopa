@@ -3,16 +3,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Login | Mercado da Copa</title>
+<title>Criar Conta | Mercado da Copa</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Hanken+Grotesk:wght@400;700&amp;family=JetBrains+Mono:wght@600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
     .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    .bg-stadium-gradient {
-        background: radial-gradient(circle at center, #004b23 0%, #003215 100%);
     }
     .tactile-btn:active {
         transform: translate(2px, 2px);
@@ -40,8 +37,8 @@
     .neobrutal-shadow {
         box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
     }
-    .neobrutal-shadow-sm {
-        box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
+    .bg-stadium-gradient {
+        background: radial-gradient(circle at center, #004b23 0%, #003215 100%);
     }
     .toast-message {
         position: fixed;
@@ -78,16 +75,16 @@
                     <span class="material-symbols-outlined text-3xl text-secondary animate-pulse">trophy</span>
                     <span class="font-title text-xl tracking-wider">MDC</span>
                 </div>
-                <h1 class="font-title text-4xl xl:text-5xl leading-none text-secondary mb-4">A maior arena de trocas da copa</h1>
-                <p class="font-body text-sm text-neutral-200 leading-relaxed max-w-xs">Colecione memórias, complete álbuns e negocie com torcedores do mundo todo em nossa plataforma neobrutalista oficial.</p>
+                <h1 class="font-title text-4xl xl:text-5xl leading-none text-secondary mb-4">Inscreva-se na convocação oficial</h1>
+                <p class="font-body text-sm text-neutral-200 leading-relaxed max-w-xs">Gere sua chave única, configure seu perfil de colecionador e proteja seus itens raros com nosso system criptográfico integrado.</p>
             </div>
             
             <div class="relative z-10 border-2 border-black bg-surface text-on-surface p-4 neobrutal-shadow bg-yellow-400">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-none border-2 border-black bg-primary flex items-center justify-center font-title text-on-primary">#1</div>
+                    <div class="w-10 h-10 rounded-none border-2 border-black bg-primary flex items-center justify-center font-title text-on-primary">✔</div>
                     <div>
-                        <p class="font-title text-xs text-black">Comunidade Ativa</p>
-                        <p class="font-mono-custom text-[10px] text-neutral-800">+14,200 trocas hoje</p>
+                        <p class="font-title text-xs text-black">Security Supabase</p>
+                        <p class="font-mono-custom text-[10px] text-neutral-800">Seus dados salvos em tempo real</p>
                     </div>
                 </div>
             </div>
@@ -95,47 +92,53 @@
 
         <section class="col-span-1 lg:col-span-7 p-6 sm:p-10 md:p-12 flex flex-col justify-center bg-amber-50">
             <div class="max-w-md w-full mx-auto">
-                <div class="mb-8">
-                    <h2 class="font-title text-3xl sm:text-4xl text-black mb-2">Aquecimento Inicial</h2>
-                    <p class="text-sm text-neutral-600">Insira suas credenciais cadastradas para entrar no gramado.</p>
+                <div class="mb-6">
+                    <h2 class="font-title text-3xl sm:text-4xl text-black mb-2">Formar nova tática</h2>
+                    <p class="text-sm text-neutral-600">Crie seu registro para negociar e gerenciar sua banca.</p>
                 </div>
 
-                <form id="loginForm" class="space-y-6">
-                    <div class="space-y-2">
-                        <label class="block font-title text-xs text-black" for="loginEmail">Seu Email de Ingressos</label>
+                <form id="registerForm" class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="block font-title text-xs text-black" for="regNome">Nome Completo</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">person</span>
+                            <input class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-black font-body text-sm rounded-none focus:ring-0 focus:border-black transition-all" id="regNome" placeholder="Seu nome" required="" type="text"/>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block font-title text-xs text-black" for="regUsername">Username do Cartão (Arroba)</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">alternate_email</span>
+                            <input class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-black font-body text-sm rounded-none focus:ring-0 focus:border-black transition-all" id="regUsername" placeholder="jogador10" required="" type="text"/>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label class="block font-title text-xs text-black" for="regEmail">Email de Registro</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">mail</span>
-                            <input class="w-full pl-10 pr-4 py-3 bg-white border-2 border-black font-body text-sm rounded-none focus:ring-0 focus:border-black transition-all" id="loginEmail" placeholder="nome@exemplo.com" required="" type="email"/>
+                            <input class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-black font-body text-sm rounded-none focus:ring-0 focus:border-black transition-all" id="regEmail" placeholder="nome@exemplo.com" required="" type="email"/>
                         </div>
                     </div>
 
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <label class="block font-title text-xs text-black" for="loginPassword">Senha de Acesso</label>
-                            <a class="font-mono-custom text-[11px] text-neutral-600 hover:underline" href="#">Esqueceu a tática?</a>
-                        </div>
+                    <div class="space-y-1">
+                        <label class="block font-title text-xs text-black" for="regPassword">Senha de Segurança</label>
                         <div class="relative">
                             <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-lg">lock</span>
-                            <input class="w-full pl-10 pr-4 py-3 bg-white border-2 border-black font-body text-sm rounded-none focus:ring-0 focus:border-black transition-all" id="loginPassword" placeholder="••••••••" required="" type="password"/>
+                            <input class="w-full pl-10 pr-4 py-2.5 bg-white border-2 border-black font-body text-sm rounded-none focus:ring-0 focus:border-black transition-all" id="regPassword" placeholder="Mínimo 6 dígitos" required="" type="password"/>
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between py-2">
-                        <label class="flex items-center gap-2 cursor-pointer select-none">
-                            <input class="w-4 h-4 rounded-none border-2 border-black text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
-                            <span class="font-mono-custom text-xs text-neutral-700">Lembrar escalação</span>
-                        </label>
-                    </div>
-
-                    <button class="w-full bg-[#004b23] text-white font-title py-4 px-6 border-2 border-black neobrutal-shadow tactile-btn text-center tracking-wide hover:bg-[#003215] transition-colors" type="submit">
-                        Entrar em Campo
+                    <button class="w-full bg-[#004b23] text-white font-title py-4 px-6 border-2 border-black neobrutal-shadow tactile-btn text-center tracking-wide hover:bg-[#003215] transition-colors mt-2" type="submit">
+                        Concluir Convocação
                     </button>
                 </form>
 
-                <div class="mt-8 pt-6 border-t-2 border-dashed border-neutral-300 text-center">
+                <div class="mt-6 pt-4 border-t-2 border-dashed border-neutral-300 text-center">
                     <p class="text-sm text-neutral-600">
-                        Ainda não tem numeração na camisa? 
-                        <a class="font-title text-sm text-[#004b23] hover:underline ml-1" href="cadastro.html">Criar Conta</a>
+                        Já tem numeração na camisa? 
+                        <a class="font-title text-sm text-[#004b23] hover:underline ml-1" href="acesso.html">Fazer Login</a>
                     </p>
                 </div>
             </div>
@@ -143,7 +146,7 @@
     </main>
 
     <script type="module">
-        import { login, setSession } from './js/api.js';
+        import { register } from './js/api.js';
 
         function showToast(msg) {
             const toast = document.createElement('div');
@@ -153,23 +156,23 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
+        document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            const nome = document.getElementById('regNome').value;
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
 
-            const result = await login(email, password);
+            const cleanUsername = username.replace('@', '');
+            const result = await register(email, password, nome, cleanUsername);
             if (result.error) {
                 showToast('❌ ' + (result.error.message || result.error));
                 return;
             }
-            if (result.session && result.session.access_token) {
-                setSession(result.user, result.session.access_token);
-                showToast('✅ Login realizado com sucesso! Redirecionando...');
-                setTimeout(() => {
-                    window.location.href = 'telaprincipal.html';
-                }, 1500);
-            }
+            showToast('🎉 Conta criada com sucesso! Redirecionando...');
+            setTimeout(() => {
+                window.location.href = 'acesso.html';
+            }, 2000);
         });
 
         // Floating particles (mantido)

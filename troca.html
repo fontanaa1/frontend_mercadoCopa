@@ -1,201 +1,319 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Propor Troca - Mercado da Copa</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-  <style>
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .tactile-push:active { transform: translate(2px, 2px); box-shadow: none !important; }
-    .neobrutal-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
-    body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
-  </style>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#003215", "primary-container": "#004b23", "surface": "#f8f9fa",
-            "outline": "#707970", "outline-variant": "#c0c9be", "on-surface": "#191c1d",
-            "on-surface-variant": "#404941", "secondary-container": "#fcd400", "error": "#ba1a1a",
-            "secondary": "#705d00", "background": "#f8f9fa"
-          },
-          borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
-          spacing: { gutter: "12px", "container-margin": "20px", "stack-lg": "48px", "stack-md": "24px", "stack-sm": "8px", unit: "4px" },
-          fontFamily: { "headline-lg": ["Anton"], "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-lg": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "body-sm": ["Hanken Grotesk"], "label-caps": ["JetBrains Mono"] },
-          fontSize: { "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }] }
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Propor Troca - Mercado da Copa</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script type="module" src="./js/api.js"></script>
+    <script src="menu.js"></script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-      }
-    }
-  </script>
+
+        .tactile-push:active {
+            transform: translate(2px, 2px);
+            box-shadow: none !important;
+        }
+
+        body {
+            min-height: max(884px, 100dvh);
+            font-family: 'Hanken Grotesk', sans-serif;
+        }
+
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #003215;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            z-index: 1001;
+            animation: fadeInOut 3s ease-in-out;
+            box-shadow: 4px 4px 0px 0px #fcd400;
+            border: 1px solid #fcd400;
+            white-space: nowrap;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+
+            15% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            85% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+    </style>
 </head>
-<body class="bg-background text-on-surface min-h-screen pb-28">
 
-  <header class="w-full top-0 sticky z-40 bg-surface border-b-2 border-outline-variant">
-    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
-      <button onclick="window.history.back()" class="text-primary"><span class="material-symbols-outlined">arrow_back</span></button>
-      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Propor Troca</h1>
-      <button class="text-primary"><span class="material-symbols-outlined">swap_horiz</span></button>
-    </div>
-  </header>
+<body class="bg-gray-50 text-gray-800 min-h-screen pb-28">
 
-  <main class="max-w-md mx-auto px-container-margin py-stack-md space-y-6">
-
-    <!-- Meu Item -->
-    <div class="bg-surface border-2 border-outline-variant rounded-xl p-4">
-      <h3 class="font-label-caps text-label-caps text-primary mb-3">SEU ITEM</h3>
-      <div class="flex gap-4">
-        <div class="w-24 h-24 bg-surface-container-highest rounded-lg overflow-hidden border border-outline-variant">
-          <img id="myItemImage" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU" alt="meu item">
+    <header class="w-full top-0 sticky z-40 bg-white border-b-2 border-gray-200">
+        <div class="flex justify-between items-center px-4 py-3 w-full">
+            <div class="flex items-center gap-4">
+                <button id="menuBtn" class="text-primary" onclick="window.openSidebar()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h1 class="font-['Anton'] text-2xl text-primary tracking-tight">Propor Troca</h1>
+            </div>
+            <button class="text-primary"><span class="material-symbols-outlined">swap_horiz</span></button>
         </div>
-        <div>
-          <h4 id="myItemName" class="font-title-md">Jaqueta Itália 90</h4>
-          <p id="myItemSize" class="font-body-sm text-on-surface-variant">Tamanho XL · Excelente</p>
-          <span id="myItemPrice" class="font-headline-lg text-primary">R$ 899</span>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 py-6 space-y-6">
+
+        <!-- Produto a Receber (Desejado) -->
+        <div class="bg-white border-2 border-gray-200 rounded-xl p-4">
+            <h3 class="font-mono text-xs text-primary mb-3">1. ITEM QUE VOCÊ VAI RECEBER</h3>
+            <div id="availableItemsList" class="space-y-3">
+                <div class="text-center py-4 text-gray-500">📦 Carregando item desejado...</div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Setinha de troca -->
-    <div class="flex justify-center">
-      <span class="material-symbols-outlined text-4xl text-outline">swap_horiz</span>
-    </div>
-
-    <!-- Selecione o Item Desejado -->
-    <div class="bg-surface border-2 border-primary rounded-xl p-4 neobrutal-shadow">
-      <h3 class="font-label-caps text-label-caps text-primary mb-3">SELECIONE O ITEM DESEJADO</h3>
-      
-      <div id="availableItemsList" class="space-y-3 max-h-80 overflow-y-auto">
-        <!-- Os itens disponíveis para troca serão injetados via JavaScript -->
-      </div>
-    </div>
-
-    <!-- Mensagem opcional -->
-    <div class="bg-surface border-2 border-outline-variant rounded-xl p-4">
-      <label class="font-label-caps text-label-caps text-primary">MENSAGEM PARA O VENDEDOR</label>
-      <textarea id="mensagemTroca" rows="3" class="w-full mt-2 bg-transparent border-2 border-outline-variant rounded-lg p-2" placeholder="Olá! Gostaria de propor uma troca..."></textarea>
-    </div>
-
-    <!-- Botão enviar proposta -->
-    <button id="enviarPropostaBtn" class="w-full bg-primary text-on-primary py-4 rounded-xl font-headline-lg-mobile uppercase neobrutal-shadow tactile-push flex items-center justify-center gap-2">
-      <span class="material-symbols-outlined">send</span>
-      ENVIAR PROPOSTA DE TROCA
-    </button>
-
-    <p class="text-center text-body-sm text-on-surface-variant">Após enviar, o vendedor terá 48h para responder.</p>
-
-  </main>
-
-  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
-    <div class="flex justify-around items-center w-full px-2 py-3">
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
-      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
-      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
-      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
-    </div>
-  </nav>
-
-  <script>
-    // Produtos disponíveis para troca (que aceitam troca)
-    const produtosDisponiveisTroca = [
-      { id: 1, nome: "Brasil 1970 - Retrô Pelé", preco: 750, tamanho: "G", estado: "Excelente", vendedor: "@camisas_retro", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuCUrJNJKiGYJ8IZRYlb3EGdU7kpNlfq5RfbHZJJf6DrkHCutts30cqLNX7EcpLTcODsRSa5C4bqj1ADzmUDj8ZXSBAfkc_2XZwoUU7tjNmU1L9hPF6X6hh1fCSfGaU8iAKcnBfRZ7nfTwBTtTzri8oYDWOtzsjvtnwuFjV1-t3OleVPF9Lr79hbNVF59jrAfOWt2mXI0exTRKDmp9tMitagEgw_dUCLbWkRYPX4zZjzkTgq232XKyNrryw6rItEg7j1aCsBdeUmrYQ" },
-      { id: 3, nome: "Casaco Treino Seleção 94", preco: 300, tamanho: "M", estado: "Raro", vendedor: "@arquivo_94", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuC62dQ5kP604-1pftSLJOhRtSspWov-O6EaxXz7gmVa-Xt3cFc3jXnITIocjVpoLRcUad84ghHUDUv434r0EeAeVADgGU-E8AEhxoQvX7Du8xvjMCmCBqFIQPTci0VG6xSMjd1fplQZiK0z27yV_AG59jfofLElbAyZXKEm6CftLA9taCbpMxAjZPLApOwnm4WqhvebjC65dDiyrCRSIifbv1XtEkbam1zNUi-I3cew-nxBzLQUfpy9z2dow1r79OCpkt0VTanPgF0" },
-      { id: 5, nome: "Brasil 1998 Home Retro", preco: 349, tamanho: "G", estado: "Deadstock", vendedor: "@vintage_brasil", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBaYi6ElVjmgzirYOwlxw7XaxFfNqMu9DKbdYWweDmYvvREaybL6j_fQKDXeisKquzIqkOSwdHUnQbaK8p7Q2fakPtDyLG8ZQfrx0Wlc6aXlIhMa2E0R8Mph9m40Ua0-NlqsmQspo5-pWzQVh-MLBd-ZMnvwNmp9zJ-_LlMvvKsFroRsyuQR7DAKga0xzAWmqJIxHQFRUCWoewstVUVbi3zh3XS4ENpM-7wFWWgU6Y7zb7aJ0fqNo0Kbtie0s50TRFeiSc7Ny9E7Pw" },
-      { id: 6, nome: "Agasalho Argentina '94", preco: 520, tamanho: "M", estado: "Rare", vendedor: "@colecionador_ald", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuBbuwd__FDHRBsBkHE7v9UUFIDJLjfI-0a8TYWTpfVgkaeXJuvNI0abTFSgnMEUfoIwH5cbi_K7QRpGfKD2dEz5AZaUc4t04aRR6mudtgD0YtmlJ91zEZHZPnLPzdaFe4NTdrFubknyVQ4REjGbaMt_FTywZQKFPCvp0ggQCSSdqt87RQU3akXGtoghrWBz6W3KGoswEVrqnwzITjMFWUi7tKZ0IMhLqQchIXMmnw49bfhPDSZoPRa_tZROAXfGzenSilXz7aMk6i0" },
-      { id: 7, nome: "Boné USA '94 Corduroy", preco: 120, tamanho: "Único", estado: "Authentic", vendedor: "@bonestock", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDjUlRtsUiZrTGZ6eUOBSGUpdaBO6ih_UB5dbcz8unt0zUkcr7VK8B9_bDRKxb9OX6e0xjalQTxLcOizREwR5i8eriDiBlsGD9HyM6u97KiFjvoBAY2AwtkEOuqGOeEndVtSAEkOy20Kq3oI1y9S-L_TExiXmOqphJaRWUzvwm8RK8YcHSyoQQMtJLHcIBdcpKhHTbaDNIRDOKIwbg_P9w8ePZeZt6X9MwDHekhxqpY7W5fEGdAuQm0K6QHbO2uXdQ3P152bd8fDP8" },
-      { id: 9, nome: "Jaqueta Itália 90", preco: 899, tamanho: "XL", estado: "Excelente", vendedor: "@italia_collection", imagem: "https://lh3.googleusercontent.com/aida-public/AB6AXuDavNjk62VpS9fN42ZwXbJJ65PNbVikUuJh1RoWX_EB40JCOAiCKz5p8vPcnS0SoOcmNYXgEFDQpriaDWSp7Tvp6Sp2PAdP_wuv0cxN1OzQDQSpbkLaSQMJYWbPnOHePBjqI2azrXT4mu6UC-nJ8bWWqGcBnZAWIpHq0TEhB-Ru41rTvj4OX_7ZS-f8zVnRxTA7TgbH5Il8Kf9Dowsy6_ZG5aFhWi7nyeaGCQ2LQcxyNmPe-NDCGM8_BC29cRo8ychPdd8AcvQxGQU" }
-    ];
-
-    let selectedItemId = null;
-    let meuItem = null;
-
-    function loadMyItem() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const itemId = urlParams.get('id');
-      const itemNome = urlParams.get('item');
-      
-      const saved = localStorage.getItem('currentProduct');
-      if (saved && !itemId) {
-        meuItem = JSON.parse(saved);
-      } else if (itemId && produtosDisponiveisTroca.find(p => p.id == itemId)) {
-        meuItem = produtosDisponiveisTroca.find(p => p.id == itemId);
-      } else {
-        meuItem = produtosDisponiveisTroca[5];
-      }
-      
-      if (meuItem) {
-        document.getElementById('myItemImage').src = meuItem.imagem;
-        document.getElementById('myItemName').textContent = meuItem.nome;
-        document.getElementById('myItemSize').innerHTML = `Tamanho ${meuItem.tamanho} · ${meuItem.estado}`;
-        document.getElementById('myItemPrice').innerHTML = `R$ ${meuItem.preco}`;
-      }
-      
-      renderAvailableItems();
-    }
-
-    function renderAvailableItems() {
-      const container = document.getElementById('availableItemsList');
-      const filtered = produtosDisponiveisTroca.filter(p => p.id !== meuItem?.id);
-      
-      container.innerHTML = filtered.map(produto => `
-        <div class="flex gap-3 p-3 border-2 border-outline-variant rounded-lg hover:border-primary cursor-pointer transition-all ${selectedItemId === produto.id ? 'border-primary bg-primary-container/10' : ''}" onclick="selectItem(${produto.id})">
-          <div class="w-16 h-16 bg-surface-container-highest rounded overflow-hidden flex-shrink-0">
-            <img src="${produto.imagem}" class="w-full h-full object-cover" alt="${produto.nome}">
-          </div>
-          <div class="flex-grow">
-            <h4 class="font-title-md">${produto.nome}</h4>
-            <p class="font-body-sm text-on-surface-variant">Tamanho: ${produto.tamanho} · ${produto.estado}</p>
-            <span class="font-label-caps text-primary">Vendedor: ${produto.vendedor}</span>
-          </div>
-          <input type="radio" name="targetItem" value="${produto.id}" ${selectedItemId === produto.id ? 'checked' : ''} class="w-5 h-5 accent-primary">
+        <div class="flex justify-center">
+            <span class="material-symbols-outlined text-4xl text-gray-400">swap_horiz</span>
         </div>
-      `).join('');
-    }
 
-    function selectItem(id) {
-      selectedItemId = id;
-      renderAvailableItems();
-    }
+        <!-- Meus Produtos (para oferecer) -->
+        <div class="bg-white border-2 border-gray-200 rounded-xl p-4">
+            <h3 class="font-mono text-xs text-primary mb-3">2. SELECIONE O SEU ITEM PARA OFERECER</h3>
+            <div id="meusProdutosList" class="space-y-3 max-h-80 overflow-y-auto">
+                <div class="text-center py-4 text-gray-500">📦 Carregando seus produtos...</div>
+            </div>
+        </div>
 
-    function enviarProposta() {
-      if (!selectedItemId) {
-        alert('Por favor, selecione um item para troca!');
-        return;
-      }
-      
-      const targetItem = produtosDisponiveisTroca.find(p => p.id === selectedItemId);
-      const mensagem = document.getElementById('mensagemTroca').value;
-      
-      // Salvar proposta no localStorage
-      const propostas = JSON.parse(localStorage.getItem('propostas_troca') || '[]');
-      propostas.push({
-        id: Date.now(),
-        meuItem: meuItem,
-        itemDesejado: targetItem,
-        mensagem: mensagem,
-        status: 'pendente',
-        data: new Date().toLocaleString('pt-BR')
-      });
-      localStorage.setItem('propostas_troca', JSON.stringify(propostas));
-      
-      alert(`Proposta de troca enviada com sucesso!\n\nVocê propôs trocar ${meuItem.nome} por ${targetItem.nome}.\nO vendedor será notificado e terá 48h para responder.`);
-      
-      window.location.href = 'telaprincipal.html';
-    }
+        <div class="bg-white border-2 border-gray-200 rounded-xl p-4">
+            <label class="font-mono text-xs text-primary">MENSAGEM PARA O VENDEDOR</label>
+            <textarea id="mensagemTroca" rows="3"
+                class="w-full mt-2 bg-transparent border-2 border-gray-200 rounded-lg p-2 focus:border-primary focus:outline-none"
+                placeholder="Olá! Gostaria de propor uma troca..."></textarea>
+        </div>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadMyItem();
-      document.getElementById('enviarPropostaBtn').addEventListener('click', enviarProposta);
-    });
+        <button id="enviarPropostaBtn"
+            class="w-full bg-primary text-white py-4 rounded-xl font-bold uppercase flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined">send</span> ENVIAR PROPOSTA
+        </button>
 
-    window.selectItem = selectItem;
-  </script>
+        <p class="text-center text-sm text-gray-500">Após enviar, o vendedor terá 48h para responder.</p>
+
+    </main>
+
+    <nav class="fixed bottom-0 w-full z-50 bg-white border-t-2 border-gray-200 flex justify-around items-center py-2">
+        <a href="telaprincipal.html" class="flex flex-col items-center text-gray-500 p-2"><span
+                class="material-symbols-outlined">home</span><span class="text-[10px] mt-1">Home</span></a>
+        <a href="telaprincipal.html" class="flex flex-col items-center text-gray-500 p-2"><span
+                class="material-symbols-outlined">search</span><span class="text-[10px] mt-1">Search</span></a>
+        <a href="publicaritens.html" class="flex flex-col items-center text-gray-500 p-2"><span
+                class="material-symbols-outlined">add_circle</span><span class="text-[10px] mt-1">Sell</span></a>
+        <a href="carrinho.html" class="flex flex-col items-center text-gray-500 p-2"><span
+                class="material-symbols-outlined">shopping_cart</span><span class="text-[10px] mt-1">Cart</span></a>
+        <a href="perfil.html" class="flex flex-col items-center bg-primary/10 text-primary rounded-xl p-2"><span
+                class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span
+                class="text-[10px] mt-1">Profile</span></a>
+    </nav>
+
+    <script type="module">
+        import { meusProdutos, proporTroca, getUser, getToken, carregarProdutoPorId } from './js/api.js';
+
+        const API_BASE_URL = window.API_BASE_URL || "http://localhost:3000";
+
+        let meusProdutosList = [];
+        let targetItem = null;
+        let selectedMyItemId = null;
+        let selectedTargetItemId = null;
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Verificar autenticação
+        const token = getToken();
+        if (!token) {
+            showToast('🔐 Faça login para propor troca!');
+            setTimeout(() => { window.location.href = 'acesso.html'; }, 1500);
+        }
+
+        function renderMyItems() {
+            const container = document.getElementById('meusProdutosList');
+            if (!container) return;
+            container.innerHTML = meusProdutosList.map(produto => `
+                <div class="flex gap-3 p-3 border-2 ${selectedMyItemId === produto.id ? 'border-primary bg-primary/5' : 'border-gray-200'} rounded-lg hover:border-primary cursor-pointer transition-all" onclick="selectMyItem('${produto.id}')">
+                    <div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                        <img src="${produto.imagem_url || 'https://placehold.co/400x500/e0e0e0/333?text=Item'}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Item'">
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-sm">${produto.titulo}</h4>
+                        <p class="text-xs text-gray-500">R$ ${produto.preco || '0'} · Tamanho: ${produto.tamanho || 'Único'}</p>
+                    </div>
+                    <input type="radio" name="myItem" ${selectedMyItemId === produto.id ? 'checked' : ''} class="w-5 h-5 accent-primary">
+                </div>
+            `).join('');
+        }
+
+        // Carregar MEUS produtos (para oferecer)
+        async function loadMyItems() {
+            const token = getToken();
+            if (!token) {
+                showToast('🔐 Faça login para ver seus itens!');
+                return;
+            }
+
+            try {
+                console.log('Buscando meus produtos disponíveis para troca...');
+                const myItems = await meusProdutos(token);
+
+                if (myItems.error) {
+                    console.error('Erro retornado pela API:', myItems.error);
+                    return;
+                }
+
+                // QUALQUER item que o usuário já publicou
+                meusProdutosList = myItems;
+
+                if (meusProdutosList.length === 0) {
+                    document.getElementById('meusProdutosList').innerHTML = '<div class="text-center py-4 text-gray-500">📦 Nenhum item seu encontrado para oferecer. Crie um item primeiro!</div>';
+                    return;
+                }
+
+                renderMyItems();
+
+            } catch (err) {
+                console.error('Erro ao carregar meus itens:', err);
+                showToast('❌ Erro ao carregar seus produtos para troca');
+            }
+        }
+
+        // Carregar o produto que eu quero receber (especificado no URL ?id=...)
+        async function loadTargetItem() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetId = urlParams.get('id');
+            if (!targetId) {
+                document.getElementById('availableItemsList').innerHTML = '<div class="text-center py-4 text-red-500">⚠️ Nenhum item foi selecionado para troca!</div>';
+                return;
+            }
+
+            try {
+                console.log('Carregando item desejado para a troca:', targetId);
+                const produto = await carregarProdutoPorId(targetId);
+
+                if (produto.error) {
+                    document.getElementById('availableItemsList').innerHTML = `<div class="text-center py-4 text-red-500">❌ ${produto.error}</div>`;
+                    return;
+                }
+
+                targetItem = produto;
+                selectedTargetItemId = produto.id;
+
+                const container = document.getElementById('availableItemsList');
+                const vendedorNome = produto.usuario?.raw_user_meta_data?.nome || produto.usuario?.email?.split('@')[0] || 'Vendedor';
+                
+                container.innerHTML = `
+                    <div class="flex gap-3 p-3 border-2 border-primary bg-primary/5 rounded-lg">
+                        <div class="w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                            <img src="${produto.imagem_url || 'https://placehold.co/400x500/e0e0e0/333?text=Item'}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x500/e0e0e0/333?text=Item'">
+                        </div>
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-sm">${produto.titulo}</h4>
+                            <p class="text-xs text-gray-500">R$ ${produto.preco} · Vendedor: ${vendedorNome}</p>
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                console.error('Erro ao carregar item de destino:', err);
+                document.getElementById('availableItemsList').innerHTML = '<div class="text-center py-4 text-red-500">❌ Erro ao carregar o item desejado</div>';
+            }
+        }
+
+        window.selectMyItem = (id) => {
+            selectedMyItemId = id;
+            renderMyItems();
+            console.log('Item selecionado para oferecer:', selectedMyItemId);
+        };
+
+        async function enviarProposta() {
+            if (!getToken()) {
+                showToast('🔐 Faça login para propor troca!');
+                setTimeout(() => { window.location.href = 'acesso.html'; }, 1500);
+                return;
+            }
+
+            if (!selectedMyItemId) {
+                showToast('⚠️ Selecione um item seu para oferecer!');
+                return;
+            }
+
+            if (!selectedTargetItemId || !targetItem) {
+                showToast('⚠️ Erro ao carregar o item desejado!');
+                return;
+            }
+
+            const myItem = meusProdutosList.find(p => p.id === selectedMyItemId);
+
+            if (!myItem) {
+                showToast('❌ Erro ao identificar o item selecionado');
+                return;
+            }
+
+            const mensagem = document.getElementById('mensagemTroca').value;
+
+            console.log('Enviando proposta:', {
+                receptor_id: targetItem.usuario_id,
+                produto_solicitante_id: myItem.id,
+                produto_receptor_id: targetItem.id,
+                mensagem: mensagem
+            });
+
+            const result = await proporTroca(token, {
+                receptor_id: targetItem.usuario_id,
+                produto_solicitante_id: myItem.id,
+                produto_receptor_id: targetItem.id,
+                mensagem: mensagem
+            });
+
+            if (result.error) {
+                showToast('❌ ' + result.error);
+                console.error('Erro na proposta:', result.error);
+            } else {
+                showToast('✅ Proposta de troca enviada com sucesso!');
+                console.log('Proposta enviada:', result);
+                setTimeout(() => { window.location.href = 'telaprincipal.html'; }, 1500);
+            }
+        }
+
+        document.getElementById('enviarPropostaBtn')?.addEventListener('click', enviarProposta);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Página de troca carregada');
+            loadMyItems();
+            loadTargetItem();
+        });
+    </script>
 </body>
-  <!-- Menu Hamburguer Global -->
-  <script src="menu.js"></script>
-</body>
+
 </html>

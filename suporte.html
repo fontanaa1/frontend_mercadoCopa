@@ -6,113 +6,159 @@
   <title>Suporte - Mercado da Copa</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script type="module" src="./js/api.js"></script>
+  <script src="menu.js"></script>
   <style>
     .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-    .tactile-push:active { transform: translate(2px, 2px); box-shadow: none !important; }
-    .accordion-content { transition: max-height 0.3s ease-out; max-height: 0; overflow: hidden; }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
     .accordion.active .accordion-content { max-height: 300px; }
     body { min-height: max(884px, 100dvh); font-family: 'Hanken Grotesk', sans-serif; }
-  </style>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: { extend: { colors: { "primary": "#003215", "primary-container": "#004b23", "surface": "#f8f9fa", "outline": "#707970", "outline-variant": "#c0c9be", "on-surface": "#191c1d", "on-surface-variant": "#404941", "secondary-container": "#fcd400", "error": "#ba1a1a" }, fontFamily: { "label-caps": ["JetBrains Mono"], "title-md": ["Hanken Grotesk"], "body-lg": ["Hanken Grotesk"] }, fontSize: { "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }], "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }] } } }
+    .toast-message {
+      position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+      background: #003215; color: white; padding: 12px 24px; border-radius: 50px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px; z-index: 1001;
+      animation: fadeInOut 3s ease-in-out; box-shadow: 4px 4px 0px 0px #fcd400;
+      border: 1px solid #fcd400; white-space: nowrap;
     }
-  </script>
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    }
+  </style>
 </head>
-<body class="bg-background text-on-surface min-h-screen pb-28">
+<body class="bg-gray-50 text-gray-800 min-h-screen pb-28">
 
-  <header class="w-full top-0 sticky z-40 bg-surface border-b-2 border-outline-variant">
-    <div class="flex justify-between items-center px-container-margin py-stack-sm w-full">
-      <button onclick="window.history.back()" class="text-primary"><span class="material-symbols-outlined">arrow_back</span></button>
-      <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Suporte ao Cliente</h1>
-      <button class="text-primary"><span class="material-symbols-outlined">chat</span></button>
+  <header class="w-full top-0 sticky z-40 bg-white border-b-2 border-gray-200">
+    <div class="flex justify-between items-center px-4 py-3 w-full">
+      <div class="flex items-center gap-4">
+        <button id="menuBtn" class="text-primary" onclick="window.openSidebar()">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <h1 class="font-['Anton'] text-2xl text-primary tracking-tight">Suporte ao Cliente</h1>
+      </div>
+      <button id="openChatBtn" class="text-primary"><span class="material-symbols-outlined">chat</span></button>
     </div>
   </header>
 
-  <main class="max-w-md mx-auto px-container-margin py-stack-md space-y-6">
+  <main class="max-w-md mx-auto px-4 py-6 space-y-6">
 
-    <!-- Canais de Contato Rápidos -->
     <div class="grid grid-cols-2 gap-3">
-      <div class="bg-surface border-2 border-outline-variant rounded-xl p-4 text-center hover:border-primary tactile-push">
+      <div class="bg-white border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary cursor-pointer" onclick="showToast('📱 WhatsApp: (11) 99999-8888')">
         <span class="material-symbols-outlined text-primary text-3xl">whatsapp</span>
-        <p class="font-title-md text-title-md">WhatsApp</p>
-        <p class="font-body-sm text-on-surface-variant">(11) 99999-8888</p>
+        <p class="font-bold">WhatsApp</p>
+        <p class="text-sm text-gray-500">(11) 99999-8888</p>
       </div>
-      <div class="bg-surface border-2 border-outline-variant rounded-xl p-4 text-center hover:border-primary tactile-push">
+      <div class="bg-white border-2 border-gray-200 rounded-xl p-4 text-center hover:border-primary cursor-pointer" onclick="showToast('📧 suporte@mercadodacopa.com')">
         <span class="material-symbols-outlined text-primary text-3xl">mail</span>
-        <p class="font-title-md text-title-md">E-mail</p>
-        <p class="font-body-sm text-on-surface-variant">suporte@mercadodacopa.com</p>
+        <p class="font-bold">E-mail</p>
+        <p class="text-sm text-gray-500">suporte@mercadodacopa.com</p>
       </div>
     </div>
 
-    <!-- Abrir Chamado -->
-    <div class="bg-surface border-2 border-primary rounded-xl p-5 neobrutal-shadow">
-      <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-primary">support_agent</span><h3 class="font-headline-lg-mobile text-primary">Abrir Chamado</h3></div>
-      <select class="w-full bg-transparent border-b-2 border-outline mb-3 py-2"><option>Selecione o assunto</option><option>Problemas com pagamento</option><option>Troca ou devolução</option><option>Item não recebido</option><option>Dúvida sobre autenticidade</option></select>
-      <textarea rows="3" class="w-full bg-transparent border-2 border-outline-variant p-2 rounded-lg mb-3" placeholder="Descreva sua solicitação..."></textarea>
-      <button class="w-full bg-primary text-on-primary py-3 rounded-lg font-label-caps uppercase tactile-push">ENVIAR MENSAGEM</button>
+    <div class="bg-white border-2 border-primary rounded-xl p-5 shadow-md">
+      <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined text-primary">support_agent</span><h3 class="font-['Anton'] text-xl text-primary">Abrir Chamado</h3></div>
+      <select id="chamadoAssunto" class="w-full bg-transparent border-b-2 border-gray-300 mb-3 py-2 focus:border-primary focus:outline-none">
+        <option value="">Selecione o assunto</option>
+        <option value="pagamento">Problemas com pagamento</option>
+        <option value="troca">Troca ou devolução</option>
+        <option value="entrega">Item não recebido</option>
+        <option value="autenticidade">Dúvida sobre autenticidade</option>
+      </select>
+      <textarea id="chamadoMensagem" rows="3" class="w-full border-2 border-gray-200 rounded-lg p-2 focus:border-primary focus:outline-none" placeholder="Descreva sua solicitação..."></textarea>
+      <button id="enviarChamadoBtn" class="w-full bg-primary text-white py-3 rounded-lg font-mono text-xs uppercase mt-3">ENVIAR MENSAGEM</button>
     </div>
 
-    <!-- FAQ Accordion -->
     <div class="space-y-2">
-      <h3 class="font-label-caps text-label-caps text-primary uppercase tracking-wider">Perguntas Frequentes</h3>
+      <h3 class="font-mono text-xs text-primary uppercase tracking-wider">Perguntas Frequentes</h3>
       
-      <div class="border-2 border-outline-variant rounded-xl overflow-hidden">
-        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center bg-surface hover:bg-surface-container-low"><span class="font-title-md">Como sei se o item é original?</span><span class="material-symbols-outlined">expand_more</span></button>
-        <div class="accordion-content px-4 pb-4 text-on-surface-variant border-t border-outline-variant">Todos os itens com selo <strong class="text-primary">Winner's Circle</strong> são verificados por especialistas. Além disso, cada vendedor passa por uma curadoria de reputação.</div>
-      </div>
-      
-      <div class="border-2 border-outline-variant rounded-xl overflow-hidden">
-        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center bg-surface"><span class="font-title-md">Qual o prazo de entrega?</span><span class="material-symbols-outlined">expand_more</span></button>
-        <div class="accordion-content px-4 pb-4 text-on-surface-variant border-t border-outline-variant">O prazo médio é de 3 a 7 dias úteis para Sudeste e 5 a 12 para outras regiões. Itens com selo "Match Ready" possuem prioridade no envio.</div>
+      <div class="border-2 border-gray-200 rounded-xl overflow-hidden">
+        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center bg-white hover:bg-gray-50"><span class="font-bold">Como sei se o item é original?</span><span class="material-symbols-outlined">expand_more</span></button>
+        <div class="accordion-content px-4 pb-4 text-gray-600 border-t border-gray-200">Todos os itens com selo <strong class="text-primary">Winner's Circle</strong> são verificados por especialistas.</div>
       </div>
       
-      <div class="border-2 border-outline-variant rounded-xl overflow-hidden">
-        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center bg-surface"><span class="font-title-md">Posso devolver um item?</span><span class="material-symbols-outlined">expand_more</span></button>
-        <div class="accordion-content px-4 pb-4 text-on-surface-variant border-t border-outline-variant">Sim, você tem 7 dias corridos após o recebimento para solicitar devolução. O reembolso é processado em até 5 dias úteis.</div>
+      <div class="border-2 border-gray-200 rounded-xl overflow-hidden">
+        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center bg-white"><span class="font-bold">Qual o prazo de entrega?</span><span class="material-symbols-outlined">expand_more</span></button>
+        <div class="accordion-content px-4 pb-4 text-gray-600 border-t border-gray-200">3 a 7 dias úteis para Sudeste, 5 a 12 para outras regiões.</div>
       </div>
-
-      <div class="border-2 border-outline-variant rounded-xl overflow-hidden">
-        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center bg-surface"><span class="font-title-md">Como vender no Mercado da Copa?</span><span class="material-symbols-outlined">expand_more</span></button>
-        <div class="accordion-content px-4 pb-4 text-on-surface-variant border-t border-outline-variant">Acesse o menu <strong>Sell</strong> no bottom nav, cadastre seu item com fotos e descrição. Nossa equipe analisará e publicará em até 48h.</div>
+      
+      <div class="border-2 border-gray-200 rounded-xl overflow-hidden">
+        <button class="accordion-btn w-full text-left p-4 flex justify-between items-center bg-white"><span class="font-bold">Posso devolver um item?</span><span class="material-symbols-outlined">expand_more</span></button>
+        <div class="accordion-content px-4 pb-4 text-gray-600 border-t border-gray-200">Sim, você tem 7 dias corridos após o recebimento.</div>
       </div>
-    </div>
-
-    <!-- Avaliação do Atendimento -->
-    <div class="bg-surface-container-low p-5 rounded-xl border-2 border-outline-variant text-center">
-      <span class="material-symbols-outlined text-secondary-container text-3xl">star</span>
-      <p class="font-title-md mt-1">Atendimento 24h</p>
-      <p class="font-body-sm text-on-surface-variant">Nossa equipe está pronta para ajudar você a marcar esse gol.</p>
     </div>
 
   </main>
 
-  <nav class="fixed bottom-0 w-full z-50 bg-surface border-t-2 border-outline-variant">
-    <div class="flex justify-around items-center w-full px-2 py-3">
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">home</span><span class="font-label-caps text-label-caps mt-1">Home</span></a>
-      <a href="telaprincipal.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">search</span><span class="font-label-caps text-label-caps mt-1">Search</span></a>
-      <a href="publicaritens.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">add_circle</span><span class="font-label-caps text-label-caps mt-1">Sell</span></a>
-      <a href="carrinho.html" class="flex flex-col items-center justify-center text-on-surface-variant p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="font-label-caps text-label-caps mt-1">Cart</span></a>
-      <a href="perfil.html" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="font-label-caps text-label-caps mt-1">Profile</span></a>
-    </div>
+  <nav class="fixed bottom-0 w-full z-50 bg-white border-t-2 border-gray-200 flex justify-around items-center py-2">
+    <a href="telaprincipal.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">home</span><span class="text-[10px] mt-1">Home</span></a>
+    <a href="telaprincipal.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">search</span><span class="text-[10px] mt-1">Search</span></a>
+    <a href="publicaritens.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">add_circle</span><span class="text-[10px] mt-1">Sell</span></a>
+    <a href="carrinho.html" class="flex flex-col items-center text-gray-500 p-2"><span class="material-symbols-outlined">shopping_cart</span><span class="text-[10px] mt-1">Cart</span></a>
+    <a href="perfil.html" class="flex flex-col items-center bg-primary/10 text-primary rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="text-[10px] mt-1">Profile</span></a>
   </nav>
 
+  <div id="chatModal" class="fixed bottom-20 right-4 w-80 max-w-[calc(100vw-2rem)] bg-white rounded-xl shadow-xl border-2 border-primary z-50 hidden flex-col overflow-hidden">
+    <div class="bg-primary text-white p-3 flex justify-between items-center"><span class="flex items-center gap-2"><span class="material-symbols-outlined">sports_soccer</span> VAR - Atendimento</span><button id="closeChatBtn" class="text-white">&times;</button></div>
+    <div id="chatMessages" class="h-80 overflow-y-auto p-3 bg-gray-50">
+      <div class="flex mb-3"><div class="bg-white border border-gray-200 rounded-2xl p-2 max-w-[80%]">Olá! Sou o assistente VAR. Como posso ajudar? ⚽</div></div>
+    </div>
+    <div class="flex p-3 border-t border-gray-200"><input type="text" id="chatInput" class="flex-1 border-2 border-gray-200 rounded-full px-3 py-2 text-sm focus:border-primary focus:outline-none" placeholder="Digite sua mensagem..." onkeypress="if(event.key==='Enter') sendMessage()"><button onclick="sendMessage()" class="ml-2 bg-primary text-white rounded-full px-4 py-2 text-sm">Enviar</button></div>
+  </div>
+
   <script>
-    // Accordion functionality
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast-message';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
     document.querySelectorAll('.accordion-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const parent = btn.parentElement;
         parent.classList.toggle('active');
         const icon = btn.querySelector('.material-symbols-outlined');
-        if(parent.classList.contains('active')) icon.textContent = 'expand_less';
-        else icon.textContent = 'expand_more';
+        icon.textContent = parent.classList.contains('active') ? 'expand_less' : 'expand_more';
       });
     });
+
+    document.getElementById('enviarChamadoBtn')?.addEventListener('click', () => {
+      const assunto = document.getElementById('chamadoAssunto').value;
+      const mensagem = document.getElementById('chamadoMensagem').value;
+      if (!assunto || !mensagem) { showToast('⚠️ Preencha todos os campos'); return; }
+      showToast('✅ Chamado enviado! Responderemos em até 24h.');
+      document.getElementById('chamadoAssunto').value = '';
+      document.getElementById('chamadoMensagem').value = '';
+    });
+
+    const chatModal = document.getElementById('chatModal');
+    document.getElementById('openChatBtn')?.addEventListener('click', () => chatModal.classList.remove('hidden'));
+    document.getElementById('closeChatBtn')?.addEventListener('click', () => chatModal.classList.add('hidden'));
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+      if (!message) return;
+      
+      const container = document.getElementById('chatMessages');
+      container.innerHTML += `<div class="flex justify-end mb-3"><div class="bg-primary text-white rounded-2xl p-2 max-w-[80%]">${escapeHtml(message)}</div></div>`;
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+      
+      setTimeout(() => {
+        let resposta = 'Obrigado pelo contato! Nosso time responderá em breve.';
+        if (message.toLowerCase().includes('prazo') || message.toLowerCase().includes('entrega')) resposta = 'Prazo de entrega: 3 a 7 dias úteis. 🚚';
+        else if (message.toLowerCase().includes('troca')) resposta = 'Você tem 7 dias para solicitar troca. 📦';
+        container.innerHTML += `<div class="flex mb-3"><div class="bg-white border border-gray-200 rounded-2xl p-2 max-w-[80%]">${resposta}</div></div>`;
+        container.scrollTop = container.scrollHeight;
+      }, 500);
+    }
+
+    function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+    window.sendMessage = sendMessage;
   </script>
-  <script src="app.js" defer></script>
-</body>
-  <!-- Menu Hamburguer Global -->
-  <script src="menu.js"></script>
 </body>
 </html>
