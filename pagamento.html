@@ -27,6 +27,21 @@
         }
         .payment-option.selected { border-color: #003215; background: #edeeef; }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#003215",
+                        "primary-container": "#004b23",
+                        secondary: "#fcd400",
+                        "secondary-dark": "#705d00",
+                        tertiary: "#5c000b",
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
@@ -111,15 +126,14 @@
     </nav>
 
     <script type="module">
-        import { getCarrinho, clearCart, criarPedido, getEnderecos, getToken } from './js/api.js';
-
-        const API_BASE_URL = window.API_BASE_URL || "http://localhost:3000";
+        import { getToken, getCarrinho, clearCart, criarPedido, getEnderecos } from './js/api.js';
 
         let compraData = null;
         let selectedPayment = 'pix';
         let originalTotal = 0;
         let enderecos = [];
         let selectedEnderecoId = null;
+        const token = getToken();
 
         function showToast(message) {
             const toast = document.createElement('div');
@@ -129,18 +143,42 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
+        if (!token) {
+            showToast('🔐 Faça login para finalizar a compra!');
+            setTimeout(() => { window.location.href = 'acesso.html'; }, 1500);
+        }
+
         async function loadCompra() {
-            const carrinho = await getCarrinho();
-            if (carrinho.error || !carrinho.itens || carrinho.itens.length === 0) {
-                showToast('⚠️ Carrinho vazio!');
-                setTimeout(() => { window.location.href = 'carrinho.html'; }, 1500);
-                return;
+            if (!token) return;
+            // Tenta carregar do localStorage primeiro (fallback)
+            let carrinho = null;
+            try {
+                const saved = localStorage.getItem('mdc:checkout_data');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (parsed.itens && parsed.itens.length) {
+                        carrinho = parsed;
+                    }
+                }
+            } catch (_) {}
+
+            if (!carrinho) {
+                // Busca da API
+                const result = await getCarrinho(token);
+                if (result.error || !result.itens || result.itens.length === 0) {
+                    showToast('⚠️ Carrinho vazio!');
+                    setTimeout(() => { window.location.href = 'carrinho.html'; }, 1500);
+                    return;
+                }
+                carrinho = result;
             }
-            
+
             compraData = carrinho;
             originalTotal = carrinho.total;
             renderItems();
             updateTotals();
+            // Limpa o localStorage após carregar
+            localStorage.removeItem('mdc:checkout_data');
         }
 
         function renderItems() {
@@ -160,7 +198,8 @@
         }
 
         async function loadEnderecos() {
-            const result = await getEnderecos();
+            if (!token) return;
+            const result = await getEnderecos(token);
             if (result.error) return;
             
             enderecos = result;
@@ -222,64 +261,92 @@
         }
 
         async function finalizarCompra() {
-    if (!selectedEnderecoId) {
-        showToast('⚠️ Selecione um endereço de entrega!');
-        return;
-    }
-    
-    const endereco = enderecos.find(e => e.id === selectedEnderecoId);
-    if (!endereco) {
-        showToast('⚠️ Endereço não encontrado!');
-        return;
-    }
+            if (!token) {
+                showToast('🔐 Faça login para finalizar a compra.');
+                return;
+            }
+            if (!selectedEnderecoId) {
+                showToast('⚠️ Selecione um endereço de entrega!');
+                return;
+            }
+            
+            const endereco = enderecos.find(e => e.id === selectedEnderecoId);
+            if (!endereco) {
+                showToast('⚠️ Endereço não encontrado!');
+                return;
+            }
 
-    const { finalTotal } = updateTotals();
-    const pedido = {
-        items: compraData.itens.map(item => ({
-            produto_id: item.produto.id,
-            quantidade: item.quantidade,
-            preco_unitario: item.produto.preco
-        })),
-        total: finalTotal,
-        forma_pagamento: selectedPayment,
-        endereco_entrega: {  // <-- envia objeto completo
-            nome_completo: endereco.nome_completo,
-            rua: endereco.rua,
-            numero: endereco.numero,
-            bairro: endereco.bairro,
-            cidade: endereco.cidade,
-            estado: endereco.estado,
-            cep: endereco.cep,
-            complemento: endereco.complemento
+            const { finalTotal } = updateTotals();
+            const pedido = {
+                items: compraData.itens.map(item => ({
+                    produto_id: item.produto.id,
+                    quantidade: item.quantidade,
+                    preco_unitario: item.produto.preco
+                })),
+                total: finalTotal,
+                forma_pagamento: selectedPayment,
+                endereco_entrega: {
+                    nome_completo: endereco.nome_completo,
+                    rua: endereco.rua,
+                    numero: endereco.numero,
+                    bairro: endereco.bairro,
+                    cidade: endereco.cidade,
+                    estado: endereco.estado,
+                    cep: endereco.cep,
+                    complemento: endereco.complemento
+                }
+            };
+
+            const result = await criarPedido(token, pedido);
+            
+            if (result.error) {
+                showToast('❌ ' + result.error);
+                return;
+            }
+            
+            await clearCart(token);
+            
+            localStorage.setItem('compra_finalizada', JSON.stringify({
+                items: compraData.itens.map(item => ({
+                    nome: item.produto.titulo,
+                    preco: item.produto.preco,
+                    tamanho: item.produto.tamanho,
+                    quantidade: item.quantidade,
+                    imagem: item.produto.imagem_url
+                })),
+                total: originalTotal,
+                finalTotal: finalTotal,
+                paymentMethod: selectedPayment,
+                endereco: endereco
+            }));
+
+            showToast('✅ Pedido realizado!');
+            setTimeout(() => { window.location.href = 'compra.html'; }, 1500);
         }
-    };
 
-    const result = await criarPedido(pedido);
-    
-    if (result.error) {
-        showToast('❌ ' + result.error);
-        return;
-    }
-    
-    await clearCart();
-    
-    localStorage.setItem('compra_finalizada', JSON.stringify({
-        items: compraData.itens.map(item => ({
-            nome: item.produto.titulo,
-            preco: item.produto.preco,
-            tamanho: item.produto.tamanho,
-            quantidade: item.quantidade,
-            imagem: item.produto.imagem_url
-        })),
-        total: originalTotal,
-        finalTotal: finalTotal,
-        paymentMethod: selectedPayment,
-        endereco: endereco
-    }));
+        // Event listeners
+        document.getElementById('pixOption')?.addEventListener('click', () => selectPayment('pix'));
+        document.getElementById('creditoOption')?.addEventListener('click', () => selectPayment('credito'));
+        document.getElementById('boletoOption')?.addEventListener('click', () => selectPayment('boleto'));
+        document.getElementById('finalizarBtn')?.addEventListener('click', finalizarCompra);
+        document.getElementById('enderecoSelect')?.addEventListener('change', (e) => {
+            if (e.target.value) mostrarDetalhesEndereco(e.target.value);
+            else {
+                document.getElementById('enderecoDetalhes').classList.add('hidden');
+                selectedEnderecoId = null;
+            }
+        });
+        document.getElementById('novoEnderecoBtn')?.addEventListener('click', () => {
+            window.location.href = 'configuracoes.html';
+        });
 
-    showToast('✅ Pedido realizado!');
-    setTimeout(() => { window.location.href = 'compra.html'; }, 1500);
-}
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            if (token) {
+                loadCompra();
+                loadEnderecos();
+            }
+        });
     </script>
 </body>
 </html>
