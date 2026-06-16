@@ -1,7 +1,7 @@
 // js/api.js — Camada de comunicação com o backend do Mercado da Copa
 // Todas as funções fazem fetch para a API Express rodando no backend.
 
-const API_BASE = 'https://backend-mercado-copa.vercel.app/api'; // SEM barra no final
+const API_BASE = 'https://backend-mercado-copa.vercel.app/api/';
 
 // ─── Sessão / Auth local (localStorage) ─────────────────────
 
@@ -46,15 +46,19 @@ function authHeaders(token) {
 }
 
 async function request(path, options = {}) {
-    // Remove barras duplicadas: garante que a URL fique no formato correto
-    const url = `${API_BASE}${path.startsWith('/') ? path : '/' + path}`;
     try {
-        const res = await fetch(url, options);
-        const data = await res.json();
+        const res = await fetch(`${API_BASE}${path}`, options);
+        const text = await res.text();
+        let data = null;
+        try { data = text ? JSON.parse(text) : null; } catch (_) { data = null; }
+
         if (!res.ok) {
-            return { error: data.error || data.message || 'Erro desconhecido' };
+            const serverMsg = (data && (data.error || data.message)) || text || `HTTP ${res.status}`;
+            console.error(`[API] HTTP ${res.status} em ${path}:`, text);
+            return { error: serverMsg, status: res.status, body: text };
         }
-        return data;
+
+        return data !== null ? data : text;
     } catch (err) {
         console.error(`[API] Erro em ${path}:`, err);
         return { error: 'Não foi possível conectar ao servidor.' };
@@ -283,7 +287,16 @@ export async function getPedidos(token) {
     });
 }
 
-export async function criarPedido(token, dados) {
+export async function criarPedido(tokenOrDados, dados) {
+    // Backwards-compatible: allow calling criarPedido(dados) or criarPedido(token, dados)
+    let token = null;
+    if (tokenOrDados && typeof tokenOrDados === 'object' && !dados) {
+        dados = tokenOrDados;
+        token = getToken();
+    } else {
+        token = tokenOrDados || getToken();
+    }
+
     return request('/pedidos', {
         method: 'POST',
         headers: authHeaders(token),
