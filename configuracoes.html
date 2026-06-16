@@ -115,42 +115,51 @@
         <a href="perfil.html" class="flex flex-col items-center bg-primary/10 text-primary rounded-xl p-2"><span class="material-symbols-outlined" style="font-variation-settings:'FILL'1;">person</span><span class="text-[10px] mt-1">Profile</span></a>
     </nav>
 
-    <script type="module">
-        import { getEnderecos, criarEndereco, atualizarEndereco, deletarEndereco, getUser, clearSession } from './js/api.js';
+<script type="module">
+    import { getToken, getEnderecos, criarEndereco, atualizarEndereco, deletarEndereco, getUser, clearSession } from './js/api.js';
 
-        const API_BASE_URL = window.API_BASE_URL || "http://localhost:3000";
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
 
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+    const token = getToken();
+    if (!token) {
+        showToast('🔐 Faça login para acessar configurações');
+        setTimeout(() => { window.location.href = 'acesso.html'; }, 1500);
+        throw new Error('Token não encontrado');
+    }
+
+    function loadProfile() {
+        const user = getUser();
+        if (user) {
+            const nome = user.user_metadata?.nome || user.email?.split('@')[0] || 'Colecionador';
+            const username = user.user_metadata?.username || '@' + nome.toLowerCase().replace(/\s/g, '');
+            document.getElementById('perfilNome').textContent = nome;
+            document.getElementById('perfilEmail').textContent = user.email;
+            document.getElementById('perfilUsername').textContent = username;
+            document.getElementById('avatarImg').src = `https://ui-avatars.com/api/?background=003215&color=fff&bold=true&name=${encodeURIComponent(nome)}`;
         }
+    }
 
-        // Verificar autenticação
-        const token = localStorage.getItem('mdc:auth') ? JSON.parse(localStorage.getItem('mdc:auth')).token : null;
+    async function loadEnderecos() {
         if (!token) {
-            showToast('🔐 Faça login para acessar configurações');
-            setTimeout(() => { window.location.href = 'acesso.html'; }, 1500);
+            console.warn('Token não disponível, abortando carregamento de endereços');
+            return;
         }
-
-        function loadProfile() {
-            const user = getUser();
-            if (user) {
-                const nome = user.user_metadata?.nome || user.email?.split('@')[0] || 'Colecionador';
-                const username = user.user_metadata?.username || '@' + nome.toLowerCase().replace(/\s/g, '');
-                document.getElementById('perfilNome').textContent = nome;
-                document.getElementById('perfilEmail').textContent = user.email;
-                document.getElementById('perfilUsername').textContent = username;
-                document.getElementById('avatarImg').src = `https://ui-avatars.com/api/?background=003215&color=fff&bold=true&name=${encodeURIComponent(nome)}`;
-            }
-        }
-
-        async function loadEnderecos() {
-            const result = await getEnderecos();
+        try {
+            const result = await getEnderecos(token);
             if (result.error) {
-                document.getElementById('enderecosList').innerHTML = '<div class="text-center py-4 text-red-500">Erro ao carregar endereços</div>';
+                if (result.error === 'Token inválido' || result.error.includes('JWT')) {
+                    showToast('🔐 Sessão expirada. Faça login novamente.');
+                    clearSession();
+                    setTimeout(() => window.location.href = 'acesso.html', 2000);
+                    return;
+                }
+                document.getElementById('enderecosList').innerHTML = '<div class="text-center py-4 text-red-500">Erro ao carregar endereços: ' + result.error + '</div>';
                 return;
             }
 
@@ -177,10 +186,26 @@
                     </div>
                 </div>
             `).join('');
+        } catch (err) {
+            console.error('Erro ao carregar endereços:', err);
+            document.getElementById('enderecosList').innerHTML = '<div class="text-center py-4 text-red-500">Erro ao carregar endereços</div>';
         }
+    }
 
-        window.editarEndereco = async (id) => {
-            const result = await getEnderecos();
+    window.editarEndereco = async (id) => {
+        if (!token) return;
+        try {
+            const result = await getEnderecos(token);
+            if (result.error) {
+                if (result.error === 'Token inválido' || result.error.includes('JWT')) {
+                    showToast('🔐 Sessão expirada. Faça login novamente.');
+                    clearSession();
+                    setTimeout(() => window.location.href = 'acesso.html', 2000);
+                    return;
+                }
+                showToast('❌ ' + result.error);
+                return;
+            }
             const endereco = result.find(e => e.id === id);
             if (endereco) {
                 document.getElementById('enderecoId').value = endereco.id;
@@ -196,42 +221,67 @@
                 document.getElementById('enderecoModal').classList.remove('hidden');
                 document.getElementById('enderecoModal').classList.add('flex');
             }
-        };
+        } catch (err) {
+            showToast('❌ Erro ao carregar endereço para edição');
+        }
+    };
 
-        window.deletarEndereco = async (id) => {
-            if (!confirm('Tem certeza que deseja excluir este endereço?')) return;
-            const result = await deletarEndereco(id);
+    window.deletarEndereco = async (id) => {
+        if (!token) return;
+        if (!confirm('Tem certeza que deseja excluir este endereço?')) return;
+        try {
+            const result = await deletarEndereco(token, id);
             if (result.error) {
+                if (result.error === 'Token inválido' || result.error.includes('JWT')) {
+                    showToast('🔐 Sessão expirada. Faça login novamente.');
+                    clearSession();
+                    setTimeout(() => window.location.href = 'acesso.html', 2000);
+                    return;
+                }
                 showToast('❌ ' + result.error);
             } else {
                 showToast('🗑️ Endereço removido');
                 loadEnderecos();
             }
+        } catch (err) {
+            showToast('❌ Erro ao deletar endereço');
+        }
+    };
+
+    async function salvarEndereco(e) {
+        e.preventDefault();
+        if (!token) {
+            showToast('🔐 Faça login para gerenciar endereços.');
+            return;
+        }
+        const id = document.getElementById('enderecoId').value;
+        const endereco = {
+            nome_completo: document.getElementById('endNome').value,
+            cep: document.getElementById('endCep').value,
+            rua: document.getElementById('endRua').value,
+            numero: document.getElementById('endNumero').value,
+            bairro: document.getElementById('endBairro').value,
+            cidade: document.getElementById('endCidade').value,
+            estado: document.getElementById('endEstado').value,
+            complemento: document.getElementById('endComplemento').value,
+            principal: document.getElementById('endPrincipal').checked
         };
 
-        async function salvarEndereco(e) {
-            e.preventDefault();
-            const id = document.getElementById('enderecoId').value;
-            const endereco = {
-                nome_completo: document.getElementById('endNome').value,
-                cep: document.getElementById('endCep').value,
-                rua: document.getElementById('endRua').value,
-                numero: document.getElementById('endNumero').value,
-                bairro: document.getElementById('endBairro').value,
-                cidade: document.getElementById('endCidade').value,
-                estado: document.getElementById('endEstado').value,
-                complemento: document.getElementById('endComplemento').value,
-                principal: document.getElementById('endPrincipal').checked
-            };
-
+        try {
             let result;
             if (id) {
-                result = await atualizarEndereco(id, endereco);
+                result = await atualizarEndereco(token, id, endereco);
             } else {
-                result = await criarEndereco(endereco);
+                result = await criarEndereco(token, endereco);
             }
 
             if (result.error) {
+                if (result.error === 'Token inválido' || result.error.includes('JWT')) {
+                    showToast('🔐 Sessão expirada. Faça login novamente.');
+                    clearSession();
+                    setTimeout(() => window.location.href = 'acesso.html', 2000);
+                    return;
+                }
                 showToast('❌ ' + result.error);
             } else {
                 showToast(id ? '✅ Endereço atualizado!' : '✅ Endereço adicionado!');
@@ -241,32 +291,35 @@
                 document.getElementById('enderecoId').value = '';
                 loadEnderecos();
             }
+        } catch (err) {
+            showToast('❌ Erro ao salvar endereço');
         }
+    }
 
-        document.getElementById('novoEnderecoBtn')?.addEventListener('click', () => {
-            document.getElementById('enderecoForm').reset();
-            document.getElementById('enderecoId').value = '';
-            document.getElementById('enderecoModal').classList.remove('hidden');
-            document.getElementById('enderecoModal').classList.add('flex');
-        });
-        document.getElementById('closeModalBtn')?.addEventListener('click', () => {
-            document.getElementById('enderecoModal').classList.add('hidden');
-            document.getElementById('enderecoModal').classList.remove('flex');
-        });
-        document.getElementById('enderecoForm')?.addEventListener('submit', salvarEndereco);
-        document.getElementById('alterarSenhaBtn')?.addEventListener('click', () => showToast('🔐 Em breve você poderá alterar sua senha!'));
-        document.getElementById('editarPerfilBtn')?.addEventListener('click', () => showToast('✏️ Em breve você poderá editar seu perfil!'));
-        document.getElementById('limparHistoricoBtn')?.addEventListener('click', () => showToast('🗑️ Histórico limpo!'));
-        document.getElementById('excluirContaBtn')?.addEventListener('click', () => {
-            if (confirm('⚠️ Tem certeza que deseja excluir sua conta? Esta ação é irreversível!')) {
-                showToast('Conta excluída (demo)');
-            }
-        });
+    document.getElementById('novoEnderecoBtn')?.addEventListener('click', () => {
+        document.getElementById('enderecoForm').reset();
+        document.getElementById('enderecoId').value = '';
+        document.getElementById('enderecoModal').classList.remove('hidden');
+        document.getElementById('enderecoModal').classList.add('flex');
+    });
+    document.getElementById('closeModalBtn')?.addEventListener('click', () => {
+        document.getElementById('enderecoModal').classList.add('hidden');
+        document.getElementById('enderecoModal').classList.remove('flex');
+    });
+    document.getElementById('enderecoForm')?.addEventListener('submit', salvarEndereco);
+    document.getElementById('alterarSenhaBtn')?.addEventListener('click', () => showToast('🔐 Em breve você poderá alterar sua senha!'));
+    document.getElementById('editarPerfilBtn')?.addEventListener('click', () => showToast('✏️ Em breve você poderá editar seu perfil!'));
+    document.getElementById('limparHistoricoBtn')?.addEventListener('click', () => showToast('🗑️ Histórico limpo!'));
+    document.getElementById('excluirContaBtn')?.addEventListener('click', () => {
+        if (confirm('⚠️ Tem certeza que deseja excluir sua conta? Esta ação é irreversível!')) {
+            showToast('Conta excluída (demo)');
+        }
+    });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadProfile();
-            loadEnderecos();
-        });
-    </script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProfile();
+        loadEnderecos();
+    });
+</script>
 </body>
 </html>
