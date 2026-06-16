@@ -1,7 +1,7 @@
 // js/api.js — Camada de comunicação com o backend do Mercado da Copa
 // Todas as funções fazem fetch para a API Express rodando no backend.
 
-const API_BASE = 'https://backend-mercado-copa.vercel.app/api/';
+const API_BASE = 'https://backend-mercado-copa.vercel.app/api'; // SEM barra no final
 
 // ─── Sessão / Auth local (localStorage) ─────────────────────
 
@@ -46,8 +46,10 @@ function authHeaders(token) {
 }
 
 async function request(path, options = {}) {
+    // CORREÇÃO: Remove barras duplicadas na URL (ex: api//auth/login → api/auth/login)
+    const url = `${API_BASE}${path}`.replace(/([^:]\/)\/+/g, "$1");
     try {
-        const res = await fetch(`${API_BASE}${path}`, options);
+        const res = await fetch(url, options);
         const data = await res.json();
         if (!res.ok) {
             return { error: data.error || data.message || 'Erro desconhecido' };
@@ -281,16 +283,7 @@ export async function getPedidos(token) {
     });
 }
 
-export async function criarPedido(tokenOrDados, dados) {
-    // Backwards-compatible: allow calling criarPedido(dados) or criarPedido(token, dados)
-    let token = null;
-    if (tokenOrDados && typeof tokenOrDados === 'object' && !dados) {
-        dados = tokenOrDados;
-        token = getToken();
-    } else {
-        token = tokenOrDados || getToken();
-    }
-
+export async function criarPedido(token, dados) {
     return request('/pedidos', {
         method: 'POST',
         headers: authHeaders(token),
