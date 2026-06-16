@@ -26,6 +26,21 @@
             100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
         }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#003215",
+                        "primary-container": "#004b23",
+                        secondary: "#fcd400",
+                        "secondary-dark": "#705d00",
+                        tertiary: "#5c000b",
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen pb-28">
 
@@ -116,9 +131,7 @@
     </nav>
 
     <script type="module">
-        import { getEnderecos, criarEndereco, atualizarEndereco, deletarEndereco, getUser, clearSession } from './js/api.js';
-
-        const API_BASE_URL = window.API_BASE_URL || "http://localhost:3000";
+        import { getToken, getEnderecos, criarEndereco, atualizarEndereco, deletarEndereco, getUser } from './js/api.js';
 
         function showToast(message) {
             const toast = document.createElement('div');
@@ -128,8 +141,7 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        // Verificar autenticação
-        const token = localStorage.getItem('mdc:auth') ? JSON.parse(localStorage.getItem('mdc:auth')).token : null;
+        const token = getToken();
         if (!token) {
             showToast('🔐 Faça login para acessar configurações');
             setTimeout(() => { window.location.href = 'acesso.html'; }, 1500);
@@ -148,7 +160,8 @@
         }
 
         async function loadEnderecos() {
-            const result = await getEnderecos();
+            if (!token) return;
+            const result = await getEnderecos(token);
             if (result.error) {
                 document.getElementById('enderecosList').innerHTML = '<div class="text-center py-4 text-red-500">Erro ao carregar endereços</div>';
                 return;
@@ -180,7 +193,8 @@
         }
 
         window.editarEndereco = async (id) => {
-            const result = await getEnderecos();
+            if (!token) return;
+            const result = await getEnderecos(token);
             const endereco = result.find(e => e.id === id);
             if (endereco) {
                 document.getElementById('enderecoId').value = endereco.id;
@@ -199,8 +213,9 @@
         };
 
         window.deletarEndereco = async (id) => {
+            if (!token) return;
             if (!confirm('Tem certeza que deseja excluir este endereço?')) return;
-            const result = await deletarEndereco(id);
+            const result = await deletarEndereco(token, id);
             if (result.error) {
                 showToast('❌ ' + result.error);
             } else {
@@ -211,6 +226,10 @@
 
         async function salvarEndereco(e) {
             e.preventDefault();
+            if (!token) {
+                showToast('🔐 Faça login para gerenciar endereços.');
+                return;
+            }
             const id = document.getElementById('enderecoId').value;
             const endereco = {
                 nome_completo: document.getElementById('endNome').value,
@@ -226,9 +245,9 @@
 
             let result;
             if (id) {
-                result = await atualizarEndereco(id, endereco);
+                result = await atualizarEndereco(token, id, endereco);
             } else {
-                result = await criarEndereco(endereco);
+                result = await criarEndereco(token, endereco);
             }
 
             if (result.error) {
