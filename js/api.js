@@ -48,17 +48,11 @@ function authHeaders(token) {
 async function request(path, options = {}) {
     try {
         const res = await fetch(`${API_BASE}${path}`, options);
-        const text = await res.text();
-        let data = null;
-        try { data = text ? JSON.parse(text) : null; } catch (_) { data = null; }
-
+        const data = await res.json();
         if (!res.ok) {
-            const serverMsg = (data && (data.error || data.message)) || text || `HTTP ${res.status}`;
-            console.error(`[API] HTTP ${res.status} em ${path}:`, text);
-            return { error: serverMsg, status: res.status, body: text };
+            return { error: data.error || data.message || 'Erro desconhecido' };
         }
-
-        return data !== null ? data : text;
+        return data;
     } catch (err) {
         console.error(`[API] Erro em ${path}:`, err);
         return { error: 'Não foi possível conectar ao servidor.' };
