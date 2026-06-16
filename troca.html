@@ -66,6 +66,37 @@
             }
         }
     </style>
+
+        <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ba1a1a", "on-primary-container": "#79bb87", "tertiary-fixed": "#ffdad7",
+                        "on-secondary-fixed-variant": "#544600", "on-primary-fixed": "#00210c", "surface-container": "#edeeef",
+                        "on-secondary": "#ffffff", "inverse-primary": "#93d6a0", "surface-tint": "#2a6a3f", "primary": "#003215",
+                        "tertiary-container": "#860015", "error-container": "#ffdad6", "surface-dim": "#d9dadb",
+                        "primary-fixed-dim": "#93d6a0", "on-secondary-container": "#6e5c00", "surface-container-lowest": "#ffffff",
+                        "surface": "#f8f9fa", "on-tertiary-container": "#ff8a86", "tertiary": "#5c000b", "surface-variant": "#e1e3e4",
+                        "surface-bright": "#f8f9fa", "on-primary": "#ffffff", "secondary-container": "#fcd400", "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#221b00", "inverse-surface": "#2e3132", "secondary": "#705d00", "on-surface": "#191c1d",
+                        "surface-container-highest": "#e1e3e4", "outline-variant": "#c0c9be", "on-tertiary-fixed": "#410005",
+                        "inverse-on-surface": "#f0f1f2", "secondary-fixed": "#ffe16d", "primary-fixed": "#aef2bb",
+                        "on-primary-fixed-variant": "#0b5229", "on-error-container": "#93000a", "secondary-fixed-dim": "#e9c400",
+                        "on-background": "#191c1d", "on-surface-variant": "#404941", "background": "#f8f9fa", "primary-container": "#004b23",
+                        "tertiary-fixed-dim": "#ffb3af", "on-tertiary-fixed-variant": "#930018", "surface-container-high": "#e7e8e9",
+                        "surface-container-low": "#f3f4f5", "outline": "#707970", "on-error": "#ffffff"
+                    },
+                    borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+                    spacing: { gutter: "12px", unit: "4px", "stack-lg": "48px", "stack-sm": "8px", "stack-md": "24px", "container-margin": "20px" },
+                    fontFamily: { "title-md": ["Hanken Grotesk"], "display-lg": ["Anton"], "body-sm": ["Hanken Grotesk"], "headline-lg-mobile": ["Anton"], "headline-lg": ["Anton"], "label-caps": ["JetBrains Mono"], "body-lg": ["Hanken Grotesk"] },
+                    fontSize: { "title-md": ["20px", { lineHeight: "1.4", fontWeight: "700" }], "display-lg": ["48px", { lineHeight: "1.1", letterSpacing: "0.02em", fontWeight: "400" }], "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }], "headline-lg-mobile": ["28px", { lineHeight: "1.2", fontWeight: "400" }], "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "1.6", fontWeight: "400" }] }
+                }
+            }
+        }
+    </script>
+    
 </head>
 
 <body class="bg-gray-50 text-gray-800 min-h-screen pb-28">
