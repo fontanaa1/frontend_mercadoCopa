@@ -132,19 +132,24 @@
     async function carregarProduto() {
         const urlParams = new URLSearchParams(window.location.search);
         const produtoId = urlParams.get('id');
-        if (!produtoId) return;
+        if (!produtoId) {
+            showToast('⚠️ Produto não especificado.');
+            setTimeout(() => { window.location.href = 'telaprincipal.html'; }, 1500);
+            return;
+        }
 
         try {
             const produto = await carregarProdutoPorId(produtoId);
 
             if (produto.error) {
-                showToast('Produto não encontrado');
+                showToast('❌ Produto não encontrado');
                 setTimeout(() => { window.location.href = 'telaprincipal.html'; }, 1500);
                 return;
             }
 
             produtoAtual = produto;
 
+            // Preencher dados básicos
             document.getElementById('produtoTitulo').textContent = produto.titulo;
             document.getElementById('produtoPreco').textContent = `R$ ${produto.preco}`;
             document.getElementById('produtoDescricao').textContent = produto.descricao || 'Sem descrição disponível.';
@@ -153,19 +158,34 @@
             document.getElementById('categoriaBadge').textContent = produto.categoria?.toUpperCase() || 'ITEM';
             document.getElementById('produtoImagem').src = produto.imagem_url || 'https://placehold.co/400x500/e0e0e0/333?text=Imagem';
             
+            // Badge de oferta (venda ou troca)
             const ofertaBadge = document.getElementById('ofertaBadge');
             if (produto.tipo_oferta === 'troca') {
                 ofertaBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">swap_horiz</span> ACEITA TROCA';
+                ofertaBadge.classList.add('bg-secondary-container', 'text-on-secondary-container');
+                // Desabilita o botão de compra para itens exclusivos de troca
+                const addBtn = document.getElementById('addToCartBtn');
+                addBtn.disabled = true;
+                addBtn.innerHTML = '<span class="material-symbols-outlined">swap_horiz</span> APENAS TROCA';
+                addBtn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-400');
             } else {
                 ofertaBadge.innerHTML = '<span class="material-symbols-outlined text-[14px]">sell</span> VENDA';
+                ofertaBadge.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+                // Garante que o botão esteja ativo
+                const addBtn = document.getElementById('addToCartBtn');
+                addBtn.disabled = false;
+                addBtn.innerHTML = '<span class="material-symbols-outlined">shopping_cart</span> Adicionar ao Carrinho';
+                addBtn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-400');
             }
 
+            // Nome do vendedor
             const vendedorNome = produto.usuario?.raw_user_meta_data?.nome || produto.usuario?.email?.split('@')[0] || 'Vendedor';
             document.getElementById('vendedorInfo').innerHTML = `<span class="material-symbols-outlined text-[14px]">person</span> ${vendedorNome}`;
 
         } catch (err) {
             console.error('Erro:', err);
-            showToast('Erro ao carregar produto');
+            showToast('❌ Erro ao carregar produto');
+            setTimeout(() => { window.location.href = 'telaprincipal.html'; }, 1500);
         }
     }
 
@@ -174,6 +194,13 @@
         if (!token) {
             showToast('🔐 Faça login para adicionar ao carrinho!');
             setTimeout(() => { window.location.href = 'acesso.html'; }, 1500);
+            return;
+        }
+
+        // Verifica se o botão está desabilitado (caso de troca)
+        const addBtn = document.getElementById('addToCartBtn');
+        if (addBtn.disabled) {
+            showToast('⚠️ Este item é apenas para troca.');
             return;
         }
 
