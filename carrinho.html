@@ -9,6 +9,22 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:wght@400;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#003215",
+            "primary-container": "#004b23",
+            secondary: "#fcd400",
+            "secondary-dark": "#705d00",
+            tertiary: "#5c000b",
+            "tertiary-container": "#860015",
+          }
+        }
+      }
+    }
+  </script>
   <script type="module" src="./js/api.js"></script>
   <script src="menu.js"></script>
   <style>
@@ -112,8 +128,7 @@
 
     <div id="actionButton" class="mt-6 hidden">
       <button id="finalizarBtn"
-        class="w-full bg-primary text-white font-bold py-6 rounded-xl flex items-center justify-center gap-3"
-        onclick="window.location.href='pagamento.html'">
+        class="w-full bg-primary text-white font-bold py-6 rounded-xl flex items-center justify-center gap-3">
         FINALIZAR COMPRA <span class="material-symbols-outlined">sports_soccer</span>
       </button>
       <p class="text-center text-xs font-mono mt-4 text-gray-500">PAGAMENTO 100% SEGURO</p>
@@ -137,12 +152,9 @@
   </nav>
 
   <script type="module">
-    import { getToken as getTokenApi, getCarrinho, atualizarItemCarrinho, removerItemCarrinho } from './js/api.js';
-    const API_BASE_URL = window.API_BASE_URL || "http://localhost:3000";
-
-    function getToken() {
-      return getTokenApi();
-    }
+    import { getToken, getCarrinho, atualizarItemCarrinho, removerItemCarrinho } from './js/api.js';
+    
+    let cartData = null;
 
     function showToast(msg) {
       const t = document.createElement('div');
@@ -161,15 +173,15 @@
 
       try {
         const data = await getCarrinho(token);
-
         if (data.error || !data.itens || data.itens.length === 0) {
-          document.getElementById('cartItems').innerHTML = ''; // vazio
+          document.getElementById('cartItems').innerHTML = '';
           document.getElementById('empty-cart').classList.remove('hidden');
           document.getElementById('summarySection').classList.add('hidden');
           document.getElementById('actionButton').classList.add('hidden');
           return;
         }
 
+        cartData = data;
         document.getElementById('empty-cart').classList.add('hidden');
         document.getElementById('summarySection').classList.remove('hidden');
         document.getElementById('actionButton').classList.remove('hidden');
@@ -184,51 +196,30 @@
 
     function renderCartItems(itens) {
       const container = document.getElementById('cartItems');
-      if (!container) return;
-
-      if (!itens || itens.length === 0) {
-        container.innerHTML = `
-      <div class="p-8 text-center border-2 border-dashed border-outline rounded-xl">
-        <span class="material-symbols-outlined text-4xl text-outline mb-2">shopping_cart_off</span>
-        <p class="font-bold text-lg">Seu carrinho está vazio</p>
-        <p class="text-sm text-on-surface-variant mb-4">Adicione relíquias da vitrine para começar.</p>
-        <a href="telaprincipal.html" class="inline-flex items-center gap-2 bg-primary text-on-primary font-mono text-xs uppercase tracking-widest px-4 py-2 border-2 border-black neobrutal-shadow active-state">
-          Ir para a Vitrine
-        </a>
-      </div>
-    `;
-        // Esconde o card do resumo total se estiver vazio, evitando erros estéticos
-        document.getElementById('cartSummaryCard')?.classList.add('hidden');
-        return;
-      }
-
-      // Se houver itens, mostra o resumo
-      document.getElementById('cartSummaryCard')?.classList.remove('hidden');
-
       container.innerHTML = itens.map(item => `
-    <div class="border-2 border-black p-4 bg-surface rounded-xl flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between neobrutal-shadow">
-      <div class="flex gap-4 items-center flex-1">
-        <img src="${item.produto.imagem_url || 'https://via.placeholder.com/80'}" alt="${item.produto.titulo}" class="w-20 h-20 object-cover border-2 border-black rounded-lg bg-gray-100 flex-shrink-0" />
-        <div>
-          <span class="font-mono text-[10px] uppercase tracking-widest bg-secondary-container text-on-secondary-container px-2 py-0.5 border border-black rounded-full">${item.produto.categoria}</span>
-          <h3 class="font-bold text-lg mt-1 leading-tight">${item.produto.titulo}</h3>
-          <p class="font-mono text-xs text-on-surface-variant mt-0.5">Tamanho: ${item.produto.tamanho || 'Único'} | Seleção: ${item.produto.selecao}</p>
-          <div class="font-['Anton'] text-xl text-primary mt-1">R$ ${item.produto.preco.toFixed(2).replace('.', ',')}</div>
+        <div class="border-2 border-black p-4 bg-surface rounded-xl flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between neobrutal-shadow">
+          <div class="flex gap-4 items-center flex-1">
+            <img src="${item.produto.imagem_url || 'https://via.placeholder.com/80'}" alt="${item.produto.titulo}" class="w-20 h-20 object-cover border-2 border-black rounded-lg bg-gray-100 flex-shrink-0" />
+            <div>
+              <span class="font-mono text-[10px] uppercase tracking-widest bg-secondary-container text-on-secondary-container px-2 py-0.5 border border-black rounded-full">${item.produto.categoria}</span>
+              <h3 class="font-bold text-lg mt-1 leading-tight">${item.produto.titulo}</h3>
+              <p class="font-mono text-xs text-on-surface-variant mt-0.5">Tamanho: ${item.produto.tamanho || 'Único'} | Seleção: ${item.produto.selecao}</p>
+              <div class="font-['Anton'] text-xl text-primary mt-1">R$ ${item.produto.preco.toFixed(2).replace('.', ',')}</div>
+            </div>
+          </div>
+          
+          <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-4 pt-4 sm:pt-0 border-t sm:border-t-0 border-outline/20">
+            <div class="flex items-center border-2 border-black bg-surface rounded-lg overflow-hidden">
+              <button onclick="updateQuantity('${item.id}', ${item.quantidade - 1})" class="px-2 py-1 hover:bg-black/5 font-bold transition-colors">-</button>
+              <span class="px-3 font-mono font-bold border-x-2 border-black bg-white">${item.quantidade}</span>
+              <button onclick="updateQuantity('${item.id}', ${item.quantidade + 1})" class="px-2 py-1 hover:bg-black/5 font-bold transition-colors">+</button>
+            </div>
+            <button onclick="removeItem('${item.id}')" class="text-error hover:text-red-700 flex items-center gap-1 font-mono text-xs uppercase tracking-widest">
+              <span class="material-symbols-outlined text-lg">delete</span> Remover
+            </button>
+          </div>
         </div>
-      </div>
-      
-      <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-4 pt-4 sm:pt-0 border-t sm:border-t-0 border-outline/20">
-        <div class="flex items-center border-2 border-black bg-surface rounded-lg overflow-hidden">
-          <button onclick="updateQuantity('${item.id}', ${item.quantidade - 1})" class="px-2 py-1 hover:bg-black/5 font-bold transition-colors">-</button>
-          <span class="px-3 font-mono font-bold border-x-2 border-black bg-white">${item.quantidade}</span>
-          <button onclick="updateQuantity('${item.id}', ${item.quantidade + 1})" class="px-2 py-1 hover:bg-black/5 font-bold transition-colors">+</button>
-        </div>
-        <button onclick="removeItem('${item.id}')" class="text-error hover:text-red-700 flex items-center gap-1 font-mono text-xs uppercase tracking-widest">
-          <span class="material-symbols-outlined text-lg">delete</span> Remover
-        </button>
-      </div>
-    </div>
-  `).join('');
+      `).join('');
     }
 
     function updateSummary(total) {
@@ -261,17 +252,18 @@
       }
     };
 
-    document.addEventListener('DOMContentLoaded', loadCart);
-
-    document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+    window.finalizarCompra = function() {
       if (!cartData || !cartData.itens || cartData.itens.length === 0) {
         showToast('❌ Seu carrinho está vazio!');
         return;
       }
-      // Preserva os dados estruturados idênticos ao esperado pelo pagamento.html
       localStorage.setItem('mdc:checkout_data', JSON.stringify(cartData));
       window.location.href = 'pagamento.html';
-    });
+    };
+
+    document.getElementById('finalizarBtn').addEventListener('click', window.finalizarCompra);
+
+    document.addEventListener('DOMContentLoaded', loadCart);
   </script>
 </body>
 
